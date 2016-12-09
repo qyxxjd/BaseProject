@@ -1,0 +1,20 @@
+apply plugin: 'com.jfrog.bintray'
+
+group = projectGroup
+version = projectVersion
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+    configurations = [ 'archives' ]
+    pkg {
+        repo = repoName
+        name = projectName
+        licenses = [ licensesName ]
+        websiteUrl = githubUrl
+        vcsUrl = "${githubUrl}.git"
+        publish = true
+    }
+}

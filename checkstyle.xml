@@ -1,0 +1,169 @@
+<?xml version="1.0"?><!DOCTYPE module PUBLIC
+        "-//Puppy Crawl//DTD Check Configuration 1.2//EN"
+        "http://www.puppycrawl.com/dtds/configuration_1_2.dtd">
+
+<module name="Checker">
+
+    <property name="charset" value="UTF-8"/>
+    <property name="severity" value="warning"/>
+
+    <!-- 检查文件的长度（行） default max=2000 -->
+    <module name="FileLength">
+        <property name="max" value="2500"/>
+    </module>
+
+    <module name="FileTabCharacter"/>
+
+    <!-- Trailing spaces -->
+    <module name="RegexpSingleline">
+        <property name="format" value="\s+$"/>
+        <property name="message" value="Line has trailing spaces."/>
+    </module>
+
+    <!-- Space after 'for' and 'if' -->
+    <module name="RegexpSingleline">
+        <property name="format" value="^\s*(for|if)[^ ]"/>
+        <property name="message" value="Space needed before opening parenthesis."/>
+    </module>
+
+    <!-- For each spacing -->
+    <module name="RegexpSingleline">
+        <property name="format" value="^\s*for \(.*?([^ ]:|:[^ ])"/>
+        <property name="message" value="Space needed around ':' character."/>
+    </module>
+
+    <module name="TreeWalker">
+
+        <module name="ConstantName"/>
+        <!-- 检查命名规范   -->
+        <module name="LocalFinalVariableName"/>
+        <module name="LocalVariableName"/>
+        <module name="MemberName"/>
+        <module name="MethodName">
+            <property name="format" value="^[a-z][a-zA-Z0-9_]*$"/>
+        </module>
+        <module name="PackageName"/>
+        <module name="ParameterName"/>
+        <module name="StaticVariableName"/>
+        <module name="TypeName">
+            <property name="format" value="^[A-Z][a-zA-Z0-9_]*$"/>
+        </module>
+
+        <!-- Checks for imports                              -->
+        <!-- See http://checkstyle.sf.net/config_import.html -->
+        <!-- 必须导入类的完整路径，即不能使用*导入所需的类 -->
+        <module name="AvoidStarImport"/>
+        <!-- 检查是否从非法的包中导入了类 illegalPkgs: 定义非法的包名称-->
+        <module name="IllegalImport"/> <!-- defaults to sun.* packages -->
+        <!-- 检查是否导入了不必显示导入的类-->
+        <module name="RedundantImport"/>
+        <!-- 检查是否导入的包没有使用-->
+        <module name="UnusedImports"/>
+
+        <!-- 代码缩进   -->
+        <module name="Indentation"/>
+
+        <!-- Checks for Size Violations.                    -->
+        <!-- See http://checkstyle.sf.net/config_sizes.html -->
+        <module name="LineLength">
+            <property name="max" value="100"/>
+        </module>
+        <!--<module name="MethodLength"/>-->
+        <!--<module name="ParameterNumber"/>-->
+
+        <!-- Checks for whitespace                               -->
+        <!-- See http://checkstyle.sf.net/config_whitespace.html -->
+        <module name="GenericWhitespace"/>
+        <module name="EmptyForIteratorPad"/>
+        <module name="MethodParamPad"/>
+        <module name="NoWhitespaceAfter"/>
+        <module name="NoWhitespaceBefore"/>
+        <!--<module name="OperatorWrap"/>-->
+        <module name="ParenPad"/>
+        <module name="TypecastParenPad"/>
+        <module name="WhitespaceAfter"/>
+        <module name="WhitespaceAround"/>
+
+        <!-- Modifier Checks                                    -->
+        <!-- See http://checkstyle.sf.net/config_modifiers.html -->
+        <!--module name="ModifierOrder"/-->
+        <!-- 检查是否有多余的修饰符，例如：接口中的方法不必使用public、abstract修饰 -->
+        <module name="RedundantModifier"/>
+
+        <!-- Checks for blocks. You know, those {}'s         -->
+        <!-- See http://checkstyle.sf.net/config_blocks.html -->
+        <!--<module name="AvoidNestedBlocks"/>-->
+        <!--<module name="EmptyBlock"/>-->
+
+        <!-- NeedBraces 检查是否应该使用括号的地方没有加括号 -->
+        <module name="NeedBraces">
+            <property name="tokens" value="LITERAL_DO, LITERAL_ELSE, LITERAL_FOR, LITERAL_WHILE"/>
+        </module>
+        <!-- option: 定义左大括号'{'显示位置，eol在同一行显示，nl在下一行显示
+             maxLineLength: 大括号'{'所在行行最多容纳的字符数
+             tokens: 该属性适用的类型，例：CLASS_DEF,INTERFACE_DEF,METHOD_DEF,CTOR_DEF -->
+        <!--<module name="LeftCurly">
+            <property name="option" value="eol"/>
+        </module>-->
+
+        <!-- 右大括号是否单独一行显示 -->
+        <!--<module name="RightCurly">
+            <property name="option" value="alone"/>
+        </module>-->
+
+        <!-- Checks for common coding problems               -->
+        <!-- See http://checkstyle.sf.net/config_coding.html -->
+        <!--<module name="AvoidInlineConditionals"/>-->
+        <module name="CovariantEquals"/>
+        <!--<module name="DoubleCheckedLocking"/>-->
+        <module name="EmptyStatement"/>
+        <module name="EqualsAvoidNull"/>
+        <!-- 检查在重写了equals方法后是否重写了hashCode方法 -->
+        <module name="EqualsHashCode"/>
+        <!--<module name="HiddenField"/>-->
+        <!-- 检查非法实例化 -->
+        <module name="IllegalInstantiation"/>
+        <module name="InnerAssignment"/>
+        <!--<module name="MagicNumber"/>-->
+        <!-- 检查switch语句是否有default代码块 -->
+        <module name="MissingSwitchDefault"/>
+        <!--检查switch中case后是否加入了跳出语句，例如：return、break、throw、continue -->
+        <module name="FallThrough"/>
+        <module name="RedundantThrows"/>
+        <!-- 检查boolean值是否冗余的地方 -->
+        <module name="SimplifyBooleanExpression"/>
+        <!-- 检查是否存在过度复杂的boolean返回值 -->
+        <module name="SimplifyBooleanReturn"/>
+
+        <!-- 每一行只能定义一个变量 -->
+        <module name="MultipleVariableDeclarations"/>
+
+        <!-- Checks for class design                         -->
+        <!-- See http://checkstyle.sf.net/config_design.html -->
+        <!--module name="DesignForExtension"/-->
+        <!--module name="FinalClass"/-->
+        <module name="HideUtilityClassConstructor"/>
+        <module name="InterfaceIsType"/>
+        <!--<module name="VisibilityModifier"/>-->
+
+        <!-- Miscellaneous other checks.                   -->
+        <!-- See http://checkstyle.sf.net/config_misc.html -->
+        <!-- 检查再定义数组时，采用java风格还是c风格，例如：int[] num是java风格，int num[]是c风格。默认是java风格 -->
+        <module name="ArrayTypeStyle"/>
+        <!--module name="FinalParameters"/-->
+        <!-- 检查是否存在TODO待处理 -->
+        <module name="TodoComment"/>
+        <!-- 检查是否在long类型是否定义了大写的L -->
+        <module name="UpperEll"/>
+
+        <!-- if-else嵌套语句个数 最多4层 -->
+        <module name="NestedIfDepth">
+            <property name="max" value="4"/>
+        </module>
+
+        <!-- try-catch 嵌套语句个数 最多2层 -->
+        <module name="NestedTryDepth">
+            <property name="max" value="2"/>
+        </module>
+    </module>
+</module>
