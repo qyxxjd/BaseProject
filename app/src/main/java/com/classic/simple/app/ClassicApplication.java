@@ -2,7 +2,7 @@ package com.classic.simple.app;
 
 import android.app.Application;
 
-import com.classic.core.BasicProject;
+import com.classic.android.BasicProject;
 import com.classic.simple.BuildConfig;
 import com.elvishew.xlog.LogLevel;
 

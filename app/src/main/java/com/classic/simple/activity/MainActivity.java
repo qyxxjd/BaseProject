@@ -14,11 +14,11 @@ import android.view.View;
 
 import com.classic.adapter.BaseAdapterHelper;
 import com.classic.adapter.CommonRecyclerAdapter;
-import com.classic.core.permissions.AfterPermissionGranted;
-import com.classic.core.permissions.EasyPermissions;
-import com.classic.core.utils.DoubleClickExitHelper;
-import com.classic.core.utils.SDCardUtil;
-import com.classic.core.utils.ToastUtil;
+import com.classic.android.permissions.AfterPermissionGranted;
+import com.classic.android.permissions.EasyPermissions;
+import com.classic.android.utils.DoubleClickExitHelper;
+import com.classic.android.utils.SDCardUtil;
+import com.classic.android.utils.ToastUtil;
 import com.classic.simple.R;
 import com.classic.simple.model.Demo;
 import com.elvishew.xlog.XLog;

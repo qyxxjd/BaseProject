@@ -19,7 +19,6 @@ android {
 }
 
 dependencies {
-    compile rootProject.ext.supportAppcompatV7
     compile rootProject.ext.supportRecyclerView
     compile rootProject.ext.supportCardView
     compile rootProject.ext.commonAdapter
@@ -27,6 +26,13 @@ dependencies {
     compile rootProject.ext.butterknife
     annotationProcessor rootProject.ext.butterknifeCompiler
 
-    compile project(':base')
+    compile project(':core')
     compile project(':utils')
+
+//    compile 'com.classic.android:core:1.0'
+//    compile 'com.classic.android:utils:1.0'
+//    compile 'com.classic.android:rxjava:1.0'
+//    compile 'com.classic.android:okhttp:1.0'
+
+
 }

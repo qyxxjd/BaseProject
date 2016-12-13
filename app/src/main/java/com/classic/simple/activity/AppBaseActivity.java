@@ -3,7 +3,7 @@ package com.classic.simple.activity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.classic.core.base.BaseActivity;
+import com.classic.android.base.BaseActivity;
 
 import butterknife.ButterKnife;
 

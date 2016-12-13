@@ -2,7 +2,7 @@ package com.classic.simple.model;
 
 import android.graphics.Color;
 
-import com.classic.core.utils.DataUtil;
+import com.classic.android.utils.DataUtil;
 
 import java.io.Serializable;
 import java.util.ArrayList;

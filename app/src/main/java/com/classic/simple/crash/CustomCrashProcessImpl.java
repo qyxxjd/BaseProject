@@ -1,8 +1,8 @@
 package com.classic.simple.crash;
 
-import com.classic.core.interfaces.ICrashProcess;
-import com.classic.core.utils.DateUtil;
-import com.classic.core.utils.SDCardUtil;
+import com.classic.android.interfaces.ICrashProcess;
+import com.classic.android.utils.DateUtil;
+import com.classic.android.utils.SDCardUtil;
 
 import java.io.BufferedWriter;
 import java.io.File;

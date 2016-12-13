@@ -1,6 +1,6 @@
 package com.classic.simple.activity;
 
-import com.classic.core.base.BaseSplashActivity;
+import com.classic.android.base.BaseSplashActivity;
 import com.classic.simple.R;
 
 import java.util.List;

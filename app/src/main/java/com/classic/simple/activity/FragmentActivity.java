@@ -19,7 +19,6 @@ public class FragmentActivity extends AppBaseActivity {
 
     @Override public void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
-        //这里偷懒，使用默认的。实际项目中建议使用ToolBar
         getSupportActionBar().setTitle("Fragment示例");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mImageFragment = new ImageFragment();

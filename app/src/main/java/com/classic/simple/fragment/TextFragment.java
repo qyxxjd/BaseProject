@@ -1,7 +1,7 @@
 package com.classic.simple.fragment;
 
-import com.classic.core.base.BaseFragment;
-import com.classic.core.utils.ToastUtil;
+import com.classic.android.base.BaseFragment;
+import com.classic.android.utils.ToastUtil;
 import com.classic.simple.R;
 
 public class TextFragment extends BaseFragment {
