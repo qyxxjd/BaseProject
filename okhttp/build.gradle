@@ -22,11 +22,11 @@ android {
 }
 
 dependencies {
-    compile project(':rxjava')
+//    compile rootProject.ext.rxProject
     compile rootProject.ext.okhttp
 }
 
 //apply from: rootProject.file('gradle/maven.gradle')
 //apply from: rootProject.file('gradle/bintray.gradle')
-apply from: rootProject.file('gradle/findbugs.gradle')
-apply from: rootProject.file('gradle/checkstyle.gradle')
+//apply from: rootProject.file('gradle/findbugs.gradle')
+//apply from: rootProject.file('gradle/checkstyle.gradle')

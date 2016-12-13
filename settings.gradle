@@ -1,1 +1,1 @@
-include ':app', ':base', ':utils', ':rxjava', ':okhttp'
+include ':app', ':core', ':utils'/*, ':rxjava', ':okhttp'*/

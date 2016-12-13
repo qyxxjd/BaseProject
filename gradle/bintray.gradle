@@ -11,10 +11,15 @@ bintray {
     configurations = [ 'archives' ]
     pkg {
         repo = repoName
-        name = projectName
+        name = projectArtifactId
         licenses = [ licensesName ]
         websiteUrl = githubUrl
         vcsUrl = "${githubUrl}.git"
         publish = true
+
+        version {
+            name = projectVersion
+            released = new Date()
+        }
     }
 }

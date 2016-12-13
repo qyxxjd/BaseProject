@@ -7,10 +7,10 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.3'
 
-        //https://github.com/dcendents/android-maven-gradle-plugin
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
-        //https://github.com/bintray/gradle-bintray-plugin
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
+//        //https://github.com/dcendents/android-maven-gradle-plugin
+//        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+//        //https://github.com/bintray/gradle-bintray-plugin
+//        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
     }
 }
 
@@ -28,14 +28,21 @@ task clean(type: Delete) {
 ext {
     projectName = 'BaseProject'
     projectDesc = 'android base project'
-    projectGroup = 'com.classic.core'
+    projectGroup = 'com.classic.android'
 
 //    projectVersion = '1.0' // base library version
-//    projectVersion = '1.0' // utils library version
-//    projectVersion = '1.0' // okhttp library version
-//    projectVersion = '1.0' // rxjava library version
+//    projectArtifactId = 'core'
 
-    orgName = 'xxjd'
+//    projectVersion = '1.0' // utils library version
+//    projectArtifactId = 'utils'
+//
+//    projectVersion = '1.0' // okhttp library version
+//    projectArtifactId = 'okhttp'
+//
+//    projectVersion = '1.0' // rxjava library version
+//    projectArtifactId = 'rxjava'
+
+    orgName = 'classic'
     repoName = 'maven'
 
     developerId = 'qyxxjd'

@@ -3,11 +3,15 @@ apply plugin: 'com.github.dcendents.android-maven'
 install {
     repositories.mavenInstaller {
         pom.project {
-            packaging 'aar'
             name projectName
             description projectDesc
             url githubUrl
             inceptionYear '2016'
+
+            packaging 'aar'
+            groupId projectGroup
+            artifactId projectArtifactId
+            version projectVersion
 
             licenses {
                 license {
