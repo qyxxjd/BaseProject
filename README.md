@@ -12,7 +12,7 @@
 - `Android6.0`权限管理
 - 通用适配器  [请参考CommonAdapter](https://github.com/qyxxjd/CommonAdapter)
 
-`Gradlew`依赖
+`Gradle`依赖
 ```gradle
 dependencies {
     compile 'com.classic.android:core:1.0'
@@ -25,7 +25,7 @@ dependencies {
 - `RxActivity`、`RxFragment`
 - 常用方法封装
 
-`Gradlew`依赖
+`Gradle`依赖
 ```gradle
 dependencies {
     compile 'com.classic.android:rxjava:1.0'
@@ -37,7 +37,7 @@ dependencies {
 - 集成`OkHttp (v3.5.0)`
 - 网络相关的一些封装
 
-`Gradlew`依赖
+`Gradle`依赖
 ```gradle
 dependencies {
     compile 'com.classic.android:okhttp:1.0'
@@ -46,7 +46,7 @@ dependencies {
 
 工具类：
 
-`Gradlew`依赖
+`Gradle`依赖
 ```gradle
 dependencies {
     compile 'com.classic.android:utils:1.0'
