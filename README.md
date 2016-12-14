@@ -44,7 +44,7 @@ dependencies {
 }
 ```
 
-工具类：
+#### 工具类：
 
 `Gradle`依赖
 ```gradle
@@ -52,6 +52,36 @@ dependencies {
     compile 'com.classic.android:utils:1.0'
 }
 ```
+
+ | 文件名 | 描述 | 
+ | ----- | ----- | 
+ | [AppInfoUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/AppInfoUtil.java) | 应用程序相关信息工具类 | 
+ | [BitmapUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/BitmapUtil.java) | `bitmap`工具类 | 
+ | [ByteUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/ByteUtil.java) | 字节处理工具类 | 
+ | [CloseUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/CloseUtil.java) | `Closeable`工具类 | 
+ | [ConversionUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/ConversionUtil.java) | 单位转换工具类 | 
+ | [CursorUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/CursorUtil.java) | `Cursor`工具类 | 
+ | [DataUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/DataUtil.java) | 数据非空检查工具类 | 
+ | [DateUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/DateUtil.java) | 日期操作工具类 | 
+ | [DeviceUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/DeviceUtil.java) | 设备信息工具类 | 
+ | [EditTextUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/EditTextUtil.java) | 文本输入框工具类 | 
+ | [FileUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/FileUtil.java) | 文件操作工具类 | 
+ | [HtmlUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/HtmlUtil.java) | `HTML`处理类 | 
+ | [IntentUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/IntentUtil.java) | `Intent`工具类 | 
+ | [IpUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/IpUtil.java) | 获取设备`IP`地址 | 
+ | [KeyBoardUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/KeyBoardUtil.java) | 输入法工具类 | 
+ | [MatcherUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/MatcherUtil.java) | 正则匹配工具类 | 
+ | [MoneyUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/MoneyUtil.java) | 高精度数据计算工具类 | 
+ | [NetworkUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/NetworkUtil.java) | 网络状态工具类 | 
+ | [PackageUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/PackageUtil.java) | `Package`工具类 | 
+ | [ResourceUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/ResourceUtil.java) | `Assets`、`Raw`资源文件操作工具类 | 
+ | [SizeUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/SizeUtil.java) | 字节、毫秒相关常量 | 
+ | [StringUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/StringUtil.java) | 字符串工具类 | 
+ | [ToastUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/ToastUtil.java) | `Toast`工具类 | 
+ | [ViewHolder](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/ViewHolder.java) | `View`复用工具类 |
+ | [WifiHelper](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/WifiHelper.java) | `WIFI`工具类 | 
+ | [WindowUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/WindowUtil.java) | 屏幕相关工具类 | 
+
 
 ##使用步骤
 
@@ -250,35 +280,6 @@ public void onPermissionsDenied(int requestCode, List<String> perms) {
     //用户拒绝授权
 }
 ```
-
-
-##工具类
-* [AppInfoUtil - 应用程序相关信息](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/AppInfoUtil.java) <br/>
-* [BitmapUtil - 图像处理](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/BitmapUtil.java) <br/>
-* [CloseUtil - 实现Closeable对象关闭工具类](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/CloseUtil.java)<br/>
-* [ConversionUtil - 单位转换](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/ConversionUtil.java)<br/>
-* [DataUtil - 数据非空判断工具类](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/DataUtil.java)<br/>
-* [DateUtil - 日期操作](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/DateUtil.java)<br/>
-* [DeviceUtil - 设备信息](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/DeviceUtil.java)<br/>
-* [DoubleClickExitHelper - 双击退出应用程序](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/DoubleClickExitHelper.java)<br/>
-* [EditTextUtil - 文本输入框工具类](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/EditTextUtil.java)<br/>
-* [FileUtil - 文件操作](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/FileUtil.java)<br/>
-* [HtmlUtil - HTML处理](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/HtmlUtil.java)<br/>
-* [IntentUtil - 常用系统Intent](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/IntentUtil.java)<br/>
-* [IpUtil - IP工具类](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/IpUtil.java)<br/>
-* [KeyBoardUtil - 键盘工具类](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/KeyBoardUtil.java)<br/>
-* [MatcherUtil - 正则表达式](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/MatcherUtil.java)<br/>
-* [MoneyUtil - 高精度数据计算](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/MoneyUtil.java)<br/>
-* [NetworkUtil - 网络状态](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/NetworkUtil.java)<br/>
-* [PackageUtil - 包管理](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/PackageUtil.java)<br/>
-* [ResourceUtil - 资源文件操作](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/ResourceUtil.java)<br/>
-* [SDcardUtil - 存储卡工具类](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/SDcardUtil.java)<br/>
-* [SharedPreferencesUtil - 偏好参数存储工具类](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/SharedPreferencesUtil.java)<br/>
-* [StringUtil - 字符串处理工具类](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/StringUtil.java)<br/>
-* [ToastUtil - Toast工具类](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/ToastUtil.java)<br/>
-* [ViewHolder - View复用工具类](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/ViewHolder.java)<br/>
-* [WifiHelper - wifi管理](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/WifiHelper.java)<br/>
-* [WindowUtil - 屏幕管理](https://github.com/qyxxjd/AndroidBasicProject/blob/master/classic/src/main/java/com/classic/core/utils/WindowUtil.java)<br/>
 
 
 ##感谢
