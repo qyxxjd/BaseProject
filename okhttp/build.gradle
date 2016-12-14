@@ -22,7 +22,7 @@ android {
 }
 
 dependencies {
-//    compile rootProject.ext.rxProject
+    compile rootProject.ext.rxProject
     compile rootProject.ext.okhttp
 }
 

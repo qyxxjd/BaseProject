@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.classic.android.BasicProject;
-import com.classic.android.base.R;
+import com.classic.android.core.R;
 import com.classic.android.http.exception.HttpException;
 import com.elvishew.xlog.XLog;
 

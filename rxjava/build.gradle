@@ -22,7 +22,7 @@ android {
 }
 
 dependencies {
-//    compile rootProject.ext.baseProject
+    compile rootProject.ext.baseProject
     compile rootProject.ext.rxJava
     compile rootProject.ext.rxAndroid
 }
