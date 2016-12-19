@@ -4,8 +4,12 @@ def dagger2Version = "2.8"
 def okhttpVersion = "3.5.0"
 def butterknifeVersion = "8.4.0"
 
-ext {
+def baseVersion = "1.0"
+def rxVersion = "1.1"
+def httpVersion = "1.1"
+def utilsVersion = "1.0"
 
+ext {
     android = [
             compileSdkVersion: 25,
             buildToolsVersion: "25.0.2",
@@ -24,8 +28,13 @@ ext {
     supportGridLayout = "com.android.support:gridlayout-v7:${supportVersion}"
     supportAnnotations = "com.android.support:support-annotations:${supportVersion}"
 
+    baseProject = "com.classic.android:core:${baseVersion}"
+    rxProject = "com.classic.android:rxjava:${rxVersion}"
+    httpProject = "com.classic.android:okhttp:${httpVersion}"
+    utils = "com.classic.android:utils:${utilsVersion}"
+
     //通用适配器
-    commonAdapter = "com.classic.adapter:commonadapter:1.4"
+    commonAdapter = "com.classic.adapter:commonadapter:1.5"
     //图片加载
     glide = "com.github.bumptech.glide:glide:3.7.0"
 
@@ -36,7 +45,7 @@ ext {
     butterknifeCompiler = "com.jakewharton:butterknife-compiler:${butterknifeVersion}"
 
     //Rx家族，响应式编程
-    rxJava = "io.reactivex.rxjava2:rxjava:2.0.2"
+    rxJava = "io.reactivex.rxjava2:rxjava:2.0.3"
     rxAndroid = "io.reactivex.rxjava2:rxandroid:2.0.1"
 
     //网络请求
@@ -47,9 +56,4 @@ ext {
     okhttpLoggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${okhttpVersion}"
 
     xlog = "com.elvishew:xlog:1.3.0"
-
-    baseProject = "com.classic.android:core:1.0"
-    rxProject = "com.classic.android:rxjava:1.0"
-    httpProject = "com.classic.android:okhttp:1.0"
-    utils = "com.classic.android:utils:1.0"
 }

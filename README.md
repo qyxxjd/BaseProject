@@ -21,14 +21,14 @@ dependencies {
 
 #### 基于`RxJava`的版本：
 - 包含基础项目的所有功能
-- 集成`RxJava (v2.0.2)`、`RxAndroid (v2.0.1)`
+- 集成`RxJava (v2.0.3)`、`RxAndroid (v2.0.1)`
 - `RxActivity`、`RxFragment`
 - 常用方法封装
 
 `Gradle`依赖
 ```gradle
 dependencies {
-    compile 'com.classic.android:rxjava:1.0'
+    compile 'com.classic.android:rxjava:1.1'
 }
 ```
 
@@ -40,7 +40,7 @@ dependencies {
 `Gradle`依赖
 ```gradle
 dependencies {
-    compile 'com.classic.android:okhttp:1.0'
+    compile 'com.classic.android:okhttp:1.1'
 }
 ```
 
