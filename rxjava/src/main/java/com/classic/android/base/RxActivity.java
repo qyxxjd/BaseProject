@@ -1,11 +1,14 @@
 package com.classic.android.base;
 
-import com.classic.android.base.BaseActivity;
+import android.support.annotation.NonNull;
+
 import com.classic.android.event.ActivityEvent;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Predicate;
 import io.reactivex.subjects.BehaviorSubject;
 
@@ -17,13 +20,16 @@ import io.reactivex.subjects.BehaviorSubject;
  * 创 建 人: 续写经典
  * 创建时间: 2016/12/8 17:03
  */
-public abstract class RxActivity extends BaseActivity {
+@SuppressWarnings("unused") public abstract class RxActivity extends BaseActivity {
     private final BehaviorSubject<Integer> mBehaviorSubject = BehaviorSubject.create();
+
+    private CompositeDisposable mCompositeDisposable;
 
     /**
      * 绑定一个Activity的生命周期
      * <p>
-     *     例如：网络请求时绑定ActivityEvent.STOP, onStop()时会自动取消网络请求
+     * 例如：网络请求时绑定ActivityEvent.STOP, onStop()时会自动取消网络请求
+     *
      * @param event
      * {@link ActivityEvent#CREATE},
      * {@link ActivityEvent#START},
@@ -32,11 +38,9 @@ public abstract class RxActivity extends BaseActivity {
      * {@link ActivityEvent#PAUSE},
      * {@link ActivityEvent#STOP},
      * {@link ActivityEvent#DESTROY}.
-     * @param <T>
-     * @return
      */
-    @SuppressWarnings("unused")
-    protected <T> ObservableTransformer<T, T> bindEvent(@ActivityEvent final int event) {
+    @SuppressWarnings("unused") protected <T> ObservableTransformer<T, T> bindEvent(
+            @ActivityEvent final int event) {
         final Observable<Integer> observable = mBehaviorSubject.filter(new Predicate<Integer>() {
             @Override public boolean test(Integer integer) throws Exception {
                 return integer == event;
@@ -48,6 +52,23 @@ public abstract class RxActivity extends BaseActivity {
                 return upstream.takeUntil(observable);
             }
         };
+    }
+
+    /**
+     * 回收Disposable，onStop时进行统一处理
+     */
+    protected void recycle(@NonNull Disposable disposable) {
+        if (null == mCompositeDisposable) {
+            mCompositeDisposable = new CompositeDisposable();
+        }
+        mCompositeDisposable.add(disposable);
+    }
+
+    @Override protected void onStop() {
+        super.onStop();
+        if (null != mCompositeDisposable) {
+            mCompositeDisposable.clear();
+        }
     }
 
     @Override void stateChange(@ActivityEvent int event) {

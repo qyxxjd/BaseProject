@@ -10,7 +10,9 @@ import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
+import io.reactivex.internal.functions.Functions;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -154,10 +156,11 @@ public final class RxUtil {
      * @param backgroundAction
      * @return
      */
-    public static Disposable run(@NonNull Consumer<Integer> backgroundAction) {
-        return Observable.just(1)
+    public static Disposable run(@NonNull Action backgroundAction) {
+        return Observable.<Integer>empty()
                          .compose(RxUtil.<Integer>applySchedulers(THREAD_TRANSFORMER))
-                         .subscribe(backgroundAction);
+                         .subscribe(Functions.emptyConsumer(), Functions.ERROR_CONSUMER,
+                                    backgroundAction);
     }
 
     /**
