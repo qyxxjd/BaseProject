@@ -6,7 +6,7 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
-        versionCode 2
+        versionCode 3
         versionName rootProject.ext.android.httpVersion
 
     }
@@ -23,7 +23,9 @@ android {
 
 dependencies {
     compile rootProject.ext.rxProject
+    compile rootProject.ext.retrofit
     compile rootProject.ext.okhttp
+    compile rootProject.ext.rxJavaForRetrofit
 }
 
 //apply from: rootProject.file('gradle/maven.gradle')
