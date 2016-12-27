@@ -19,7 +19,7 @@ dependencies {
 }
 ```
 
-#### 基于`RxJava`的版本：
+#### 基于`RxJava`的版本： [示例代码点这里](https://github.com/qyxxjd/RxJava2Demo)
 - 包含基础项目的所有功能
 - 集成`RxJava (v2.0.3)`、`RxAndroid (v2.0.1)`
 - `RxActivity`、`RxFragment`
@@ -32,7 +32,7 @@ dependencies {
 }
 ```
 
-#### 基于`OkHttp`的版本：
+#### 基于`OkHttp`的版本： [示例代码点这里](https://github.com/qyxxjd/RxJava2Demo)
 - 包含基础项目、`RxJava`版本的所有功能
 - 集成`OkHttp (v3.5.0)`
 - 网络相关的一些封装
