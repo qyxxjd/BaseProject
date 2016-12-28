@@ -135,19 +135,19 @@ import java.io.File;
     /**
      * 分享文本
      *
-     * @param titie   标题
+     * @param title   标题
      * @param subject 主题
      * @param content 内容
      */
     public static void shareText(
             @NonNull Context context,
-            @NonNull String titie, @NonNull String subject, @NonNull String content) {
+            @NonNull String title, @NonNull String subject, @NonNull String content) {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_SUBJECT, subject);
         intent.putExtra(Intent.EXTRA_TEXT, content);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(Intent.createChooser(intent, titie));
+        context.startActivity(Intent.createChooser(intent, title));
     }
 
     /**
