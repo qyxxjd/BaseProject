@@ -1,6 +1,7 @@
 package com.classic.android.utils;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -194,5 +195,27 @@ import java.io.File;
         intent.setDataAndType(uri, "image/*");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
+    }
+
+    /**
+     * 文件选择
+     *
+     * @param context
+     * @param mimeType mime类型
+     * @param title 文件选择标题
+     * @param fileChooserCode startActivityForResult requestCode
+     * @param activityNotFoundHint 未找到系统默认文件选择错误提示
+     */
+    public static void showFileChooser(@NonNull Activity context, String mimeType,
+                                       CharSequence title, int fileChooserCode,
+                                       String activityNotFoundHint) {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType(mimeType);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        try {
+            context.startActivityForResult(Intent.createChooser(intent, title), fileChooserCode);
+        } catch (android.content.ActivityNotFoundException ex) {
+            ToastUtil.showToast(context.getApplicationContext(), activityNotFoundHint);
+        }
     }
 }
