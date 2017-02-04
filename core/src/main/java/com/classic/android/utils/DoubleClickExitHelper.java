@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
+import com.classic.android.core.R;
+
 /**
  * 应用名称: BaseProject
  * 包 名 称: com.classic.android.utils
@@ -17,15 +19,19 @@ import android.widget.Toast;
  */
 @SuppressWarnings({"unused", "WeakerAccess"}) public class DoubleClickExitHelper {
 
-    private static final String DEFAULT_TOAST_STRING = "再按一次返回键退出应用";
-
     private final Activity mActivity;
 
     /** 两次点击的有效时间间隔，单位：毫秒 */
-    private int timeInterval = 2000;
+    private int         timeInterval = 2000;
     private boolean     isOnKeyBacking;
     private WeakHandler mHandler;
     private Toast       mBackToast;
+
+    @SuppressLint("ShowToast") public DoubleClickExitHelper(@NonNull Activity activity) {
+        mActivity = activity;
+        mHandler = new WeakHandler(Looper.getMainLooper());
+        mBackToast = Toast.makeText(mActivity, R.string.exit_application_hint, Toast.LENGTH_LONG);
+    }
 
     /**
      * 设置两次点击的有效时间间隔
@@ -52,12 +58,6 @@ import android.widget.Toast;
             @NonNull String content) {
         mBackToast = Toast.makeText(mActivity, content, Toast.LENGTH_LONG);
         return this;
-    }
-
-    @SuppressLint("ShowToast") public DoubleClickExitHelper(@NonNull Activity activity) {
-        mActivity = activity;
-        mHandler = new WeakHandler(Looper.getMainLooper());
-        mBackToast = Toast.makeText(mActivity, DEFAULT_TOAST_STRING, Toast.LENGTH_LONG);
     }
 
     /**

@@ -2,11 +2,16 @@
     <string name="app_name">core</string>
 
     <string name="network.error.hint">请检查网络连接</string>
-    <string name="socket.timeout.hint">网络连接超时</string>
+    <string name="network.timeout.hint">网络连接超时</string>
     <string name="cancel">取消</string>
     <string name="confirm">确定</string>
     <string name="success">成功</string>
     <string name="failure">失败</string>
     <string name="modify">修改</string>
     <string name="delete">删除</string>
+
+    <string name="exit.application.hint">再按一次返回键退出应用</string>
+
+    <string name="rationale.ask.again">应用程序无法正常工作,打开应用程序设置修改应用程序的权限.</string>
+    <string name="title.settings.dialog">权限请求</string>
 </resources>

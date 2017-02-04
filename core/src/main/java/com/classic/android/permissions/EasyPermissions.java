@@ -15,57 +15,57 @@
  */
 package com.classic.android.permissions;
 
-import android.annotation.TargetApi;
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
-
-import com.classic.android.core.R;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
- * Utility to request and check System permissions for apps targeting Android M
+ * Utility to request and check System permissions for apps targeting Android M (API >= 23).
  */
-@SuppressWarnings({ "WeakerAccess", "unused" }) public class EasyPermissions {
-
-    private static final String TAG = "EasyPermissions";
-
-    private EasyPermissions() {
-        // no instances
-    }
+public class EasyPermissions {
 
     public interface PermissionCallbacks extends ActivityCompat.OnRequestPermissionsResultCallback {
 
         void onPermissionsGranted(int requestCode, List<String> perms);
 
         void onPermissionsDenied(int requestCode, List<String> perms);
+
     }
+
+    private static final String TAG = "EasyPermissions";
+    private static final String DIALOG_TAG = "RationaleDialogFragmentCompat";
 
     /**
      * Check if the calling context has a set of permissions.
      *
      * @param context the calling context.
-     * @param perms one ore more permissions, such as {@code android.Manifest.permission.CAMERA}.
-     * @return true if all permissions are already granted, false if at least one permission
-     * is not yet granted.
+     * @param perms   one ore more permissions, such as {@link Manifest.permission#CAMERA}.
+     * @return true if all permissions are already granted, false if at least one permission is not
+     * yet granted.
+     * @see Manifest.permission
      */
-    public static boolean hasPermissions(Context context, String... perms) {
+    public static boolean hasPermissions(@NonNull Context context, @NonNull String... perms) {
         // Always return true for SDK < M, let the system deal with the permissions
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             Log.w(TAG, "hasPermissions: API version < M, returning true by default");
+
+            // DANGER ZONE!!! Changing this will break the library.
             return true;
         }
 
@@ -81,139 +81,183 @@ import java.util.List;
     }
 
     /**
-     * Request a set of permissions, showing rationale if the system requests it.
+     * Request a set of permissions, showing a rationale if the system requests it.
      *
-     * @param object Activity or Fragment requesting permissions. Should implement
-     * ActivityCompat.OnRequestPermissionsResultCallback
-     * or FragmentCompat.OnRequestPermissionsResultCallback
-     * @param rationale a message explaining why the application needs this set of permissions,
-     * will
-     * be displayed if the user rejects the request the first time.
-     * @param requestCode request code to track this request, must be less than 256.
-     * @param perms a set of permissions to be requested.
+     * @see #requestPermissions(Activity, String, int, int, int, String...)
      */
-    public static void requestPermissions(
-            final Object object, String rationale, final int requestCode, final String... perms) {
-        requestPermissions(object, rationale, android.R.string.ok, android.R.string.cancel,
-                requestCode, perms);
+    public static void requestPermissions(@NonNull Activity activity,
+                                          @NonNull String rationale,
+                                          int requestCode,
+                                          @NonNull String... perms) {
+        requestPermissions(
+                activity,
+                rationale,
+                android.R.string.ok,
+                android.R.string.cancel,
+                requestCode,
+                perms);
     }
 
     /**
      * Request a set of permissions, showing rationale if the system requests it.
      *
-     * @param object Activity or Fragment requesting permissions. Should implement
-     * ActivityCompat.OnRequestPermissionsResultCallback
-     * or FragmentCompat.OnRequestPermissionsResultCallback
-     * @param rationale a message explaining why the application needs this set of permissions,
-     * will
-     * be displayed if the user rejects the request the first time.
+     * @param activity       {@link Activity} requesting permissions. Should implement {@link
+     *                       ActivityCompat.OnRequestPermissionsResultCallback} or override {@link
+     *                       FragmentActivity#onRequestPermissionsResult(int, String[], int[])} if
+     *                       it extends from {@link FragmentActivity}.
+     * @param rationale      a message explaining why the application needs this set of permissions,
+     *                       will be displayed if the user rejects the request the first time.
      * @param positiveButton custom text for positive button
      * @param negativeButton custom text for negative button
-     * @param requestCode request code to track this request, must be less than 256.
-     * @param perms a set of permissions to be requested.
+     * @param requestCode    request code to track this request, must be < 256.
+     * @param perms          a set of permissions to be requested.
+     * @see Manifest.permission
      */
-    public static void requestPermissions(
-            final Object object, String rationale,
-            @StringRes int positiveButton,
-            @StringRes int negativeButton, final int requestCode, final String... perms) {
-
-        checkCallingObjectSuitability(object);
-
-        boolean shouldShowRationale = false;
-        for (String perm : perms) {
-            shouldShowRationale = shouldShowRationale ||
-                                  shouldShowRequestPermissionRationale(object, perm);
+    @SuppressLint("NewApi")
+    public static void requestPermissions(@NonNull Activity activity,
+                                          @NonNull String rationale,
+                                          @StringRes int positiveButton,
+                                          @StringRes int negativeButton,
+                                          int requestCode,
+                                          @NonNull String... perms) {
+        if (hasPermissions(activity, perms)) {
+            notifyAlreadyHasPermissions(activity, requestCode, perms);
+            return;
         }
 
-        if (shouldShowRationale) {
-            Activity activity = getActivity(object);
-            if (null == activity) {
-                return;
-            }
-
-            AlertDialog dialog = new AlertDialog.Builder(activity, R.style.AppDialogStyle)
-                    .setMessage(rationale)
-                    .setPositiveButton(positiveButton,
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    executePermissionsRequest(object, perms,
-                                            requestCode);
-                                }
-                            })
-                    .setNegativeButton(negativeButton,
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // act as if the permissions were denied
-                                    if (object instanceof PermissionCallbacks) {
-                                        ((PermissionCallbacks) object).onPermissionsDenied(
-                                                requestCode,
-                                                Arrays.asList(perms));
-                                    }
-                                }
-                            })
-                    .create();
-            dialog.show();
+        if (shouldShowRationale(activity, perms)) {
+            showRationaleDialogFragment(
+                    activity.getFragmentManager(),
+                    rationale,
+                    positiveButton,
+                    negativeButton,
+                    requestCode,
+                    perms);
         } else {
-            executePermissionsRequest(object, perms, requestCode);
+            ActivityCompat.requestPermissions(activity, perms, requestCode);
         }
     }
 
     /**
-     * Check if at least one permission in the list of denied permissions has been permanently
-     * denied (user clicked "Never ask again").
+     * Request a set of permissions, showing rationale if the system requests it.
      *
-     * @param object Activity or Fragment requesting permissions.
-     * @param deniedPermissions list of denied permissions, usually from
-     * {@link PermissionCallbacks#onPermissionsDenied(int, List)}
-     * @return {@code true} if at least one permission in the list was permanently denied.
+     * @see #requestPermissions(Fragment, String, int, int, int, String...)
      */
-    public static boolean somePermissionPermanentlyDenied(
-            Object object, List<String> deniedPermissions) {
-        for (String deniedPermission : deniedPermissions) {
-            if (permissionPermanentlyDenied(object, deniedPermission)) {
-                return true;
-            }
+    public static void requestPermissions(@NonNull Fragment fragment,
+                                          @NonNull String rationale,
+                                          int requestCode,
+                                          @NonNull String... perms) {
+        requestPermissions(
+                fragment,
+                rationale,
+                android.R.string.ok,
+                android.R.string.cancel,
+                requestCode,
+                perms);
+    }
+
+    /**
+     * Request a set of permissions, showing rationale if the system requests it.
+     *
+     * @param fragment {@link Fragment} requesting permissions. Should override {@link
+     *                 Fragment#onRequestPermissionsResult(int, String[], int[])}.
+     * @see #requestPermissions(Activity, String, int, int, int, String...)
+     */
+    @SuppressLint("NewApi")
+    public static void requestPermissions(@NonNull Fragment fragment,
+                                          @NonNull String rationale,
+                                          @StringRes int positiveButton,
+                                          @StringRes int negativeButton,
+                                          int requestCode,
+                                          @NonNull String... perms) {
+        if (hasPermissions(fragment.getContext(), perms)) {
+            notifyAlreadyHasPermissions(fragment, requestCode, perms);
+            return;
         }
 
-        return false;
+        if (shouldShowRationale(fragment, perms)) {
+            RationaleDialogFragmentCompat
+                    .newInstance(positiveButton, negativeButton, rationale, requestCode, perms)
+                    .show(fragment.getChildFragmentManager(), DIALOG_TAG);
+        } else {
+            fragment.requestPermissions(perms, requestCode);
+        }
     }
 
     /**
-     * Check if a permission has been permanently denied (user clicked "Never ask again").
+     * Request a set of permissions, showing rationale if the system requests it.
      *
-     * @param object Activity or Fragment requesting permissions.
-     * @param deniedPermission denied permission.
-     * @return {@code true} if the permissions has been permanently denied.
+     * @see #requestPermissions(android.app.Fragment, String, int, int, int, String...)
      */
-    public static boolean permissionPermanentlyDenied(Object object, String deniedPermission) {
-        return !shouldShowRequestPermissionRationale(object, deniedPermission);
+    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+    public static void requestPermissions(@NonNull android.app.Fragment fragment,
+                                          @NonNull String rationale,
+                                          int requestCode,
+                                          @NonNull String... perms) {
+        requestPermissions(
+                fragment,
+                rationale,
+                android.R.string.ok,
+                android.R.string.cancel,
+                requestCode,
+                perms);
     }
 
     /**
-     * Handle the result of a permission request, should be called from the calling Activity's
-     * ActivityCompat.OnRequestPermissionsResultCallback#onRequestPermissionsResult(int, String[],
-     * int[])
-     * method.
+     * Request a set of permissions, showing rationale if the system requests it.
+     *
+     * @param fragment {@link android.app.Fragment} requesting permissions. Should override {@link
+     *                 android.app.Fragment#onRequestPermissionsResult(int, String[], int[])}.
+     * @see #requestPermissions(Activity, String, int, int, int, String...)
+     */
+    @SuppressLint("NewApi")
+    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+    public static void requestPermissions(@NonNull android.app.Fragment fragment,
+                                          @NonNull String rationale,
+                                          @StringRes int positiveButton,
+                                          @StringRes int negativeButton,
+                                          int requestCode,
+                                          @NonNull String... perms) {
+        if (hasPermissions(fragment.getActivity(), perms)) {
+            notifyAlreadyHasPermissions(fragment, requestCode, perms);
+            return;
+        }
+
+        if (shouldShowRationale(fragment, perms)) {
+            showRationaleDialogFragment(
+                    fragment.getChildFragmentManager(),
+                    rationale,
+                    positiveButton,
+                    negativeButton,
+                    requestCode,
+                    perms);
+        } else {
+            fragment.requestPermissions(perms, requestCode);
+        }
+    }
+
+    /**
+     * Handle the result of a permission request, should be called from the calling {@link
+     * Activity}'s {@link ActivityCompat.OnRequestPermissionsResultCallback#onRequestPermissionsResult(int,
+     * String[], int[])} method.
      * <p>
      * If any permissions were granted or denied, the {@code object} will receive the appropriate
-     * callbacks through {@link PermissionCallbacks} and methods annotated with
-     * {@link AfterPermissionGranted} will be run if appropriate.
+     * callbacks through {@link PermissionCallbacks} and methods annotated with {@link
+     * AfterPermissionGranted} will be run if appropriate.
      *
-     * @param requestCode requestCode argument to permission result callback.
-     * @param permissions permissions argument to permission result callback.
+     * @param requestCode  requestCode argument to permission result callback.
+     * @param permissions  permissions argument to permission result callback.
      * @param grantResults grantResults argument to permission result callback.
-     * @param receivers an array of objects that have a method annotated with {@link
-     * AfterPermissionGranted}
-     * or implement {@link PermissionCallbacks}.
+     * @param receivers    an array of objects that have a method annotated with {@link
+     *                     AfterPermissionGranted} or implement {@link PermissionCallbacks}.
      */
-    public static void onRequestPermissionsResult(
-            int requestCode, String[] permissions, int[] grantResults, Object... receivers) {
-
+    public static void onRequestPermissionsResult(int requestCode,
+                                                  @NonNull String[] permissions,
+                                                  @NonNull int[] grantResults,
+                                                  @NonNull Object... receivers) {
         // Make a collection of granted and denied permissions from the request.
-        ArrayList<String> granted = new ArrayList<>();
-        ArrayList<String> denied = new ArrayList<>();
+        List<String> granted = new ArrayList<>();
+        List<String> denied = new ArrayList<>();
         for (int i = 0; i < permissions.length; i++) {
             String perm = permissions[i];
             if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
@@ -246,49 +290,158 @@ import java.util.List;
         }
     }
 
-    @TargetApi(23)
-    private static boolean shouldShowRequestPermissionRationale(Object object, String perm) {
+    /**
+     * Check if at least one permission in the list of denied permissions has been permanently
+     * denied (user clicked "Never ask again").
+     *
+     * @param activity          {@link Activity} requesting permissions.
+     * @param deniedPermissions list of denied permissions, usually from {@link
+     *                          PermissionCallbacks#onPermissionsDenied(int, List)}
+     * @return {@code true} if at least one permission in the list was permanently denied.
+     */
+    public static boolean somePermissionPermanentlyDenied(@NonNull Activity activity,
+                                                          @NonNull List<String> deniedPermissions) {
+        for (String deniedPermission : deniedPermissions) {
+            if (permissionPermanentlyDenied(activity, deniedPermission)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if at least one permission in the list of denied permissions has been permanently
+     * denied (user clicked "Never ask again").
+     *
+     * @see #somePermissionPermanentlyDenied(Activity, List)
+     */
+    public static boolean somePermissionPermanentlyDenied(@NonNull Fragment fragment,
+                                                          @NonNull List<String> deniedPermissions) {
+        for (String deniedPermission : deniedPermissions) {
+            if (permissionPermanentlyDenied(fragment, deniedPermission)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if at least one permission in the list of denied permissions has been permanently
+     * denied (user clicked "Never ask again").
+     *
+     * @see #somePermissionPermanentlyDenied(Activity, List)
+     */
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public static boolean somePermissionPermanentlyDenied(@NonNull android.app.Fragment fragment,
+                                                          @NonNull List<String> deniedPermissions) {
+        for (String deniedPermission : deniedPermissions) {
+            if (permissionPermanentlyDenied(fragment, deniedPermission)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if a permission has been permanently denied (user clicked "Never ask again").
+     *
+     * @param activity         {@link Activity} requesting permissions.
+     * @param deniedPermission denied permission.
+     * @return {@code true} if the permissions has been permanently denied.
+     */
+    public static boolean permissionPermanentlyDenied(@NonNull Activity activity,
+                                                      @NonNull String deniedPermission) {
+        return !shouldShowRequestPermissionRationale(activity, deniedPermission);
+    }
+
+    /**
+     * Check if a permission has been permanently denied (user clicked "Never ask again").
+     *
+     * @see #permissionPermanentlyDenied(Activity, String)
+     */
+    public static boolean permissionPermanentlyDenied(@NonNull Fragment fragment,
+                                                      @NonNull String deniedPermission) {
+        return !shouldShowRequestPermissionRationale(fragment, deniedPermission);
+    }
+
+    /**
+     * Check if a permission has been permanently denied (user clicked "Never ask again").
+     *
+     * @see #permissionPermanentlyDenied(Activity, String)
+     */
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public static boolean permissionPermanentlyDenied(@NonNull android.app.Fragment fragment,
+                                                      @NonNull String deniedPermission) {
+        return !shouldShowRequestPermissionRationale(fragment, deniedPermission);
+    }
+
+    private static void notifyAlreadyHasPermissions(Object object,
+                                                    int requestCode,
+                                                    @NonNull String[] perms) {
+        int[] grantResults = new int[perms.length];
+        for (int i = 0; i < perms.length; i++) {
+            grantResults[i] = PackageManager.PERMISSION_GRANTED;
+        }
+
+        onRequestPermissionsResult(requestCode, perms, grantResults, object);
+    }
+
+    /**
+     * @param object Activity or Fragment
+     * @return true if the user has previously denied any of the {@code perms} and we should show a
+     * rationale, false otherwise.
+     */
+    private static boolean shouldShowRationale(@NonNull Object object, @NonNull String[] perms) {
+        boolean shouldShowRationale = false;
+        for (String perm : perms) {
+            shouldShowRationale =
+                    shouldShowRationale || shouldShowRequestPermissionRationale(object, perm);
+        }
+        return shouldShowRationale;
+    }
+
+    private static boolean shouldShowRequestPermissionRationale(@NonNull Object object,
+                                                                @NonNull String perm) {
         if (object instanceof Activity) {
             return ActivityCompat.shouldShowRequestPermissionRationale((Activity) object, perm);
         } else if (object instanceof Fragment) {
             return ((Fragment) object).shouldShowRequestPermissionRationale(perm);
         } else if (object instanceof android.app.Fragment) {
-            return ((android.app.Fragment) object).shouldShowRequestPermissionRationale(perm);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                return ((android.app.Fragment) object).shouldShowRequestPermissionRationale(perm);
+            } else {
+                throw new IllegalArgumentException(
+                        "Target SDK needs to be greater than 23 if caller is android.app.Fragment");
+            }
         } else {
-            return false;
+            throw new IllegalArgumentException("Object was neither an Activity nor a Fragment.");
         }
     }
 
-    @TargetApi(23)
-    private static void executePermissionsRequest(Object object, String[] perms, int requestCode) {
-        checkCallingObjectSuitability(object);
-
-        if (object instanceof Activity) {
-            ActivityCompat.requestPermissions((Activity) object, perms, requestCode);
-        } else if (object instanceof Fragment) {
-            ((Fragment) object).requestPermissions(perms, requestCode);
-        } else if (object instanceof android.app.Fragment) {
-            ((android.app.Fragment) object).requestPermissions(perms, requestCode);
-        }
+    /**
+     * Show a {@link RationaleDialogFragment} explaining permission request rationale.
+     */
+    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+    private static void showRationaleDialogFragment(@NonNull android.app.FragmentManager fragmentManager,
+                                                    @NonNull String rationale,
+                                                    @StringRes int positiveButton,
+                                                    @StringRes int negativeButton,
+                                                    int requestCode,
+                                                    @NonNull String... perms) {
+        RationaleDialogFragment
+                .newInstance(positiveButton, negativeButton, rationale, requestCode, perms)
+                .show(fragmentManager, DIALOG_TAG);
     }
 
-    @TargetApi(11) private static Activity getActivity(Object object) {
-        if (object instanceof Activity) {
-            return ((Activity) object);
-        } else if (object instanceof Fragment) {
-            return ((Fragment) object).getActivity();
-        } else if (object instanceof android.app.Fragment) {
-            return ((android.app.Fragment) object).getActivity();
-        } else {
-            return null;
-        }
-    }
-
-    private static void runAnnotatedMethods(Object object, int requestCode) {
+    private static void runAnnotatedMethods(@NonNull Object object, int requestCode) {
         Class clazz = object.getClass();
         if (isUsingAndroidAnnotations(object)) {
             clazz = clazz.getSuperclass();
         }
+
         for (Method method : clazz.getDeclaredMethods()) {
             if (method.isAnnotationPresent(AfterPermissionGranted.class)) {
                 // Check for annotated methods with matching request code.
@@ -297,7 +450,7 @@ import java.util.List;
                     // Method must be void so that we can invoke it
                     if (method.getParameterTypes().length > 0) {
                         throw new RuntimeException(
-                                "Cannot execute non-void method " + method.getName());
+                                "Cannot execute method " + method.getName() + " because it is non-void method and/or has input parameters.");
                     }
 
                     try {
@@ -316,28 +469,10 @@ import java.util.List;
         }
     }
 
-    private static void checkCallingObjectSuitability(Object object) {
-        // Make sure Object is an Activity or Fragment
-        boolean isActivity = object instanceof Activity;
-        boolean isSupportFragment = object instanceof Fragment;
-        boolean isAppFragment = object instanceof android.app.Fragment;
-        boolean isMinSdkM = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
-
-        if (!(isSupportFragment || isActivity || (isAppFragment && isMinSdkM))) {
-            if (isAppFragment) {
-                throw new IllegalArgumentException(
-                        "Target SDK needs to be greater than 23 if caller is android.app.Fragment");
-            } else {
-                throw new IllegalArgumentException("Caller must be an Activity or a Fragment.");
-            }
-        }
-    }
-
-    private static boolean isUsingAndroidAnnotations(Object object) {
+    private static boolean isUsingAndroidAnnotations(@NonNull Object object) {
         if (!object.getClass().getSimpleName().endsWith("_")) {
             return false;
         }
-
         try {
             Class clazz = Class.forName("org.androidannotations.api.view.HasViews");
             return clazz.isInstance(object);

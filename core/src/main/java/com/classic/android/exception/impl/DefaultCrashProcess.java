@@ -69,7 +69,7 @@ public class DefaultCrashProcess implements ICrashProcess {
         PackageManager pm = mContext.getPackageManager();
         PackageInfo pi = pm.getPackageInfo(mContext.getPackageName(),
                                            PackageManager.GET_ACTIVITIES);
-        pw.println("设备信息：");
+        pw.println("Device info：");
         pw.print("App Version Name: ");
         pw.println(pi.versionName);
         pw.print("App Version Code: ");
