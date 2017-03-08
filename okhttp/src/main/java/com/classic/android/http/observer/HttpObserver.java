@@ -7,8 +7,8 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.classic.android.BasicProject;
-import com.classic.android.core.R;
 import com.classic.android.http.exception.HttpException;
+import com.classic.android.okhttp.R;
 import com.elvishew.xlog.XLog;
 
 import java.net.SocketTimeoutException;
@@ -90,7 +90,7 @@ import io.reactivex.observers.DisposableObserver;
     /** 网络连接超时回调 */
     public void onSocketTimeout() {
         if (isDebug) {
-            XLog.tag(TAG).e(mAppContext.getResources().getString(R.string.socket_timeout_hint));
+            XLog.tag(TAG).e(mAppContext.getResources().getString(R.string.network_timeout_hint));
         }
     }
 

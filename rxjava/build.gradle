@@ -6,9 +6,8 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
-        versionCode 2
-        versionName rootProject.ext.android.rxVersion
-
+        versionCode rootProject.ext.android.libVersionCode
+        versionName '1.5'
     }
     buildTypes {
         release {

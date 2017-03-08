@@ -1,6 +1,7 @@
 package com.classic.android.base;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -31,10 +32,12 @@ import java.util.List;
     private   int          mActivityState;
     private   BaseFragment mCurrentFragment;
     protected Activity     mActivity;
+    protected Context      mAppContext;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         stateChange(ActivityEvent.CREATE);
+        mAppContext = getApplicationContext();
         mActivity = this;
         initPre();
         BaseActivityStack.getInstance().addActivity(this);

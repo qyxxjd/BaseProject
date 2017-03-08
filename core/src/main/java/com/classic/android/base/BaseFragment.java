@@ -35,10 +35,12 @@ import java.util.List;
 
     private   int      mFragmentState;
     protected Activity mActivity;
+    protected Context  mAppContext;
 
     @Override public void onAttach(Context context) {
         super.onAttach(context);
         stateChange(FragmentEvent.ATTACH);
+        mAppContext = context.getApplicationContext();
         mActivity = (Activity) context;
     }
 

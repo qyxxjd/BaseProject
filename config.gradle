@@ -1,12 +1,15 @@
-def supportVersion = "25.1.1"
-def retrofitVersion = "2.1.0"
+def supportVersion = "25.2.0"
+def retrofitVersion = "2.2.0"
 def dagger2Version = "2.9"
 def okhttpVersion = "3.6.0"
 def butterknifeVersion = "8.5.1"
 
-def baseVersion = "1.0"
-def rxVersion = "1.1"
-def httpVersion = "1.1"
+// 通用的 VersionCode , 有更新就自增
+def libVersionCode = 7
+
+def baseVersion = "1.2"
+def rxVersion = "1.5"
+def httpVersion = "1.5"
 def utilsVersion = "1.0"
 
 ext {
@@ -34,7 +37,7 @@ ext {
     utils = "com.classic.android:utils:${utilsVersion}"
 
     //通用适配器
-    commonAdapter = "com.classic.adapter:commonadapter:1.5"
+    commonAdapter = "com.classic.adapter:commonadapter:1.6"
     //图片加载
     glide = "com.github.bumptech.glide:glide:3.7.0"
 
@@ -45,13 +48,13 @@ ext {
     butterknifeCompiler = "com.jakewharton:butterknife-compiler:${butterknifeVersion}"
 
     //Rx家族，响应式编程
-    rxJava = "io.reactivex.rxjava2:rxjava:2.0.5"
+    rxJava = "io.reactivex.rxjava2:rxjava:2.0.7"
     rxAndroid = "io.reactivex.rxjava2:rxandroid:2.0.1"
 
     //网络请求
     retrofit = "com.squareup.retrofit2:retrofit:${retrofitVersion}"
     gsonForRetrofit = "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
-    rxJavaForRetrofit = "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0"
+    rxJavaForRetrofit = "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}"
     okhttp = "com.squareup.okhttp3:okhttp:${okhttpVersion}"
     okhttpLoggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${okhttpVersion}"
 

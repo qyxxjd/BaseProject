@@ -4,13 +4,16 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Debug;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
-import com.classic.android.utils.SDCardUtil;
 import com.classic.android.interfaces.ICrashProcess;
+import com.classic.android.utils.SDCardUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -30,6 +33,8 @@ public class DefaultCrashProcess implements ICrashProcess {
     private static final String CHARSET_NAME    = "UTF-8";
     private static final String LOG_NAME_PREFIX = "crash_";
     private static final String LOG_NAME_SUFFIX = ".log";
+    private static final String OOM_PREFIX      = "oom_";
+    private static final String OOM_SUFFIX      = ".hprof";
 
     private final SimpleDateFormat mDateFormat;
     private final SimpleDateFormat mTimeFormat;
@@ -42,10 +47,18 @@ public class DefaultCrashProcess implements ICrashProcess {
     }
 
     @Override public void onException(Thread thread, Throwable exception) throws Exception {
-        //noinspection StringBufferReplaceableByString
-        final StringBuilder sb = new StringBuilder(LOG_NAME_PREFIX).append(
-                mDateFormat.format(new Date(System.currentTimeMillis()))).append(LOG_NAME_SUFFIX);
-        final File file = new File(SDCardUtil.getLogDirPath(), sb.toString());
+        if (isOutOfMemoryError(exception)) {
+            final File file = new File(SDCardUtil.getLogDirPath(),
+                                       createFileName(OOM_PREFIX, OOM_SUFFIX));
+            try {
+                Debug.dumpHprofData(file.getAbsolutePath());
+            } catch (IOException e) {
+                Log.e("DefaultCrashProcess", "dump hprof error", e);
+            }
+        }
+
+        final File file = new File(SDCardUtil.getLogDirPath(),
+                                   createFileName(LOG_NAME_PREFIX, LOG_NAME_SUFFIX));
         if (!file.exists()) {
             //noinspection ResultOfMethodCallIgnored
             file.createNewFile();
@@ -107,5 +120,24 @@ public class DefaultCrashProcess implements ICrashProcess {
         }
         pw.println("------------------------------------");
         pw.println();
+    }
+
+    private boolean isOutOfMemoryError(Throwable ex) {
+        if (ex instanceof OutOfMemoryError) {
+            return true;
+        }
+        while ((ex = ex.getCause()) != null) {
+            if (ex instanceof OutOfMemoryError) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private String createFileName(@NonNull String prefix, @NonNull String suffix) {
+        //noinspection StringBufferReplaceableByString
+        return new StringBuilder(prefix).append(mDateFormat.format(new Date(System.currentTimeMillis())))
+                                        .append(suffix)
+                                        .toString();
     }
 }

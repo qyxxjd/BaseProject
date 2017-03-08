@@ -27,8 +27,6 @@ dependencies {
     compile rootProject.ext.butterknife
     annotationProcessor rootProject.ext.butterknifeCompiler
 
-//    compile rootProject.ext.baseProject
-    compile rootProject.ext.rxProject
-//    compile rootProject.ext.httpProject
+    compile rootProject.ext.baseProject
     compile rootProject.ext.utils
 }
