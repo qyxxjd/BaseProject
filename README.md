@@ -4,7 +4,9 @@
 </p>
 
 `BaseProject`是一个简易的`Android`基础项目，方便您快速进行开发。
+
 #### 基础项目：
+
 - `BaseActivity`、`BaseFragment`
 - `Activity`栈管理
 - 异常信息收集
@@ -20,6 +22,7 @@ dependencies {
 ```
 
 #### 基于`RxJava`的版本： [示例代码点这里](https://github.com/qyxxjd/RxJava2Demo)
+
 - 包含基础项目的所有功能
 - 集成`RxJava (v2.0.7)`、`RxAndroid (v2.0.1)`
 - `RxActivity`、`RxFragment`
@@ -33,6 +36,7 @@ dependencies {
 ```
 
 #### 基于`OkHttp`的版本： [示例代码点这里](https://github.com/qyxxjd/RxJava2Demo)
+
 - 包含基础项目、`RxJava`版本的所有功能
 - 集成`OkHttp (v3.6.0)`、`Retrofit (v2.2.0)`
 - 网络相关的一些封装
@@ -83,7 +87,7 @@ dependencies {
 | [WindowUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/WindowUtil.java) | 屏幕相关工具类 |
 
 
-##使用步骤
+## 使用步骤
 
 第一步：按需添加依赖
 
@@ -108,7 +112,7 @@ public class YourApplication extends Application {
 }
 ```
 
-##代码示例
+## 代码示例
 
 Activity示例
 ```java
@@ -282,17 +286,20 @@ public void onPermissionsDenied(int requestCode, List<String> perms) {
 ```
 
 
-##感谢
+## 感谢
+
 [XLog](https://github.com/elvishew/xLog)
 
 [EasyPermissions](https://github.com/googlesamples/easypermissions)
 
 
-##关于
+## 关于
+
 * Blog: [http://blog.csdn.net/qy1387](http://blog.csdn.net/qy1387)
 * Email: [pgliubin@gmail.com](http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=pgliubin@gmail.com)
 
-##License
+## License
+
 ```
 Copyright 2015 classic
 
