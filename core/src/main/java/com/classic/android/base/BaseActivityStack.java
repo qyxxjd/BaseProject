@@ -54,7 +54,7 @@ import java.util.Stack;
             return null;
         }
         IActivity activity = sActivityStack.lastElement();
-        return (Activity) activity;
+        return (Activity)activity;
     }
 
     /**
@@ -68,7 +68,7 @@ import java.util.Stack;
                 break;
             }
         }
-        return null == activity ? null : (Activity) activity;
+        return null == activity ? null : (Activity)activity;
     }
 
     /**
@@ -76,7 +76,7 @@ import java.util.Stack;
      */
     public void finishActivity() {
         IActivity activity = sActivityStack.lastElement();
-        finishActivity((Activity) activity);
+        finishActivity((Activity)activity);
     }
 
     /**
@@ -95,7 +95,7 @@ import java.util.Stack;
     public void finishActivity(Class<?> cls) {
         for (IActivity activity : sActivityStack) {
             if (activity.getClass().equals(cls)) {
-                finishActivity((Activity) activity);
+                finishActivity((Activity)activity);
             }
         }
     }
@@ -106,7 +106,7 @@ import java.util.Stack;
     public void finishOthersActivity(Class<?> cls) {
         for (IActivity activity : sActivityStack) {
             if (!(activity.getClass().equals(cls))) {
-                finishActivity((Activity) activity);
+                finishActivity((Activity)activity);
             }
         }
     }
@@ -117,7 +117,7 @@ import java.util.Stack;
     public void finishAllActivity() {
         for (int i = 0, size = sActivityStack.size(); i < size; i++) {
             if (null != sActivityStack.get(i)) {
-                ((Activity) sActivityStack.get(i)).finish();
+                ((Activity)sActivityStack.get(i)).finish();
             }
         }
         sActivityStack.clear();

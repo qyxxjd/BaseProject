@@ -63,8 +63,7 @@ import java.util.List;
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow()
-            .setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                      WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            .setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         this.setContentView(createLayout());
         init();
         setSplashResources(mResources);
@@ -124,13 +123,12 @@ import java.util.List;
      */
     private View createLayout() {
         FrameLayout layout = new FrameLayout(this);
-        LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT,
-                                                     LayoutParams.MATCH_PARENT);
+        LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         layout.setLayoutParams(layoutParams);
         layout.setBackgroundColor(getBackgroundColor());
         mSplashImage = new ImageView(this);
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
+                                                                       FrameLayout.LayoutParams.MATCH_PARENT);
         params.gravity = Gravity.CENTER;
         layout.addView(mSplashImage, params);
 
@@ -194,8 +192,8 @@ import java.util.List;
 
         public void handleMessage(Message msg) {
             if (msg.what == SPLASH_PLAY) {
-                SplashImgResource resource  = (SplashImgResource) msg.obj;
-                AlphaAnimation    animation = new AlphaAnimation(resource.mStartAlpha, 1f);
+                SplashImgResource resource = (SplashImgResource)msg.obj;
+                AlphaAnimation animation = new AlphaAnimation(resource.mStartAlpha, 1f);
                 animation.setDuration(resource.mPlayerTime);
                 BaseSplashActivity splash = activity.get();
                 if (splash != null) {

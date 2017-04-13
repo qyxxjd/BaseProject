@@ -41,7 +41,7 @@ import java.util.List;
         super.onAttach(context);
         stateChange(FragmentEvent.ATTACH);
         mAppContext = context.getApplicationContext();
-        mActivity = (Activity) context;
+        mActivity = (Activity)context;
     }
 
     @Override public void onSaveInstanceState(Bundle outState) {
@@ -54,13 +54,11 @@ import java.util.List;
         stateChange(FragmentEvent.CREATE);
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         stateChange(FragmentEvent.CREATE_VIEW);
-        View                  parentView = inflater.inflate(getLayoutResId(), container, false);
-        SharedPreferencesUtil spUtil     = new SharedPreferencesUtil(mActivity, SP_NAME);
-        final String          simpleName = this.getClass().getSimpleName();
+        View parentView = inflater.inflate(getLayoutResId(), container, false);
+        SharedPreferencesUtil spUtil = new SharedPreferencesUtil(mActivity, SP_NAME);
+        final String simpleName = this.getClass().getSimpleName();
         if (spUtil.getBooleanValue(simpleName, true)) {
             onFirst();
             spUtil.putBooleanValue(simpleName, false);
@@ -74,7 +72,7 @@ import java.util.List;
         super.onViewCreated(view, savedInstanceState);
         stateChange(FragmentEvent.VIEW_CREATE);
         if (savedInstanceState != null) {
-            boolean             isHidden    = savedInstanceState.getBoolean(STATE_IS_HIDDEN);
+            boolean isHidden = savedInstanceState.getBoolean(STATE_IS_HIDDEN);
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             if (isHidden) {
                 transaction.hide(this);
@@ -124,8 +122,8 @@ import java.util.List;
         stateChange(FragmentEvent.DETACH);
     }
 
-    @Override public void onRequestPermissionsResult(
-            int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    @Override public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                                     @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }

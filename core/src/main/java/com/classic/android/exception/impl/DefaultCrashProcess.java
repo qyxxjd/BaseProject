@@ -48,8 +48,7 @@ public class DefaultCrashProcess implements ICrashProcess {
 
     @Override public void onException(Thread thread, Throwable exception) throws Exception {
         if (isOutOfMemoryError(exception)) {
-            final File file = new File(SDCardUtil.getLogDirPath(),
-                                       createFileName(OOM_PREFIX, OOM_SUFFIX));
+            final File file = new File(SDCardUtil.getLogDirPath(), createFileName(OOM_PREFIX, OOM_SUFFIX));
             try {
                 Debug.dumpHprofData(file.getAbsolutePath());
             } catch (IOException e) {
@@ -57,15 +56,13 @@ public class DefaultCrashProcess implements ICrashProcess {
             }
         }
 
-        final File file = new File(SDCardUtil.getLogDirPath(),
-                                   createFileName(LOG_NAME_PREFIX, LOG_NAME_SUFFIX));
+        final File file = new File(SDCardUtil.getLogDirPath(), createFileName(LOG_NAME_PREFIX, LOG_NAME_SUFFIX));
         if (!file.exists()) {
             //noinspection ResultOfMethodCallIgnored
             file.createNewFile();
         }
         //PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(file, true)));
-        PrintWriter pw = new PrintWriter(
-                new OutputStreamWriter(new FileOutputStream(file, true), CHARSET_NAME));
+        PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(file, true), CHARSET_NAME));
         // 导出手机信息
         savePhoneInfo(pw);
         // 导出发生异常的时间
@@ -80,8 +77,7 @@ public class DefaultCrashProcess implements ICrashProcess {
     private void savePhoneInfo(PrintWriter pw) throws Exception {
         // 应用的版本名称和版本号
         PackageManager pm = mContext.getPackageManager();
-        PackageInfo pi = pm.getPackageInfo(mContext.getPackageName(),
-                                           PackageManager.GET_ACTIVITIES);
+        PackageInfo pi = pm.getPackageInfo(mContext.getPackageName(), PackageManager.GET_ACTIVITIES);
         pw.println("Device info：");
         pw.print("App Version Name: ");
         pw.println(pi.versionName);

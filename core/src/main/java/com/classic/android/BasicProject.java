@@ -20,7 +20,7 @@ import com.elvishew.xlog.printer.Printer;
  * 创 建 人: 续写经典
  * 创建时间: 2016/11/29 18:19
  */
-@SuppressWarnings({ "WeakerAccess", "unused" }) public final class BasicProject {
+@SuppressWarnings({"WeakerAccess", "unused"}) public final class BasicProject {
 
     private static volatile BasicProject sInstance;
 
@@ -150,7 +150,7 @@ import com.elvishew.xlog.printer.Printer;
          * 日志打印参数配置
          *
          * @param logLevel 日志等级
-         * @param config 日志配置
+         * @param config   日志配置
          */
         public Builder setLog(int logLevel, @NonNull LogConfiguration config) {
             mLogLevel = logLevel;

@@ -42,8 +42,8 @@ import java.util.List;
         initPre();
         BaseActivityStack.getInstance().addActivity(this);
         setContentView(getLayoutResId());
-        SharedPreferencesUtil spUtil     = new SharedPreferencesUtil(this, SP_NAME);
-        final String          simpleName = this.getClass().getSimpleName();
+        SharedPreferencesUtil spUtil = new SharedPreferencesUtil(this, SP_NAME);
+        final String simpleName = this.getClass().getSimpleName();
         if (spUtil.getBooleanValue(simpleName, true)) {
             onFirst();
             spUtil.putBooleanValue(simpleName, false);
@@ -53,8 +53,8 @@ import java.util.List;
         register();
     }
 
-    @Override public void onRequestPermissionsResult(
-            int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    @Override public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                                     @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
@@ -95,8 +95,7 @@ import java.util.List;
         aty.finish();
     }
 
-    @Override public void skipActivity(
-            @NonNull Activity aty, @NonNull Class<?> cls, @NonNull Bundle extras) {
+    @Override public void skipActivity(@NonNull Activity aty, @NonNull Class<?> cls, @NonNull Bundle extras) {
         startActivity(aty, cls, extras);
         aty.finish();
     }
@@ -111,8 +110,7 @@ import java.util.List;
         aty.startActivity(it);
     }
 
-    @Override public void startActivity(
-            @NonNull Activity aty, @NonNull Class<?> cls, @NonNull Bundle extras) {
+    @Override public void startActivity(@NonNull Activity aty, @NonNull Class<?> cls, @NonNull Bundle extras) {
         Intent intent = new Intent();
         intent.putExtras(extras);
         intent.setClass(aty, cls);
@@ -182,8 +180,7 @@ import java.util.List;
         if (targetFragment.equals(mCurrentFragment)) {
             return;
         }
-        android.support.v4.app.FragmentTransaction transaction
-                = getSupportFragmentManager().beginTransaction();
+        android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (!targetFragment.isAdded()) {
             transaction.add(resView, targetFragment, targetFragment.getClass().getName());
         }

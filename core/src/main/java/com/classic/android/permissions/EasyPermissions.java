@@ -40,6 +40,10 @@ import java.util.List;
  */
 public class EasyPermissions {
 
+    /**
+     * Callback interface to receive the results of {@code EasyPermissions.requestPermissions()}
+     * calls.
+     */
     public interface PermissionCallbacks extends ActivityCompat.OnRequestPermissionsResultCallback {
 
         void onPermissionsGranted(int requestCode, List<String> perms);
@@ -403,6 +407,43 @@ public class EasyPermissions {
         return shouldShowRationale;
     }
 
+    /**
+     * @param activity Activity
+     * @param perms Array of permissions
+     * @return true if the user has previously denied any of the {@code perms} and we should show a
+     * rationale, false otherwise.
+     */
+    public static boolean somePermissionDenied(@NonNull Activity activity, @NonNull String[] perms) {
+        return shouldShowRationale(activity, perms);
+    }
+
+    /**
+     * @param fragment Fragment
+     * @param perms Array of permissions
+     * @return true if the user has previously denied any of the {@code perms} and we should show a
+     * rationale, false otherwise.
+     */
+    public static boolean somePermissionDenied(@NonNull Fragment fragment, @NonNull String[] perms) {
+        return shouldShowRationale(fragment, perms);
+    }
+
+    /**
+     * @param fragment Fragment
+     * @param perms Array of permissions
+     * @return true if the user has previously denied any of the {@code perms} and we should show a
+     * rationale, false otherwise.
+     */
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public static boolean somePermissionDenied(@NonNull android.app.Fragment fragment, @NonNull String[] perms) {
+        return shouldShowRationale(fragment, perms);
+    }
+
+    /**
+     * Determine if rationale should be shown before asking for the given permission.
+     * @param object the Fragment or Activity.
+     * @param perm the permission.
+     * @return {@code true} if rationale should be shown, {@code false} otherwise.
+     */
     private static boolean shouldShowRequestPermissionRationale(@NonNull Object object,
                                                                 @NonNull String perm) {
         if (object instanceof Activity) {
@@ -436,39 +477,52 @@ public class EasyPermissions {
                 .show(fragmentManager, DIALOG_TAG);
     }
 
+    /**
+     * Find all methods annotated with {@link AfterPermissionGranted} on a given object with the
+     * correc requestCode argument.
+     * @param object the object with annotated methods.
+     * @param requestCode the requestCode passed to the annotation.
+     */
     private static void runAnnotatedMethods(@NonNull Object object, int requestCode) {
         Class clazz = object.getClass();
         if (isUsingAndroidAnnotations(object)) {
             clazz = clazz.getSuperclass();
         }
 
-        for (Method method : clazz.getDeclaredMethods()) {
-            if (method.isAnnotationPresent(AfterPermissionGranted.class)) {
-                // Check for annotated methods with matching request code.
-                AfterPermissionGranted ann = method.getAnnotation(AfterPermissionGranted.class);
-                if (ann.value() == requestCode) {
-                    // Method must be void so that we can invoke it
-                    if (method.getParameterTypes().length > 0) {
-                        throw new RuntimeException(
-                                "Cannot execute method " + method.getName() + " because it is non-void method and/or has input parameters.");
-                    }
-
-                    try {
-                        // Make method accessible if private
-                        if (!method.isAccessible()) {
-                            method.setAccessible(true);
+        while (clazz != null) {
+            for (Method method : clazz.getDeclaredMethods()) {
+                if (method.isAnnotationPresent(AfterPermissionGranted.class)) {
+                    // Check for annotated methods with matching request code.
+                    AfterPermissionGranted ann = method.getAnnotation(AfterPermissionGranted.class);
+                    if (ann.value() == requestCode) {
+                        // Method must be void so that we can invoke it
+                        if (method.getParameterTypes().length > 0) {
+                            throw new RuntimeException(
+                                    "Cannot execute method " + method.getName() + " because it is non-void method and/or has input parameters.");
                         }
-                        method.invoke(object);
-                    } catch (IllegalAccessException e) {
-                        Log.e(TAG, "runDefaultMethod:IllegalAccessException", e);
-                    } catch (InvocationTargetException e) {
-                        Log.e(TAG, "runDefaultMethod:InvocationTargetException", e);
+
+                        try {
+                            // Make method accessible if private
+                            if (!method.isAccessible()) {
+                                method.setAccessible(true);
+                            }
+                            method.invoke(object);
+                        } catch (IllegalAccessException e) {
+                            Log.e(TAG, "runDefaultMethod:IllegalAccessException", e);
+                        } catch (InvocationTargetException e) {
+                            Log.e(TAG, "runDefaultMethod:InvocationTargetException", e);
+                        }
                     }
                 }
             }
+
+            clazz = clazz.getSuperclass();
         }
     }
 
+    /**
+     * Determine if the project is using the AndroidAnnoations library.
+     */
     private static boolean isUsingAndroidAnnotations(@NonNull Object object) {
         if (!object.getClass().getSimpleName().endsWith("_")) {
             return false;

@@ -29,7 +29,8 @@ import java.util.concurrent.locks.ReentrantLock;
     private final Handler.Callback mCallback;
     // hard reference to Callback. We need to keep callback in memory
     private final ExecHandler      mExec;
-    private       Lock       mLock      = new ReentrantLock();
+
+    private Lock mLock = new ReentrantLock();
     @SuppressWarnings({"ConstantConditions", "SpellCheckingInspection"}) @VisibleForTesting
     private final ChainedRef mRunnables = new ChainedRef(mLock, null);
 
@@ -57,8 +58,7 @@ import java.util.concurrent.locks.ReentrantLock;
      */
     public WeakHandler(@Nullable Handler.Callback callback) {
         mCallback = callback; // Hard referencing body
-        mExec = new ExecHandler(
-                new WeakReference<>(callback)); // Weak referencing inside ExecHandler
+        mExec = new ExecHandler(new WeakReference<>(callback)); // Weak referencing inside ExecHandler
     }
 
     /**
@@ -89,9 +89,8 @@ import java.util.concurrent.locks.ReentrantLock;
      * attached.
      *
      * @param r The Runnable that will be executed.
-     * @return Returns true if the Runnable was successfully placed in to the
-     * message queue.  Returns false on failure, usually because the
-     * looper processing the message queue is exiting.
+     * @return Returns true if the Runnable was successfully placed in to the message queue.  Returns false on failure,
+     * usually because the looper processing the message queue is exiting.
      */
     public final boolean post(@NonNull Runnable r) {
         return mExec.post(wrapRunnable(r));
@@ -104,14 +103,12 @@ import java.util.concurrent.locks.ReentrantLock;
      * The runnable will be run on the thread to which this handler is attached.
      *
      * @param r            The Runnable that will be executed.
-     * @param uptimeMillis The absolute time at which the callback should run,
-     *                     using the {@link android.os.SystemClock#uptimeMillis} time-base.
-     * @return Returns true if the Runnable was successfully placed in to the
-     * message queue.  Returns false on failure, usually because the
-     * looper processing the message queue is exiting.  Note that a
-     * result of true does not mean the Runnable will be processed -- if
-     * the looper is quit before the delivery time of the message
-     * occurs then the message will be dropped.
+     * @param uptimeMillis The absolute time at which the callback should run, using the {@link
+     *                     android.os.SystemClock#uptimeMillis} time-base.
+     * @return Returns true if the Runnable was successfully placed in to the message queue.  Returns false on failure,
+     * usually because the looper processing the message queue is exiting.  Note that a result of true does not mean the
+     * Runnable will be processed -- if the looper is quit before the delivery time of the message occurs then the
+     * message will be dropped.
      */
     public final boolean postAtTime(@NonNull Runnable r, long uptimeMillis) {
         return mExec.postAtTime(wrapRunnable(r), uptimeMillis);
@@ -124,14 +121,12 @@ import java.util.concurrent.locks.ReentrantLock;
      * The runnable will be run on the thread to which this handler is attached.
      *
      * @param r            The Runnable that will be executed.
-     * @param uptimeMillis The absolute time at which the callback should run,
-     *                     using the {@link android.os.SystemClock#uptimeMillis} time-base.
-     * @return Returns true if the Runnable was successfully placed in to the
-     * message queue.  Returns false on failure, usually because the
-     * looper processing the message queue is exiting.  Note that a
-     * result of true does not mean the Runnable will be processed -- if
-     * the looper is quit before the delivery time of the message
-     * occurs then the message will be dropped.
+     * @param uptimeMillis The absolute time at which the callback should run, using the {@link
+     *                     android.os.SystemClock#uptimeMillis} time-base.
+     * @return Returns true if the Runnable was successfully placed in to the message queue.  Returns false on failure,
+     * usually because the looper processing the message queue is exiting.  Note that a result of true does not mean the
+     * Runnable will be processed -- if the looper is quit before the delivery time of the message occurs then the
+     * message will be dropped.
      * @see android.os.SystemClock#uptimeMillis
      */
     public final boolean postAtTime(Runnable r, Object token, long uptimeMillis) {
@@ -145,14 +140,11 @@ import java.util.concurrent.locks.ReentrantLock;
      * is attached.
      *
      * @param r           The Runnable that will be executed.
-     * @param delayMillis The delay (in milliseconds) until the Runnable
-     *                    will be executed.
-     * @return Returns true if the Runnable was successfully placed in to the
-     * message queue.  Returns false on failure, usually because the
-     * looper processing the message queue is exiting.  Note that a
-     * result of true does not mean the Runnable will be processed --
-     * if the looper is quit before the delivery time of the message
-     * occurs then the message will be dropped.
+     * @param delayMillis The delay (in milliseconds) until the Runnable will be executed.
+     * @return Returns true if the Runnable was successfully placed in to the message queue.  Returns false on failure,
+     * usually because the looper processing the message queue is exiting.  Note that a result of true does not mean the
+     * Runnable will be processed -- if the looper is quit before the delivery time of the message occurs then the
+     * message will be dropped.
      */
     public final boolean postDelayed(Runnable r, long delayMillis) {
         return mExec.postDelayed(wrapRunnable(r), delayMillis);
@@ -168,9 +160,8 @@ import java.util.concurrent.locks.ReentrantLock;
      * other unexpected side-effects.</b>
      *
      * @param r The Runnable that will be executed.
-     * @return Returns true if the message was successfully placed in to the
-     * message queue.  Returns false on failure, usually because the
-     * looper processing the message queue is exiting.
+     * @return Returns true if the message was successfully placed in to the message queue.  Returns false on failure,
+     * usually because the looper processing the message queue is exiting.
      */
     public final boolean postAtFrontOfQueue(Runnable r) {
         return mExec.postAtFrontOfQueue(wrapRunnable(r));
@@ -203,9 +194,8 @@ import java.util.concurrent.locks.ReentrantLock;
      * before the current time. It will be received in callback,
      * in the thread attached to this handler.
      *
-     * @return Returns true if the message was successfully placed in to the
-     * message queue.  Returns false on failure, usually because the
-     * looper processing the message queue is exiting.
+     * @return Returns true if the message was successfully placed in to the message queue.  Returns false on failure,
+     * usually because the looper processing the message queue is exiting.
      */
     public final boolean sendMessage(Message msg) {
         return mExec.sendMessage(msg);
@@ -214,9 +204,8 @@ import java.util.concurrent.locks.ReentrantLock;
     /**
      * Sends a Message containing only the what value.
      *
-     * @return Returns true if the message was successfully placed in to the
-     * message queue.  Returns false on failure, usually because the
-     * looper processing the message queue is exiting.
+     * @return Returns true if the message was successfully placed in to the message queue.  Returns false on failure,
+     * usually because the looper processing the message queue is exiting.
      */
     public final boolean sendEmptyMessage(int what) {
         return mExec.sendEmptyMessage(what);
@@ -226,9 +215,8 @@ import java.util.concurrent.locks.ReentrantLock;
      * Sends a Message containing only the what value, to be delivered
      * after the specified amount of time elapses.
      *
-     * @return Returns true if the message was successfully placed in to the
-     * message queue.  Returns false on failure, usually because the
-     * looper processing the message queue is exiting.
+     * @return Returns true if the message was successfully placed in to the message queue.  Returns false on failure,
+     * usually because the looper processing the message queue is exiting.
      * @see #sendMessageDelayed(Message, long)
      */
     public final boolean sendEmptyMessageDelayed(int what, long delayMillis) {
@@ -239,9 +227,8 @@ import java.util.concurrent.locks.ReentrantLock;
      * Sends a Message containing only the what value, to be delivered
      * at a specific time.
      *
-     * @return Returns true if the message was successfully placed in to the
-     * message queue.  Returns false on failure, usually because the
-     * looper processing the message queue is exiting.
+     * @return Returns true if the message was successfully placed in to the message queue.  Returns false on failure,
+     * usually because the looper processing the message queue is exiting.
      * @see #sendMessageAtTime(Message, long)
      */
     public final boolean sendEmptyMessageAtTime(int what, long uptimeMillis) {
@@ -253,12 +240,10 @@ import java.util.concurrent.locks.ReentrantLock;
      * before (current time + delayMillis). You will receive it in
      * callback, in the thread attached to this handler.
      *
-     * @return Returns true if the message was successfully placed in to the
-     * message queue.  Returns false on failure, usually because the
-     * looper processing the message queue is exiting.  Note that a
-     * result of true does not mean the message will be processed -- if
-     * the looper is quit before the delivery time of the message
-     * occurs then the message will be dropped.
+     * @return Returns true if the message was successfully placed in to the message queue.  Returns false on failure,
+     * usually because the looper processing the message queue is exiting.  Note that a result of true does not mean the
+     * message will be processed -- if the looper is quit before the delivery time of the message occurs then the
+     * message will be dropped.
      */
     public final boolean sendMessageDelayed(Message msg, long delayMillis) {
         return mExec.sendMessageDelayed(msg, delayMillis);
@@ -271,15 +256,12 @@ import java.util.concurrent.locks.ReentrantLock;
      * You will receive it in callback, in the thread attached
      * to this handler.
      *
-     * @param uptimeMillis The absolute time at which the message should be
-     *                     delivered, using the
-     *                     {@link android.os.SystemClock#uptimeMillis} time-base.
-     * @return Returns true if the message was successfully placed in to the
-     * message queue.  Returns false on failure, usually because the
-     * looper processing the message queue is exiting.  Note that a
-     * result of true does not mean the message will be processed -- if
-     * the looper is quit before the delivery time of the message
-     * occurs then the message will be dropped.
+     * @param uptimeMillis The absolute time at which the message should be delivered, using the {@link
+     *                     android.os.SystemClock#uptimeMillis} time-base.
+     * @return Returns true if the message was successfully placed in to the message queue.  Returns false on failure,
+     * usually because the looper processing the message queue is exiting.  Note that a result of true does not mean the
+     * message will be processed -- if the looper is quit before the delivery time of the message occurs then the
+     * message will be dropped.
      */
     public boolean sendMessageAtTime(Message msg, long uptimeMillis) {
         return mExec.sendMessageAtTime(msg, uptimeMillis);
@@ -293,9 +275,8 @@ import java.util.concurrent.locks.ReentrantLock;
      * can easily starve the message queue, cause ordering problems, or have
      * other unexpected side-effects.</b>
      *
-     * @return Returns true if the message was successfully placed in to the
-     * message queue.  Returns false on failure, usually because the
-     * looper processing the message queue is exiting.
+     * @return Returns true if the message was successfully placed in to the message queue.  Returns false on failure,
+     * usually because the looper processing the message queue is exiting.
      */
     public final boolean sendMessageAtFrontOfQueue(Message msg) {
         return mExec.sendMessageAtFrontOfQueue(msg);
@@ -402,7 +383,7 @@ import java.util.concurrent.locks.ReentrantLock;
         }
 
         @Override public void run() {
-            final Runnable   delegate  = mDelegate.get();
+            final Runnable delegate = mDelegate.get();
             final ChainedRef reference = mReference.get();
             if (reference != null) {
                 reference.remove();
