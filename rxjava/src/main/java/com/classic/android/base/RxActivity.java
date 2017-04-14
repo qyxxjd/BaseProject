@@ -30,17 +30,15 @@ import io.reactivex.subjects.BehaviorSubject;
      * <p>
      * 例如：网络请求时绑定ActivityEvent.STOP, onStop()时会自动取消网络请求
      *
-     * @param event
-     * {@link ActivityEvent#CREATE},
-     * {@link ActivityEvent#START},
-     * {@link ActivityEvent#RESTART},
-     * {@link ActivityEvent#RESUME},
-     * {@link ActivityEvent#PAUSE},
-     * {@link ActivityEvent#STOP},
-     * {@link ActivityEvent#DESTROY}.
+     * @param event {@link ActivityEvent#CREATE},
+     *              {@link ActivityEvent#START},
+     *              {@link ActivityEvent#RESTART},
+     *              {@link ActivityEvent#RESUME},
+     *              {@link ActivityEvent#PAUSE},
+     *              {@link ActivityEvent#STOP},
+     *              {@link ActivityEvent#DESTROY}.
      */
-    @SuppressWarnings("unused") protected <T> ObservableTransformer<T, T> bindEvent(
-            @ActivityEvent final int event) {
+    @SuppressWarnings("unused") protected <T> ObservableTransformer<T, T> bindEvent(@ActivityEvent final int event) {
         final Observable<Integer> observable = mBehaviorSubject.filter(new Predicate<Integer>() {
             @Override public boolean test(Integer integer) throws Exception {
                 return integer == event;
@@ -55,7 +53,7 @@ import io.reactivex.subjects.BehaviorSubject;
     }
 
     /**
-     * 回收Disposable，onStop时进行统一处理
+     * 回收Disposable，默认unRegister统一释放资源
      */
     protected void recycle(@NonNull Disposable disposable) {
         if (null == mCompositeDisposable) {
@@ -64,11 +62,18 @@ import io.reactivex.subjects.BehaviorSubject;
         mCompositeDisposable.add(disposable);
     }
 
-    @Override protected void onStop() {
-        super.onStop();
+    /**
+     * 清理Disposable，释放资源
+     */
+    protected void clear() {
         if (null != mCompositeDisposable) {
             mCompositeDisposable.clear();
         }
+    }
+
+    @Override public void unRegister() {
+        clear();
+        super.unRegister();
     }
 
     @Override void stateChange(@ActivityEvent int event) {

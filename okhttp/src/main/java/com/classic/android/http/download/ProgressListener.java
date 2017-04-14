@@ -15,7 +15,7 @@ public interface ProgressListener {
     /**
      * 下载进度回调
      * @param currentBytes 已下载字节数
-     * @param totalBytes 总字节数
+     * @param totalBytes 总字节数(未知情况,返回-1)
      * @param isDone 是否完成
      */
     void onProgress(long currentBytes, long totalBytes, boolean isDone);

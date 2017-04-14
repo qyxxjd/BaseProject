@@ -7,7 +7,7 @@ android {
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode rootProject.ext.android.libVersionCode
-        versionName '1.5'
+        versionName '1.6'
     }
     buildTypes {
         release {
