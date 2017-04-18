@@ -39,13 +39,13 @@ dependencies {
 #### 基于`OkHttp`的版本： [示例代码点这里](https://github.com/qyxxjd/RxJava2Demo)
 
 - 包含基础项目、`RxJava`版本的所有功能
-- 集成`OkHttp (v3.6.0)`、`Retrofit (v2.2.0)`
+- 集成`OkHttp (v3.7.0)`、`Retrofit (v2.2.0)`
 - 网络相关的一些封装
 
 `Gradle`依赖
 ```gradle
 dependencies {
-    compile 'com.classic.android:okhttp:1.6'
+    compile 'com.classic.android:okhttp:1.7'
 }
 ```
 
