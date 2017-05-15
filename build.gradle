@@ -36,10 +36,10 @@ ext {
 //    projectVersion = '1.0' // utils library version
 //    projectArtifactId = 'utils'
 
-//    projectVersion = '1.6' // rxjava library version
+//    projectVersion = '1.8' // rxjava library version
 //    projectArtifactId = 'rxjava'
 
-//    projectVersion = '1.7' // okhttp library version
+//    projectVersion = '1.8' // okhttp library version
 //    projectArtifactId = 'okhttp'
 
     orgName = 'classic'

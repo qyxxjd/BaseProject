@@ -71,7 +71,7 @@ import io.reactivex.subjects.BehaviorSubject;
      */
     protected void clear() {
         if (null != mCompositeDisposable) {
-            mCompositeDisposable.clear();
+            mCompositeDisposable.dispose();
         }
     }
 

@@ -1,5 +1,7 @@
 package com.classic.android.rx;
 
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
@@ -12,7 +14,7 @@ import io.reactivex.subjects.Subject;
  * 创 建 人: 续写经典
  * 创建时间: 2016/11/03 17:26
  */
-@SuppressWarnings("unused") public class RxBus {
+@SuppressWarnings({"unused", "SpellCheckingInspection"}) public class RxBus {
 
     private final Subject<Object> mBus = PublishSubject.create().toSerialized();
 
@@ -22,6 +24,14 @@ import io.reactivex.subjects.Subject;
 
     public Observable<Object> toObservable() {
         return mBus;
+    }
+
+    @SuppressWarnings("WeakerAccess") public Flowable<Object> toFlowable(BackpressureStrategy strategy) {
+        return mBus.toFlowable(strategy);
+    }
+
+    public Flowable<Object> toFlowable() {
+        return toFlowable(BackpressureStrategy.LATEST);
     }
 
     public boolean hasObservers() {
