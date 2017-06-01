@@ -5,88 +5,19 @@
 
 `BaseProject`是一个简易的`Android`基础项目，方便您快速进行开发。
 
-#### 基础项目：
-
-- `Support 25.3.1`
-- `BaseActivity`、`BaseFragment`
-- `Activity`栈管理
-- 异常信息收集
-- 日志打印
-- `Android6.0`权限管理
-- 通用适配器  [请参考CommonAdapter](https://github.com/qyxxjd/CommonAdapter)
-
-`Gradle`依赖
-```gradle
-dependencies {
-    compile 'com.classic.android:core:1.3'
-}
-```
-
-#### 基于`RxJava`的版本： [示例代码点这里](https://github.com/qyxxjd/RxJava2Demo)
+#### 基于`RxJava 1.X`的版本： [示例代码点这里](https://github.com/qyxxjd/RxJava2Demo)
 
 - 包含基础项目的所有功能
-- 集成`RxJava (v2.1.0)`、`RxAndroid (v2.0.1)`
+- 集成`RxJava (v1.3.0)`、`RxAndroid (v1.2.1)`、`OkHttp (v3.3.1)`、`Retrofit (v2.0.2)`
 - `RxActivity`、`RxFragment`
-- 常用方法封装
-
-`Gradle`依赖
-```gradle
-dependencies {
-    compile 'com.classic.android:rxjava:1.8'
-}
-```
-
-#### 基于`OkHttp`的版本： [示例代码点这里](https://github.com/qyxxjd/RxJava2Demo)
-
-- 包含基础项目、`RxJava`版本的所有功能
-- 集成`OkHttp (v3.8.0)`、`Retrofit (v2.3.0)`
 - 网络相关的一些封装
 
 `Gradle`依赖
 ```gradle
 dependencies {
-    compile 'com.classic.android:okhttp:1.8'
+    compile 'com.classic.android:rxjava1:1.0'
 }
 ```
-
-#### 工具类：
-
-`Gradle`依赖
-```gradle
-dependencies {
-    compile 'com.classic.android:utils:1.0'
-}
-```
-
-| 文件名 | 描述 |
-| ----- | ----- |
-| [AppInfoUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/AppInfoUtil.java) | 应用程序相关信息工具类 |
-| [BitmapUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/BitmapUtil.java) | `bitmap`工具类 |
-| [ByteUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/ByteUtil.java) | 字节处理工具类 |
-| [CloseUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/CloseUtil.java) | `Closeable`工具类 |
-| [ConversionUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/ConversionUtil.java) | 单位转换工具类 |
-| [CursorUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/CursorUtil.java) | `Cursor`工具类 |
-| [DataUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/DataUtil.java) | 数据非空检查工具类 |
-| [DateUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/DateUtil.java) | 日期操作工具类 |
-| [DeviceUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/DeviceUtil.java) | 设备信息工具类 |
-| [EditTextUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/EditTextUtil.java) | 文本输入框工具类 |
-| [FileUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/FileUtil.java) | 文件操作工具类 |
-| [HtmlUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/HtmlUtil.java) | `HTML`处理类 |
-| [IntentUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/IntentUtil.java) | `Intent`工具类 |
-| [IpUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/IpUtil.java) | 获取设备`IP`地址 |
-| [KeyBoardUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/KeyBoardUtil.java) | 输入法工具类 |
-| [MatcherUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/MatcherUtil.java) | 正则匹配工具类 |
-| [MoneyUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/MoneyUtil.java) | 高精度数据计算工具类 |
-| [NetworkUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/NetworkUtil.java) | 网络状态工具类 |
-| [PackageUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/PackageUtil.java) | `Package`工具类 |
-| [ResourceUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/ResourceUtil.java) | `Assets`、`Raw`资源文件操作工具类 |
-| [SizeUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/SizeUtil.java) | 字节、毫秒相关常量 |
-| [StringUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/StringUtil.java) | 字符串工具类 |
-| [ToastUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/ToastUtil.java) | `Toast`工具类 |
-| [ViewHolder](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/ViewHolder.java) | `View`复用工具类 |
-| [WifiHelper](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/WifiHelper.java) | `WIFI`工具类 |
-| [WindowUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/WindowUtil.java) | 屏幕相关工具类 |
-
 
 ## 使用步骤
 
