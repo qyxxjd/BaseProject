@@ -8,6 +8,7 @@ import android.os.Debug;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.classic.android.base.BaseActivityStack;
 import com.classic.android.interfaces.ICrashProcess;
 import com.classic.android.utils.SDCardUtil;
 
@@ -72,6 +73,9 @@ public class DefaultCrashProcess implements ICrashProcess {
         exception.printStackTrace(pw);
         pw.println();
         pw.close();
+
+        BaseActivityStack.getInstance().finishAllActivity();
+        Runtime.getRuntime().exit(1);
     }
 
     private void savePhoneInfo(PrintWriter pw) throws Exception {

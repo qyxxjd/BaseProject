@@ -5,7 +5,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.1'
+        classpath 'com.android.tools.build:gradle:2.3.3'
 
 //        //https://github.com/dcendents/android-maven-gradle-plugin
 //        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
@@ -30,7 +30,7 @@ ext {
     projectDesc = 'android base project'
     projectGroup = 'com.classic.android'
 
-//    projectVersion = '1.3' // base library version
+//    projectVersion = '1.4' // base library version
 //    projectArtifactId = 'core'
 
 //    projectVersion = '1.0' // utils library version

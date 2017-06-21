@@ -31,7 +31,7 @@ public class AppSettingsDialog implements Parcelable, DialogInterface.OnClickLis
     public static final int DEFAULT_SETTINGS_REQ_CODE = 16061;
 
     @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
-    public static final Creator<AppSettingsDialog> CREATOR = new Creator<AppSettingsDialog>() {
+    public static final Parcelable.Creator<AppSettingsDialog> CREATOR = new Parcelable.Creator<AppSettingsDialog>() {
         @Override
         public AppSettingsDialog createFromParcel(Parcel in) {
             return new AppSettingsDialog(in);
@@ -107,9 +107,9 @@ public class AppSettingsDialog implements Parcelable, DialogInterface.OnClickLis
     /**
      * Display the built dialog.
      */
+    @SuppressWarnings("NewApi")
     public void show() {
         if (mNegativeListener == null) {
-            //noinspection NewApi The Builder constructor prevents this
             startForResult(AppSettingsDialogHolderActivity.createShowDialogIntent(mContext, this));
         } else {
             // We can't pass the cancel listener to an activity so we default to old behavior it there is one.
@@ -121,17 +121,17 @@ public class AppSettingsDialog implements Parcelable, DialogInterface.OnClickLis
     /**
      * Show the dialog. {@link #show()} is a wrapper to ensure backwards compatibility
      */
-    void showDialog() {
-        new AlertDialog.Builder(mContext)
+    AlertDialog showDialog() {
+        return new AlertDialog.Builder(mContext)
                 .setCancelable(false)
                 .setTitle(mTitle)
                 .setMessage(mRationale)
                 .setPositiveButton(mPositiveButtonText, this)
                 .setNegativeButton(mNegativeButtonText, mNegativeListener)
-                .create()
                 .show();
     }
 
+    @SuppressWarnings("NewApi")
     @Override
     public void onClick(DialogInterface dialog, int which) {
         // Create app settings intent
@@ -140,7 +140,6 @@ public class AppSettingsDialog implements Parcelable, DialogInterface.OnClickLis
         intent.setData(uri);
 
         // Start for result
-        //noinspection NewApi The Builder constructor prevents this
         startForResult(intent);
     }
 
