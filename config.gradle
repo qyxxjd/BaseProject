@@ -5,8 +5,8 @@ def butterKnifeVersion = "8.6.0"
 
 def libVersionCode = 11
 def baseVersion = "1.4"
-def rxVersion = "1.8"
-def httpVersion = "1.8"
+def rxVersion = "1.9"
+def httpVersion = "1.9"
 def utilsVersion = "1.0"
 
 ext {

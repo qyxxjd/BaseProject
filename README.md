@@ -7,7 +7,8 @@
 
 #### 基础项目：
 
-- `Support 25.3.1`
+- `Support (v25.3.1)`
+- `EasyPermissions (v0.4.2)`
 - `BaseActivity`、`BaseFragment`
 - `Activity`栈管理
 - 异常信息收集
@@ -18,34 +19,34 @@
 `Gradle`依赖
 ```gradle
 dependencies {
-    compile 'com.classic.android:core:1.3'
+    compile 'com.classic.android:core:1.4'
 }
 ```
 
 #### 基于`RxJava`的版本： [示例代码点这里](https://github.com/qyxxjd/RxJava2Demo)
 
 - 包含基础项目的所有功能
-- 集成`RxJava (v2.1.0)`、`RxAndroid (v2.0.1)`
+- 集成`RxJava (v2.1.1)`、`RxAndroid (v2.0.1)`
 - `RxActivity`、`RxFragment`
 - 常用方法封装
 
 `Gradle`依赖
 ```gradle
 dependencies {
-    compile 'com.classic.android:rxjava:1.8'
+    compile 'com.classic.android:rxjava:1.9'
 }
 ```
 
 #### 基于`OkHttp`的版本： [示例代码点这里](https://github.com/qyxxjd/RxJava2Demo)
 
 - 包含基础项目、`RxJava`版本的所有功能
-- 集成`OkHttp (v3.8.0)`、`Retrofit (v2.3.0)`
+- 集成`OkHttp (v3.8.1)`、`Retrofit (v2.3.0)`
 - 网络相关的一些封装
 
 `Gradle`依赖
 ```gradle
 dependencies {
-    compile 'com.classic.android:okhttp:1.8'
+    compile 'com.classic.android:okhttp:1.9'
 }
 ```
 
