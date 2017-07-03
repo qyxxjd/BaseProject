@@ -78,9 +78,14 @@ import io.reactivex.subjects.BehaviorSubject;
     /**
      * 清理Disposable，释放资源
      */
-    protected void clear(Disposable disposable) {
-        if (null != disposable) {
-            disposable.dispose();
+    protected void clear(Disposable... disposables) {
+        if (null == disposables) {
+            return;
+        }
+        for (Disposable disposable : disposables) {
+            if (null != disposable) {
+                disposable.dispose();
+            }
         }
     }
 
