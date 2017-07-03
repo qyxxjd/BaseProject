@@ -75,6 +75,15 @@ import io.reactivex.subjects.BehaviorSubject;
         }
     }
 
+    /**
+     * 清理Disposable，释放资源
+     */
+    protected void clear(Disposable disposable) {
+        if (null != disposable) {
+            disposable.dispose();
+        }
+    }
+
     @Override public void unRegister() {
         clear();
         super.unRegister();
