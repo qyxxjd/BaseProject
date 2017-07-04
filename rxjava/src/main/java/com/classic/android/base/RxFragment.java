@@ -3,6 +3,7 @@ package com.classic.android.base;
 import android.support.annotation.NonNull;
 
 import com.classic.android.event.FragmentEvent;
+import com.classic.android.rx.RxUtil;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
@@ -79,14 +80,7 @@ import io.reactivex.subjects.BehaviorSubject;
      * 清理Disposable，释放资源
      */
     protected void clear(Disposable... disposables) {
-        if (null == disposables) {
-            return;
-        }
-        for (Disposable disposable : disposables) {
-            if (null != disposable) {
-                disposable.dispose();
-            }
-        }
+        RxUtil.clear(disposables);
     }
 
     @Override public void unRegister() {

@@ -167,4 +167,20 @@ import io.reactivex.schedulers.Schedulers;
                          .compose(RxUtil.<T>applySchedulers(THREAD_ON_UI_TRANSFORMER))
                          .subscribe(uiAction);
     }
+
+    /**
+     * 清理Disposable，释放资源
+     *
+     * @param disposables
+     */
+    public static void clear(Disposable... disposables) {
+        if (null == disposables) {
+            return;
+        }
+        for (Disposable disposable : disposables) {
+            if (null != disposable) {
+                disposable.dispose();
+            }
+        }
+    }
 }
