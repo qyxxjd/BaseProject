@@ -11,6 +11,6 @@ public class GlideImageLoad implements ImageLoad {
 
     @Override public void load(
             @NonNull Context context, @NonNull ImageView imageView, @NonNull String imageUrl) {
-        Glide.with(context).load(imageUrl).centerCrop().crossFade().into(imageView);
+        Glide.with(context).load(imageUrl).into(imageView);
     }
 }
