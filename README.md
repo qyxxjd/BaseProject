@@ -1,5 +1,5 @@
 <p>
-  <a href="https://developer.android.com/reference/android/os/Build.VERSION_CODES.html#GINGERBREAD"><img src="https://img.shields.io/badge/API-9%2B-blue.svg?style=flat" alt="API" /></a>
+  <a href="https://developer.android.com/reference/android/os/Build.VERSION_CODES.html#ICE_CREAM_SANDWICH"><img src="https://img.shields.io/badge/API-14%2B-blue.svg?style=flat" alt="API" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/npm/l/express.svg?maxAge=2592000" alt="License" /></a>
 </p>
 
@@ -7,8 +7,8 @@
 
 #### 基础项目：
 
-- `Support (v25.3.1)`
-- `EasyPermissions (v0.4.2)`
+- `Support (v27.0.0)`
+- `EasyPermissions (v1.0.1)`
 - `BaseActivity`、`BaseFragment`
 - `Activity`栈管理
 - 异常信息收集
@@ -19,34 +19,34 @@
 `Gradle`依赖
 ```gradle
 dependencies {
-    compile 'com.classic.android:core:1.4'
+    compile 'com.classic.android:core:1.5'
 }
 ```
 
 #### 基于`RxJava`的版本： [示例代码点这里](https://github.com/qyxxjd/RxJava2Demo)
 
 - 包含基础项目的所有功能
-- 集成`RxJava (v2.1.1)`、`RxAndroid (v2.0.1)`
+- 集成`RxJava (v2.1.6)`、`RxAndroid (v2.0.1)`
 - `RxActivity`、`RxFragment`
 - 常用方法封装
 
 `Gradle`依赖
 ```gradle
 dependencies {
-    compile 'com.classic.android:rxjava:1.9'
+    compile 'com.classic.android:rxjava:2.0'
 }
 ```
 
 #### 基于`OkHttp`的版本： [示例代码点这里](https://github.com/qyxxjd/RxJava2Demo)
 
 - 包含基础项目、`RxJava`版本的所有功能
-- 集成`OkHttp (v3.8.1)`、`Retrofit (v2.3.0)`
+- 集成`OkHttp (v3.9.1)`、`Retrofit (v2.3.0)`
 - 网络相关的一些封装
 
 `Gradle`依赖
 ```gradle
 dependencies {
-    compile 'com.classic.android:okhttp:1.9'
+    compile 'com.classic.android:okhttp:2.0'
 }
 ```
 
@@ -55,7 +55,7 @@ dependencies {
 `Gradle`依赖
 ```gradle
 dependencies {
-    compile 'com.classic.android:utils:1.0'
+    compile 'com.classic.android:utils:1.1'
 }
 ```
 
@@ -79,7 +79,6 @@ dependencies {
 | [MatcherUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/MatcherUtil.java) | 正则匹配工具类 |
 | [MoneyUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/MoneyUtil.java) | 高精度数据计算工具类 |
 | [NetworkUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/NetworkUtil.java) | 网络状态工具类 |
-| [PackageUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/PackageUtil.java) | `Package`工具类 |
 | [ResourceUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/ResourceUtil.java) | `Assets`、`Raw`资源文件操作工具类 |
 | [SizeUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/SizeUtil.java) | 字节、毫秒相关常量 |
 | [StringUtil](https://github.com/qyxxjd/BaseProject/blob/master/utils/src/main/java/com/classic/android/utils/StringUtil.java) | 字符串工具类 |
@@ -156,16 +155,16 @@ public class TestActivity extends BaseActivity {
 
     //以下为可选方法，根据需要进行重载.
     //方法执行顺序：
-    //initPre() --> initData() --> initView(Bundle savedInstanceState) --> register()
+    //onSetContentViewBefore() --> initData() --> initView(Bundle savedInstanceState) --> register()
 
     //这里可以注册一些广播、服务
     @Override public void register() { }
-    //注销广播、服务,在onDestroy()内部执行
+    //注销广播、服务
     @Override public void unRegister() { }
     //只有第一次才会执行，这里可以做一些界面功能引导
     @Override public void onFirst() { }
     //这个方法会在setContentView(...)方法之前执行
-    @Override public void initPre() { }
+    @Override public void onSetContentViewBefore() { }
     //view点击事件统一处理
     @Override public void viewClick(View v) { }
     @Override public void showProgress() { }
@@ -193,7 +192,7 @@ public class TestFragment extends BaseFragment {
 
     //这里可以注册一些广播、服务
     @Override public void register() { }
-    //注销广播、服务, 在onDestroyView()内部执行
+    //注销广播、服务
     @Override public void unRegister() { }
     //只有第一次才会执行，这里可以做一些界面功能引导
     @Override public void onFirst() { }

@@ -1,5 +1,9 @@
 plugins.apply('checkstyle')
 
+checkstyle {
+    toolVersion = "5.9"
+}
+
 task('checkstyle', type: Checkstyle) {
     configFile rootProject.file('checkstyle.xml')
     source 'src/main/java'

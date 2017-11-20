@@ -1,6 +1,8 @@
 package com.classic.android.interfaces;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 
 /**
@@ -11,7 +13,7 @@ import android.view.View;
  * 创 建 人: 续写经典
  * 创建时间: 2015/11/12 10:00
  */
-@SuppressWarnings("unused") public interface IFragment {
+@SuppressWarnings("unused") public interface IFragment extends IProgress {
 
     /**
      * 获取布局文件
@@ -39,20 +41,10 @@ import android.view.View;
     /**
      * 初始化控件
      */
-    void initView(View parentView, Bundle savedInstanceState);
+    void initView(@NonNull View parentView, @Nullable Bundle savedInstanceState);
 
     /**
      * 点击事件回调方法
      */
-    void viewClick(View v);
-
-    /**
-     * 显示进度条
-     */
-    void showProgress();
-
-    /**
-     * 隐藏进度条
-     */
-    void hideProgress();
+    void viewClick(@NonNull View v);
 }

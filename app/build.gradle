@@ -19,15 +19,14 @@ android {
 }
 
 dependencies {
-    compile rootProject.ext.supportAppcompatV7
-    compile rootProject.ext.supportRecyclerView
-    compile rootProject.ext.supportCardView
-    compile rootProject.ext.commonAdapter
-    compile rootProject.ext.glide
-    compile rootProject.ext.butterknife
+    implementation rootProject.ext.supportAppcompatV7
+    implementation rootProject.ext.supportRecyclerView
+    implementation rootProject.ext.supportCardView
+    implementation rootProject.ext.commonAdapter
+    implementation rootProject.ext.glide
+    implementation rootProject.ext.butterknife
     annotationProcessor rootProject.ext.butterknifeCompiler
 
-    compile rootProject.ext.utils
-//    compile rootProject.ext.baseProject
-    compile project(':rxjava')
+    implementation rootProject.ext.utils
+    implementation rootProject.ext.coreProject
 }

@@ -32,18 +32,19 @@ ext {
     projectName = 'BaseProject'
     projectDesc = 'android base project'
     projectGroup = 'com.classic.android'
+    projectVersionCode = 12
 
-//    projectVersion = '1.4' // base library version
-//    projectArtifactId = 'core'
+    projectVersion = '1.5' // base library version
+    projectArtifactId = 'core'
 
-//    projectVersion = '1.0' // utils library version
-//    projectArtifactId = 'utils'
-
-//    projectVersion = '1.9' // rxjava library version
+//    projectVersion = '2.0' // rxjava library version
 //    projectArtifactId = 'rxjava'
 
-//    projectVersion = '1.9' // okhttp library version
+//    projectVersion = '2.0' // okhttp library version
 //    projectArtifactId = 'okhttp'
+
+//    projectVersion = '1.1' // utils library version
+//    projectArtifactId = 'utils'
 
     orgName = 'classic'
     repoName = 'maven'

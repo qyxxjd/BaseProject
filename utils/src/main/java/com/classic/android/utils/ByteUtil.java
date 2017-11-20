@@ -10,7 +10,8 @@ import android.support.annotation.NonNull;
  * 创 建 人: 续写经典
  * 创建时间: 2016/7/12 21:09
  */
-@SuppressWarnings({"unused", "WeakerAccess"}) public final class ByteUtil {
+@SuppressWarnings({"unused", "WeakerAccess"})
+public final class ByteUtil {
 
     private ByteUtil() { }
 
@@ -34,9 +35,9 @@ import android.support.annotation.NonNull;
                 result |= (bytes[i] & 0x000000ff);
             }
         } else {
-            for (int i = 0; i < length; i++) {
+            for (byte aByte : bytes) {
                 result <<= 8;
-                result |= (bytes[i] & 0x000000ff);
+                result |= (aByte & 0x000000ff);
             }
         }
         return result;
@@ -58,8 +59,8 @@ import android.support.annotation.NonNull;
      */
     public static String bytesToHexString(@NonNull byte[] bytes) {
         StringBuilder stringBuilder = new StringBuilder("");
-        for (int i = 0; i < bytes.length; i++) {
-            int    v  = bytes[i] & 0xFF;
+        for (byte aByte : bytes) {
+            int v = aByte & 0xFF;
             String hv = Integer.toHexString(v);
             if (hv.length() < 2) {
                 stringBuilder.append(0);
@@ -77,9 +78,9 @@ import android.support.annotation.NonNull;
      */
     public static byte[] hexStringToBytes(@NonNull String hexString) {
         hexString = hexString.toUpperCase();
-        int    length   = hexString.length() / 2;
+        int length = hexString.length() / 2;
         char[] hexChars = hexString.toCharArray();
-        byte[] d        = new byte[length];
+        byte[] d = new byte[length];
         for (int i = 0; i < length; i++) {
             int pos = i * 2;
             d[i] = (byte) (charToByte(hexChars[pos]) << 4 | charToByte(hexChars[pos + 1]));
@@ -93,6 +94,7 @@ import android.support.annotation.NonNull;
      * @param c char
      * @return byte
      */
+    @SuppressWarnings("SpellCheckingInspection")
     public static byte charToByte(char c) {
         return (byte) "0123456789ABCDEF".indexOf(c);
     }

@@ -39,7 +39,7 @@ import java.text.DecimalFormat;
      */
     public static long getFolderSize(@NonNull File file) throws Exception {
         //Logger.d("获取文件大小 - path:" + file.getPath());
-        long           size     = 0;
+        long size = 0;
         File[] fileList = file.listFiles();
         if (!DataUtil.isEmpty(fileList)) {
             for (File aFileList : fileList) {
@@ -84,9 +84,8 @@ import java.text.DecimalFormat;
      * 格式化文件大小，以B、K、M、G的格式显示
      */
     public static String formatFileSize(long size) {
-        //Logger.d("格式化文件大小前 - size:" + size);
         DecimalFormat df = new DecimalFormat("#.00");
-        String        fileSizeString;
+        String fileSizeString;
         if (size < 1) {
             fileSizeString = "0B";
         } else if (size < SizeUtil.KB_2_BYTE) {
@@ -98,7 +97,6 @@ import java.text.DecimalFormat;
         } else {
             fileSizeString = df.format((double) size / SizeUtil.GB_2_BYTE) + "G";
         }
-        //Logger.d("格式化文件大小后 - size:" + fileSizeString);
         return fileSizeString;
     }
 
@@ -110,9 +108,9 @@ import java.text.DecimalFormat;
         try {
             File file = new File(path);
             fis = new FileInputStream(file);
-            int    length       = fis.available();
-            byte[] buffer       = new byte[length];
-            int    bufferLength = fis.read(buffer);
+            int length = fis.available();
+            byte[] buffer = new byte[length];
+            int bufferLength = fis.read(buffer);
             return buffer;
         } catch (Exception e) {
             return null;
@@ -149,8 +147,8 @@ import java.text.DecimalFormat;
      * @param filePath 文件路径
      */
     public static byte[] read(@NonNull String filePath) {
-        byte[]              data = null;
-        BufferedInputStream in   = null;
+        byte[] data = null;
+        BufferedInputStream in = null;
         try {
             in = new BufferedInputStream(new FileInputStream(filePath));
             data = new byte[in.available()];
@@ -201,10 +199,9 @@ import java.text.DecimalFormat;
      *             @see Context#MODE_WORLD_WRITEABLE
      *             </pre>
      */
-    public static boolean writeFile(
-            @NonNull Context context, @NonNull String fileName, @NonNull String content, int mode) {
-        boolean          success = false;
-        FileOutputStream fos     = null;
+    public static boolean writeFile(@NonNull Context context, @NonNull String fileName, @NonNull String content, int mode) {
+        boolean success = false;
+        FileOutputStream fos = null;
         try {
             fos = context.openFileOutput(fileName, mode);
             byte[] byteContent = content.getBytes(CHARSET_NAME);
@@ -236,10 +233,9 @@ import java.text.DecimalFormat;
      *
      * @param append 是否追加内容
      */
-    public static boolean writeFile(
-            @NonNull String filePath, @NonNull String content, boolean append) {
-        boolean          success = false;
-        FileOutputStream fos     = null;
+    public static boolean writeFile(@NonNull String filePath, @NonNull String content, boolean append) {
+        boolean success = false;
+        FileOutputStream fos = null;
         try {
             fos = new FileOutputStream(filePath, append);
             byte[] byteContent = content.getBytes(CHARSET_NAME);
@@ -273,13 +269,13 @@ import java.text.DecimalFormat;
         if (!new File(filePath).exists()) {
             return null;
         }
-        FileInputStream fis     = null;
-        String          content = null;
+        FileInputStream fis = null;
+        String content = null;
         try {
             fis = new FileInputStream(filePath);
-            byte[]                buffer            = new byte[1024];
+            byte[] buffer = new byte[1024];
             ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
-            int                   readLength;
+            int readLength;
             while ((readLength = fis.read(buffer)) != -1) {
                 arrayOutputStream.write(buffer, 0, readLength);
             }
@@ -306,7 +302,7 @@ import java.text.DecimalFormat;
             if (file.exists()) {
                 boolean result = file.delete();
             }
-            File    parent       = file.getParentFile();
+            File parent = file.getParentFile();
             boolean isDirCreated = parent.exists();
             if (!isDirCreated) {
                 isDirCreated = parent.mkdirs();
@@ -329,11 +325,11 @@ import java.text.DecimalFormat;
      * @param dstFile 目标文件
      */
     public static boolean copy(@NonNull String srcFile, @NonNull String dstFile) {
-        FileInputStream  fis = null;
+        FileInputStream fis = null;
         FileOutputStream fos = null;
         try {
 
-            File    dst          = new File(dstFile);
+            File dst = new File(dstFile);
             boolean isDirCreated = !dst.getParentFile().exists();
             if (!isDirCreated) {
                 isDirCreated = dst.getParentFile().mkdirs();
@@ -344,7 +340,7 @@ import java.text.DecimalFormat;
                 fos = new FileOutputStream(dstFile);
 
                 byte[] buffer = new byte[1024];
-                int    len;
+                int len;
                 while ((len = fis.read(buffer)) != -1) {
                     fos.write(buffer, 0, len);
                 }
@@ -367,10 +363,10 @@ import java.text.DecimalFormat;
             return null;
         }
 
-        MessageDigest   digest = null;
-        FileInputStream in     = null;
-        byte[]          buffer = new byte[1024];
-        int             len;
+        MessageDigest digest = null;
+        FileInputStream in = null;
+        byte[] buffer = new byte[1024];
+        int len;
         try {
             digest = MessageDigest.getInstance("MD5");
             in = new FileInputStream(file);

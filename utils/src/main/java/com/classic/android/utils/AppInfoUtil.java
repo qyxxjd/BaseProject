@@ -18,7 +18,8 @@ import java.util.List;
  * 创 建 人: 续写经典
  * 创建时间: 2015/11/4 17:26
  */
-@SuppressWarnings("unused") public final class AppInfoUtil {
+@SuppressWarnings("unused")
+public final class AppInfoUtil {
 
     private AppInfoUtil() { }
 
@@ -41,9 +42,8 @@ import java.util.List;
     public static String getAppName(@NonNull Context context) {
         try {
             PackageManager packageManager = context.getPackageManager();
-            PackageInfo    packageInfo    = packageManager.getPackageInfo(context.getPackageName(),
-                                                                          0);
-            int            labelRes       = packageInfo.applicationInfo.labelRes;
+            PackageInfo packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
+            int labelRes = packageInfo.applicationInfo.labelRes;
             return context.getResources().getString(labelRes);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
@@ -57,8 +57,7 @@ import java.util.List;
     public static String getVersionName(@NonNull Context context) {
         try {
             PackageManager packageManager = context.getPackageManager();
-            PackageInfo    info           = packageManager.getPackageInfo(context.getPackageName(),
-                                                                          0);
+            PackageInfo info = packageManager.getPackageInfo(context.getPackageName(), 0);
             if (null != info) {
                 return info.versionName;
             }
@@ -74,8 +73,7 @@ import java.util.List;
     public static int getVersionCode(@NonNull Context context) {
         try {
             PackageManager packageManager = context.getPackageManager();
-            PackageInfo    info           = packageManager.getPackageInfo(context.getPackageName(),
-                                                                          0);
+            PackageInfo info = packageManager.getPackageInfo(context.getPackageName(), 0);
             if (null != info) {
                 return info.versionCode;
             }
@@ -91,8 +89,7 @@ import java.util.List;
     public static String getPackageName(@NonNull Context context) {
         try {
             PackageManager packageManager = context.getPackageManager();
-            PackageInfo    info           = packageManager.getPackageInfo(context.getPackageName(),
-                                                                          0);
+            PackageInfo info = packageManager.getPackageInfo(context.getPackageName(), 0);
             if (null != info) {
                 return info.packageName;
             }
@@ -106,10 +103,13 @@ import java.util.List;
      * 判断当前应用程序是否处于后台
      * <pre>需要权限：&lt;uses-permission android:name="android.permission.GET_TASKS" /&gt;  </pre>
      */
-    @SuppressWarnings("deprecation") @Deprecated public static boolean isApplicationToBackground(
-            @NonNull Context context) {
-        ActivityManager                       am    = (ActivityManager) context.getSystemService(
-                Context.ACTIVITY_SERVICE);
+    @SuppressWarnings("deprecation")
+    @Deprecated
+    public static boolean isApplicationToBackground(@NonNull Context context) {
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        if (null == am) {
+            return false;
+        }
         List<ActivityManager.RunningTaskInfo> tasks = am.getRunningTasks(1);
         if (!tasks.isEmpty()) {
             ComponentName topActivity = tasks.get(0).topActivity;
@@ -125,10 +125,11 @@ import java.util.List;
      */
     public static String getProcessName(@NonNull Context context) {
         int pid = android.os.Process.myPid();
-        ActivityManager activityManager = (ActivityManager) context.getSystemService(
-                Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningAppProcessInfo appProcess :
-                activityManager.getRunningAppProcesses()) {
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        if (null == activityManager) {
+            return null;
+        }
+        for (ActivityManager.RunningAppProcessInfo appProcess : activityManager.getRunningAppProcesses()) {
             if (appProcess.pid == pid) {
                 return appProcess.processName;
             }
@@ -139,13 +140,13 @@ import java.util.List;
     /**
      * 获取当前运行的所有进程名
      */
-    public static List<String> getProcessName(
-            @NonNull Context context, @NonNull String packageName) {
+    public static List<String> getProcessName(@NonNull Context context, @NonNull String packageName) {
         List<String> list = new ArrayList<>();
-        ActivityManager activityManager = (ActivityManager) context.getSystemService(
-                Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningAppProcessInfo appProcess :
-                activityManager.getRunningAppProcesses()) {
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        if (null == activityManager) {
+            return null;
+        }
+        for (ActivityManager.RunningAppProcessInfo appProcess : activityManager.getRunningAppProcesses()) {
             if (appProcess.processName.startsWith(packageName)) {
                 list.add(appProcess.processName);
             }
@@ -156,11 +157,14 @@ import java.util.List;
     /**
      * 获取当前运行界面的包名
      */
-    @SuppressWarnings("deprecation") @Deprecated public static String getTopPackageName(
-            @NonNull Context context) {
-        ActivityManager activityManager = (ActivityManager) context.getSystemService(
-                Context.ACTIVITY_SERVICE);
-        ComponentName cn = activityManager.getRunningTasks(1).get(0).topActivity;
-        return cn.getPackageName();
+    @SuppressWarnings("deprecation")
+    @Deprecated
+    public static String getTopPackageName(@NonNull Context context) {
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        if (activityManager != null) {
+            ComponentName cn = activityManager.getRunningTasks(1).get(0).topActivity;
+            return cn.getPackageName();
+        }
+        return null;
     }
 }

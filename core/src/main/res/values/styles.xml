@@ -1,8 +1,8 @@
 <resources>
 
     <style name="AppDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="colorAccent">@color/accent_material_light</item>
-        <item name="android:textColorPrimary">@color/primary_text</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/colorPrimary</item>
         <item name="android:background">@color/white</item>
     </style>
 
@@ -23,7 +23,11 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
-    <style name="EasyPermissions" parent="Theme.AppCompat.Light.DarkActionBar"/>
+    <style name="EasyPermissions" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
 
     <style name="EasyPermissions.Transparent">
         <item name="android:windowIsTranslucent">true</item>

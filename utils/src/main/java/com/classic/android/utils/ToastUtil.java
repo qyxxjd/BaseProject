@@ -12,7 +12,8 @@ import android.widget.Toast;
  * 创 建 人: 续写经典
  * 创建时间: 2015/11/4 17:26
  */
-@SuppressWarnings("unused") public final class ToastUtil {
+@SuppressWarnings({"unused", "WeakerAccess"})
+public final class ToastUtil {
 
     private ToastUtil() { }
 

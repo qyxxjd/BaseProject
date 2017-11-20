@@ -1,9 +1,7 @@
 package com.classic.android.permissions.helper;
 
 import android.app.FragmentManager;
-import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 
 import com.classic.android.permissions.RationaleDialogFragment;
 
@@ -19,7 +17,6 @@ public abstract class BaseFrameworkPermissionsHelper<T> extends PermissionHelper
     public abstract FragmentManager getFragmentManager();
 
     @Override
-    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
     public void showRequestPermissionRationale(@NonNull String rationale,
                                                int positiveButton,
                                                int negativeButton,
@@ -27,6 +24,6 @@ public abstract class BaseFrameworkPermissionsHelper<T> extends PermissionHelper
                                                @NonNull String... perms) {
         RationaleDialogFragment
                 .newInstance(positiveButton, negativeButton, rationale, requestCode, perms)
-                .show(getFragmentManager(), RationaleDialogFragment.TAG);
+                .showAllowingStateLoss(getFragmentManager(), RationaleDialogFragment.TAG);
     }
 }

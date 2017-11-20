@@ -12,11 +12,11 @@ public class ImageFragment extends BaseFragment {
 
     @Override public void onFragmentShow() {
         super.onFragmentShow();
-        ToastUtil.showToast(getActivity(), "ImageFragment --> onFragmentShow()");
+        ToastUtil.showToast(mAppContext, "ImageFragment --> onFragmentShow()");
     }
 
     @Override public void onFragmentHide() {
         super.onFragmentHide();
-        ToastUtil.showToast(getActivity(), "ImageFragment --> onFragmentHide()");
+        ToastUtil.showToast(mAppContext, "ImageFragment --> onFragmentHide()");
     }
 }

@@ -31,7 +31,9 @@ import android.widget.EditText;
         InputMethodManager imm = (InputMethodManager) view.getContext()
                                                           .getSystemService(
                                                                   Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(view, InputMethodManager.SHOW_FORCED);
+        if (imm != null) {
+            imm.showSoftInput(view, InputMethodManager.SHOW_FORCED);
+        }
     }
 
     /**
@@ -46,7 +48,9 @@ import android.widget.EditText;
         InputMethodManager imm = (InputMethodManager) view.getContext()
                                                           .getSystemService(
                                                                   Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
     /**
@@ -55,7 +59,9 @@ import android.widget.EditText;
     public static void toggle(@NonNull Context context) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(
                 Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+        if (imm != null) {
+            imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+        }
     }
 
     /**

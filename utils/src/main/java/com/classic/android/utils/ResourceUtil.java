@@ -26,7 +26,8 @@ import java.util.List;
  * 创 建 人: 续写经典
  * 创建时间: 2015/11/3 17:26
  */
-@SuppressWarnings({"unused", "WeakerAccess"}) public final class ResourceUtil {
+@SuppressWarnings({"unused", "WeakerAccess"})
+public final class ResourceUtil {
 
     private static final String CHARSET_NAME = "UTF-8";
 
@@ -35,14 +36,12 @@ import java.util.List;
     /**
      * 读取Assets下的字符串列表
      */
-    public static List<String> getListFromAssets(
-            @NonNull Context context, @NonNull String fileName) {
+    public static List<String> getListFromAssets(@NonNull Context context, @NonNull String fileName) {
         List<String> fileContent = new ArrayList<>();
         try {
-            InputStreamReader in = new InputStreamReader(
-                    context.getResources().getAssets().open(fileName), CHARSET_NAME);
+            InputStreamReader in = new InputStreamReader(context.getResources().getAssets().open(fileName), CHARSET_NAME);
             BufferedReader br = new BufferedReader(in);
-            String         line;
+            String line;
             while ((line = br.readLine()) != null) {
                 fileContent.add(line);
             }
@@ -58,11 +57,10 @@ import java.util.List;
      * 读取Raw下的字符串列表
      */
     public static List<String> getListFromRaw(@NonNull Context context, int resId) {
-        List<String>   fileContent = new ArrayList<>();
+        List<String> fileContent = new ArrayList<>();
         BufferedReader reader;
         try {
-            InputStreamReader in = new InputStreamReader(
-                    context.getResources().openRawResource(resId), CHARSET_NAME);
+            InputStreamReader in = new InputStreamReader(context.getResources().openRawResource(resId), CHARSET_NAME);
             reader = new BufferedReader(in);
             String line;
             while ((line = reader.readLine()) != null) {
@@ -95,16 +93,15 @@ import java.util.List;
      * @param encoding the encoding
      * @return the string
      */
-    public static String readAssetsByName(
-            @NonNull Context context, @NonNull String name, @NonNull String encoding) {
-        String            text        = null;
+    public static String readAssetsByName(@NonNull Context context, @NonNull String name, @NonNull String encoding) {
+        String text = null;
         InputStreamReader inputReader = null;
-        BufferedReader    bufReader   = null;
+        BufferedReader bufReader = null;
         try {
             inputReader = new InputStreamReader(context.getAssets().open(name), encoding);
             bufReader = new BufferedReader(inputReader);
-            String       line;
-            StringBuffer buffer = new StringBuffer();
+            String line;
+            StringBuilder buffer = new StringBuilder();
             while ((line = bufReader.readLine()) != null) {
                 buffer.append(line);
             }
@@ -137,12 +134,11 @@ import java.util.List;
      * @return the string
      */
     public static String readRawByName(@NonNull Context context, int id, @NonNull String encoding) {
-        String            text        = null;
+        String text = null;
         InputStreamReader inputReader = null;
-        BufferedReader    bufReader   = null;
+        BufferedReader bufReader = null;
         try {
-            inputReader = new InputStreamReader(context.getResources().openRawResource(id),
-                                                encoding);
+            inputReader = new InputStreamReader(context.getResources().openRawResource(id), encoding);
             bufReader = new BufferedReader(inputReader);
             String line;
             //noinspection StringBufferMayBeStringBuilder
@@ -170,7 +166,7 @@ import java.util.List;
         Bitmap bit = null;
         try {
             AssetManager assetManager = context.getAssets();
-            InputStream  is           = assetManager.open(fileName);
+            InputStream is = assetManager.open(fileName);
             bit = BitmapFactory.decodeStream(is);
         } catch (Exception e) {
             e.printStackTrace();
@@ -185,12 +181,11 @@ import java.util.List;
      * @param fileName the file name
      * @return Drawable 图片
      */
-    public static Drawable getDrawableFromAsset(
-            @NonNull Context context, @NonNull String fileName) {
+    public static Drawable getDrawableFromAsset(@NonNull Context context, @NonNull String fileName) {
         Drawable drawable = null;
         try {
             AssetManager assetManager = context.getAssets();
-            InputStream  is           = assetManager.open(fileName);
+            InputStream is = assetManager.open(fileName);
             drawable = Drawable.createFromStream(is, null);
         } catch (Exception e) {
             e.printStackTrace();
@@ -203,14 +198,13 @@ import java.util.List;
      *
      * @param outDir 完整sd卡路径
      */
-    public static void copyAssets2SD(
-            @NonNull Context context, @NonNull String assetDir, @NonNull String outDir) {
-        String[]     files;
-        InputStream  is = null;
+    public static void copyAssets2SD(@NonNull Context context, @NonNull String assetDir, @NonNull String outDir) {
+        String[] files;
+        InputStream is = null;
         OutputStream os = null;
         try {
             files = context.getAssets().list(assetDir);
-            File    outDirFile   = new File(outDir);
+            File outDirFile = new File(outDir);
             boolean isDirCreated = false;
             if (!outDirFile.exists()) {
                 isDirCreated = outDirFile.mkdirs();
@@ -236,7 +230,7 @@ import java.util.List;
                     if (outFile.createNewFile()) {
                         os = new FileOutputStream(outFile);
                         byte[] buf = new byte[1024];
-                        int    len;
+                        int len;
                         while ((len = is.read(buf)) > 0) {
                             os.write(buf, 0, len);
                         }

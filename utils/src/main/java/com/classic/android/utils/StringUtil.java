@@ -8,7 +8,8 @@ package com.classic.android.utils;
  * 创 建 人: 续写经典
  * 创建时间: 2015/11/4 17:26
  */
-@SuppressWarnings({"unused", "WeakerAccess"}) public final class StringUtil {
+@SuppressWarnings({"unused", "WeakerAccess"})
+public final class StringUtil {
 
     private StringUtil() { }
 
@@ -43,7 +44,7 @@ package com.classic.android.utils;
      */
     public static Boolean isNumberLetter(String str) {
         Boolean isNoLetter = false;
-        String  expr       = "^[A-Za-z0-9]+$";
+        String expr = "^[A-Za-z0-9]+$";
         if (str.matches(expr)) {
             isNoLetter = true;
         }
@@ -58,7 +59,7 @@ package com.classic.android.utils;
      */
     public static Boolean isNumber(String str) {
         Boolean isNumber = false;
-        String  expr     = "^[0-9]+$";
+        String expr = "^[0-9]+$";
         if (str.matches(expr)) {
             isNumber = true;
         }
@@ -73,7 +74,7 @@ package com.classic.android.utils;
      */
     public static Boolean isChinese(String str) {
         Boolean isChinese = true;
-        String  chinese   = "[\u0391-\uFFE5]";
+        String chinese = "[\u0391-\uFFE5]";
         if (!isEmpty(str)) {
             //获取字段值的长度，如果含中文字符，则每个中文字符长度为2，否则为1
             for (int i = 0; i < str.length(); i++) {
@@ -96,7 +97,7 @@ package com.classic.android.utils;
      */
     public static Boolean isContainChinese(String str) {
         Boolean isChinese = false;
-        String  chinese   = "[\u0391-\uFFE5]";
+        String chinese = "[\u0391-\uFFE5]";
         if (!isEmpty(str)) {
             //获取字段值的长度，如果含中文字符，则每个中文字符长度为2，否则为1
             for (int i = 0; i < str.length(); i++) {
@@ -114,9 +115,9 @@ package com.classic.android.utils;
     /**
      * 检测String是否全是中文
      */
-    public static boolean checkNameChese(String name) {
-        boolean res   = true;
-        char[]  cTemp = name.toCharArray();
+    public static boolean checkNameChinese(String name) {
+        boolean res = true;
+        char[] cTemp = name.toCharArray();
 
         for (int i = 0; i < name.length(); i++) {
             if (!isChinese(cTemp[i])) {
@@ -137,18 +138,16 @@ package com.classic.android.utils;
                 return false;
             }
         }
-        Character.UnicodeBlock ub = Character.UnicodeBlock.of(c);
-        return (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS ||
-                ub == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS ||
-                ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A ||
-                ub == Character.UnicodeBlock.GENERAL_PUNCTUATION ||
-                ub == Character.UnicodeBlock.CJK_SYMBOLS_AND_PUNCTUATION ||
-                ub == Character.UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS);
+        Character.UnicodeBlock unicodeBlock = Character.UnicodeBlock.of(c);
+        return (unicodeBlock == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS ||
+                unicodeBlock == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS ||
+                unicodeBlock == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A ||
+                unicodeBlock == Character.UnicodeBlock.GENERAL_PUNCTUATION ||
+                unicodeBlock == Character.UnicodeBlock.CJK_SYMBOLS_AND_PUNCTUATION ||
+                unicodeBlock == Character.UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS);
     }
 
-    private static char[] chineseParam = new char[] {'」', '，', '。', '？', '…', '：', '～', '【', '＃',
-                                                     '、', '％', '＊', '＆', '＄', '（', '‘', '’', '“',
-                                                     '”', '『', '〔', '｛', '【', '￥', '￡', '‖', '〖',
-                                                     '《', '「', '》', '〗', '】', '｝', '〕', '』', '”',
-                                                     '）', '！', '；', '—'};
+    private static char[] chineseParam = new char[]{'」', '，', '。', '？', '…', '：', '～', '【',
+            '＃', '、', '％', '＊', '＆', '＄', '（', '‘', '’', '“', '”', '『', '〔', '｛', '【', '￥',
+            '￡', '‖', '〖', '《', '「', '》', '〗', '】', '｝', '〕', '』', '”', '）', '！', '；', '—'};
 }

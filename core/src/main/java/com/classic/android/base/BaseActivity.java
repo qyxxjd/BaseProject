@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -34,13 +35,13 @@ import java.util.List;
     protected Activity     mActivity;
     protected Context      mAppContext;
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         stateChange(ActivityEvent.CREATE);
         mAppContext = getApplicationContext();
         mActivity = this;
-        initPre();
         BaseActivityStack.getInstance().addActivity(this);
+        onSetContentViewBefore();
         setContentView(getLayoutResId());
         SharedPreferencesUtil spUtil = new SharedPreferencesUtil(this, SP_NAME);
         final String simpleName = this.getClass().getSimpleName();
@@ -50,7 +51,6 @@ import java.util.List;
         }
         initData();
         initView(savedInstanceState);
-        register();
     }
 
     @Override public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
@@ -61,11 +61,17 @@ import java.util.List;
 
     @Override public void onFirst() { }
 
-    @Override public void initPre() { }
+    @Override public void onSetContentViewBefore() { }
+
+    /**
+     * Version 1.5 已废弃，请使用{@link #onSetContentViewBefore()}
+     */
+    @Deprecated
+    @Override public void initPre() { onSetContentViewBefore(); }
 
     @Override public void initData() { }
 
-    @Override public void initView(Bundle savedInstanceState) { }
+    @Override public void initView(@Nullable Bundle savedInstanceState) { }
 
     @Override public void showProgress() { }
 
@@ -75,7 +81,7 @@ import java.util.List;
 
     @Override public void unRegister() { }
 
-    @Override public void viewClick(View v) { }
+    @Override public void viewClick(@NonNull View v) { }
 
     @Override public void onPermissionsGranted(int requestCode, List<String> perms) { }
 
@@ -130,22 +136,23 @@ import java.util.List;
     @Override protected void onResume() {
         super.onResume();
         stateChange(ActivityEvent.RESUME);
+        register();
     }
 
     @Override protected void onPause() {
-        super.onPause();
         stateChange(ActivityEvent.PAUSE);
+        super.onPause();
+        unRegister();
     }
 
     @Override protected void onStop() {
-        super.onStop();
         stateChange(ActivityEvent.STOP);
+        super.onStop();
     }
 
     @Override protected void onDestroy() {
-        unRegister();
-        super.onDestroy();
         stateChange(ActivityEvent.DESTROY);
+        super.onDestroy();
         BaseActivityStack.getInstance().finishActivity(this);
     }
 
@@ -193,7 +200,7 @@ import java.util.List;
             mCurrentFragment.onFragmentHide();
         }
         mCurrentFragment = targetFragment;
-        transaction.commit();
+        transaction.commitAllowingStateLoss();
     }
 
     void stateChange(@ActivityEvent int event) {

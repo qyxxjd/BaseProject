@@ -14,10 +14,11 @@ import okio.Source;
  * 应用名称: BaseProject
  * 包 名 称: com.classic.android.http.download
  *
- * 文件描述: 扩展了下载进度回调的ResponseBody {https://github.com/square/okhttp/blob/master/samples/guide/src/main/java/okhttp3/recipes/Progress.java}
+ * 文件描述: 扩展了下载进度回调的ResponseBody
  * 创 建 人: 续写经典
  * 创建时间: 2016/12/22 10:11
- *
+ * <br/>
+ * {https://github.com/square/okhttp/blob/master/samples/guide/src/main/java/okhttp3/recipes/Progress.java}
  */
 class ProgressResponseBody extends ResponseBody {
     private ResponseBody     mResponseBody;

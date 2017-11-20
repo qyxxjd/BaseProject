@@ -25,11 +25,6 @@ import android.provider.MediaStore;
 
     /**
      * 根据Uri获取绝对路径
-     * @see {http://blog.csdn.net/q445697127/article/details/40537945}
-     *
-     * @param context
-     * @param uri
-     * @return
      */
     @TargetApi(19) public static String toAbsolutePath(Context context, Uri uri) {
         if (context == null || uri == null) return null;

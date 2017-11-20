@@ -8,7 +8,6 @@ import com.classic.adapter.BaseAdapterHelper;
 import com.classic.adapter.CommonAdapter;
 import com.classic.simple.R;
 import com.classic.simple.model.News;
-import com.classic.simple.utils.GlideImageLoad;
 import com.classic.simple.utils.NewsDataSource;
 
 import java.text.SimpleDateFormat;
@@ -42,7 +41,7 @@ public class ListViewActivity extends AppBaseActivity {
 
     private final class MultipleLayoutAdapter extends CommonAdapter<News> {
 
-        public MultipleLayoutAdapter(Context context, int layoutResId, List<News> data) {
+        MultipleLayoutAdapter(Context context, int layoutResId, List<News> data) {
             super(context, layoutResId, data);
         }
 
@@ -78,13 +77,11 @@ public class ListViewActivity extends AppBaseActivity {
                                    String.format(Locale.CHINA, FORMAT_AUTHOR, item.getAuthor()))
                           .setText(R.id.item_single_picture_date,
                                    DATE_FORMAT.format(new Date(item.getReleaseTime())))
-                          .setImageLoad(new GlideImageLoad())
                           .setImageUrl(R.id.item_single_picture_cover,item.getCoverUrl());
                     break;
                 case News.TYPE_MULTIPLE_PICTURE:
                     String[] urls = item.getCoverUrl().split(URL_SEPARATOR);
                     helper.setText(R.id.item_multiple_picture_intro, item.getIntro())
-                          .setImageLoad(new GlideImageLoad())
                           .setImageUrl(R.id.item_multiple_picture_cover_left,urls[0])
                           .setImageUrl(R.id.item_multiple_picture_cover_right, urls[1]);
                     break;

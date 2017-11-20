@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +15,8 @@ import android.view.ViewGroup;
 import com.classic.android.event.FragmentEvent;
 import com.classic.android.interfaces.IFragment;
 import com.classic.android.interfaces.IRegister;
-import com.classic.android.utils.SharedPreferencesUtil;
 import com.classic.android.permissions.EasyPermissions;
+import com.classic.android.utils.SharedPreferencesUtil;
 
 import java.util.List;
 
@@ -44,7 +45,7 @@ import java.util.List;
         mActivity = (Activity)context;
     }
 
-    @Override public void onSaveInstanceState(Bundle outState) {
+    @Override public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(STATE_IS_HIDDEN, isHidden());
     }
@@ -54,7 +55,9 @@ import java.util.List;
         stateChange(FragmentEvent.CREATE);
     }
 
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Override public View onCreateView(@NonNull LayoutInflater inflater,
+                                       @Nullable ViewGroup container,
+                                       @Nullable Bundle savedInstanceState) {
         stateChange(FragmentEvent.CREATE_VIEW);
         View parentView = inflater.inflate(getLayoutResId(), container, false);
         SharedPreferencesUtil spUtil = new SharedPreferencesUtil(mActivity, SP_NAME);
@@ -68,12 +71,16 @@ import java.util.List;
         return parentView;
     }
 
-    @Override public void onViewCreated(View view, Bundle savedInstanceState) {
+    @Override public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         stateChange(FragmentEvent.VIEW_CREATE);
         if (savedInstanceState != null) {
             boolean isHidden = savedInstanceState.getBoolean(STATE_IS_HIDDEN);
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            FragmentManager fm = getFragmentManager();
+            if (null == fm) {
+                return;
+            }
+            FragmentTransaction transaction = fm.beginTransaction();
             if (isHidden) {
                 transaction.hide(this);
                 onFragmentHide();
@@ -81,9 +88,8 @@ import java.util.List;
                 transaction.show(this);
                 onFragmentShow();
             }
-            transaction.commit();
+            transaction.commitAllowingStateLoss();
         }
-        register();
     }
 
     @Override public void onStart() {
@@ -94,32 +100,33 @@ import java.util.List;
     @Override public void onResume() {
         super.onResume();
         stateChange(FragmentEvent.RESUME);
+        register();
     }
 
     @Override public void onPause() {
-        super.onPause();
         stateChange(FragmentEvent.PAUSE);
+        super.onPause();
+        unRegister();
     }
 
     @Override public void onStop() {
-        super.onStop();
         stateChange(FragmentEvent.STOP);
+        super.onStop();
     }
 
     @Override public void onDestroyView() {
-        unRegister();
-        super.onDestroyView();
         stateChange(FragmentEvent.DESTROY_VIEW);
+        super.onDestroyView();
     }
 
     @Override public void onDestroy() {
-        super.onDestroy();
         stateChange(FragmentEvent.DESTROY);
+        super.onDestroy();
     }
 
     @Override public void onDetach() {
-        super.onDetach();
         stateChange(FragmentEvent.DETACH);
+        super.onDetach();
     }
 
     @Override public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
@@ -132,7 +139,7 @@ import java.util.List;
 
     @Override public void initData() { }
 
-    @Override public void initView(View parentView, Bundle savedInstanceState) { }
+    @Override public void initView(@NonNull View parentView, @Nullable Bundle savedInstanceState) { }
 
     @Override public void register() { }
 
@@ -146,7 +153,7 @@ import java.util.List;
 
     @Override public void hideProgress() { }
 
-    @Override public void viewClick(View v) { }
+    @Override public void viewClick(@NonNull View v) { }
 
     @Override public void onPermissionsGranted(int requestCode, List<String> perms) { }
 

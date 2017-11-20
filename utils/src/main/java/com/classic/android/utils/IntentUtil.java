@@ -1,6 +1,7 @@
 package com.classic.android.utils;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -23,7 +24,8 @@ import java.io.File;
  * 创 建 人: 续写经典
  * 创建时间: 2015/11/4 17:26
  */
-@SuppressWarnings("unused") public final class IntentUtil {
+@SuppressWarnings({"unused", "SpellCheckingInspection"})
+public final class IntentUtil {
     private static final String TAG = "IntentUtil";
 
     private IntentUtil() { }
@@ -39,6 +41,7 @@ import java.io.File;
      * 直接拨号
      * 需要权限：android.permission.CALL_PHONE
      */
+    @SuppressLint("MissingPermission")
     public static void call(@NonNull Context context, @NonNull String phoneNumber) {
         Intent intentPhone = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNumber));
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) ==
@@ -64,8 +67,8 @@ import java.io.File;
 
     /** 发送短信 */
     public static void sendSms(@NonNull Context context, @NonNull String smsBody) {
-        Uri    smsToUri = Uri.parse("smsto:");
-        Intent intent   = new Intent(Intent.ACTION_SENDTO, smsToUri);
+        Uri smsToUri = Uri.parse("smsto:");
+        Intent intent = new Intent(Intent.ACTION_SENDTO, smsToUri);
         intent.putExtra("sms_body", smsBody);
         context.startActivity(intent);
     }
@@ -73,8 +76,8 @@ import java.io.File;
     /** 发送短信 */
     public static void sendSms(@NonNull Context context, @NonNull String phone,
                                @NonNull String smsBody) {
-        Uri    smsToUri = Uri.parse("smsto:" + phone);
-        Intent intent   = new Intent(Intent.ACTION_SENDTO, smsToUri);
+        Uri smsToUri = Uri.parse("smsto:" + phone);
+        Intent intent = new Intent(Intent.ACTION_SENDTO, smsToUri);
         intent.putExtra("sms_body", smsBody);
         context.startActivity(intent);
     }
@@ -86,9 +89,10 @@ import java.io.File;
     }
 
     /** 跳转到网络设置界面 */
+    @SuppressLint("ObsoleteSdkInt")
     public static void settingNetwork(@NonNull Context context) {
         Intent intent;
-        if (Build.VERSION.SDK_INT > 10) {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
             intent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
         } else {
             intent = new Intent();
@@ -100,10 +104,11 @@ import java.io.File;
     /**
      * 跳转到系统程序详细信息界面
      */
+    @SuppressLint("ObsoleteSdkInt")
     public static void startInstalledAppDetails(
             @NonNull Context context, @NonNull String packageName) {
-        Intent intent     = new Intent();
-        int    sdkVersion = Build.VERSION.SDK_INT;
+        Intent intent = new Intent();
+        int sdkVersion = Build.VERSION.SDK_INT;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
             intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
             intent.setData(Uri.fromParts("package", packageName, null));
@@ -163,7 +168,7 @@ import java.io.File;
             @NonNull Context context, @NonNull String apkPath, String authority) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        Uri  uri;
+        Uri uri;
         File file = new File(apkPath);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             uri = FileProvider.getUriForFile(context.getApplicationContext(), authority, file);
@@ -200,22 +205,22 @@ import java.io.File;
     /**
      * 文件选择
      *
-     * @param context
+     * @param activity Activity
      * @param mimeType mime类型
      * @param title 文件选择标题
      * @param fileChooserCode startActivityForResult requestCode
      * @param activityNotFoundHint 未找到系统默认文件选择错误提示
      */
-    public static void showFileChooser(@NonNull Activity context, String mimeType,
+    public static void showFileChooser(@NonNull Activity activity, String mimeType,
                                        CharSequence title, int fileChooserCode,
                                        String activityNotFoundHint) {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType(mimeType);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         try {
-            context.startActivityForResult(Intent.createChooser(intent, title), fileChooserCode);
+            activity.startActivityForResult(Intent.createChooser(intent, title), fileChooserCode);
         } catch (android.content.ActivityNotFoundException ex) {
-            ToastUtil.showToast(context.getApplicationContext(), activityNotFoundHint);
+            ToastUtil.showToast(activity.getApplicationContext(), activityNotFoundHint);
         }
     }
 }

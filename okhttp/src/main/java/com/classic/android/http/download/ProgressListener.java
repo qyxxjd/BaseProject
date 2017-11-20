@@ -22,7 +22,7 @@ public interface ProgressListener {
 
     /**
      * 下载完成
-     * @param file
+     * @param file 已下载的文件
      */
     void onSuccess(File file);
 

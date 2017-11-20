@@ -36,7 +36,7 @@ import java.util.List;
     private WifiManager mWifiManager;
 
     private WifiHelper(Context context) {
-        mWifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        mWifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
     }
 
     public static WifiHelper getInstance(@NonNull Context context) {

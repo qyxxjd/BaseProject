@@ -2,18 +2,14 @@ package com.classic.android.http.download;
 
 import android.support.annotation.NonNull;
 
-import com.classic.android.rx.RxUtil;
+import com.classic.android.http.function.FileFunction;
+import com.classic.android.rx.RxTransformer;
+import com.classic.android.rx.observer.AutoObserver;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
 import okhttp3.OkHttpClient;
-import okhttp3.ResponseBody;
-import okio.BufferedSink;
-import okio.Okio;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
@@ -47,7 +43,8 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
  *     });
  * </pre>
  */
-@SuppressWarnings("unused") public final class DownloadUtil {
+@SuppressWarnings({"unused", "WeakerAccess"})
+public final class DownloadUtil {
     private static final int    TIMEOUT   = 30;
     private static final String SEPARATOR = "/";
 
@@ -78,22 +75,9 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
                                                         .build();
         retrofit.create(DownloadApi.class)
                 .download(url)
-                .map(new Function<ResponseBody, File>() {
-                    @Override public File apply(@io.reactivex.annotations.NonNull ResponseBody responseBody)
-                            throws Exception {
-                        BufferedSink sink = Okio.buffer(Okio.sink(file));
-                        sink.writeAll(responseBody.source());
-                        sink.close();
-                        return file;
-                    }
-                })
-                .compose(RxUtil.<File>applySchedulers(RxUtil.IO_TRANSFORMER))
-                .subscribe(new Observer<File>() {
-                    Disposable disposable;
-                    @Override public void onSubscribe(Disposable d) {
-                        disposable = d;
-                    }
-
+                .map(new FileFunction(file))
+                .compose(RxTransformer.<File>applySchedulers(RxTransformer.Observable.IO))
+                .subscribe(new AutoObserver<File>() {
                     @Override public void onNext(File file) {
                         if (null != listener) {
                             listener.onSuccess(file);
@@ -104,12 +88,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
                         if (null != listener) {
                             listener.onFailure(e);
                         }
-                    }
-
-                    @Override public void onComplete() {
-                        if (null != disposable) {
-                            disposable.dispose();
-                        }
+                        super.onError(e);
                     }
                 });
     }

@@ -2,8 +2,10 @@ package com.classic.simple.app;
 
 import android.app.Application;
 
+import com.classic.adapter.Adapter;
 import com.classic.android.BasicProject;
 import com.classic.simple.BuildConfig;
+import com.classic.simple.utils.GlideImageLoad;
 import com.elvishew.xlog.LogLevel;
 
 public class ClassicApplication extends Application {
@@ -19,5 +21,6 @@ public class ClassicApplication extends Application {
                 .setLog(BuildConfig.DEBUG ? LogLevel.ALL : LogLevel.NONE);
 
         BasicProject.config(builder);
+        Adapter.config(new Adapter.Builder().setImageLoad(new GlideImageLoad()));
     }
 }

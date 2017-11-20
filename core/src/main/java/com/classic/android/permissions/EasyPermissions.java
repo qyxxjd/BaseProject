@@ -15,7 +15,6 @@
  */
 package com.classic.android.permissions;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -35,9 +34,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Utility to request and check System permissions for apps targeting Android M (API >= 23).
+ * Utility to request and check System permissions for apps targeting Android M (API &gt;= 23).
  */
-public class EasyPermissions {
+@SuppressWarnings({"unused", "WeakerAccess"})
+public final class EasyPermissions {
+
+    private EasyPermissions() {
+        // No instance.
+    }
 
     /**
      * Callback interface to receive the results of {@code EasyPermissions.requestPermissions()}
@@ -57,10 +61,10 @@ public class EasyPermissions {
      * Check if the calling context has a set of permissions.
      *
      * @param context the calling context.
-     * @param perms   one ore more permissions, such as {@link Manifest.permission#CAMERA}.
+     * @param perms   one ore more permissions, such as {@link android.Manifest.permission#CAMERA}.
      * @return true if all permissions are already granted, false if at least one permission is not
      * yet granted.
-     * @see Manifest.permission
+     * @see android.Manifest.permission
      */
     public static boolean hasPermissions(Context context, @NonNull String... perms) {
         // Always return true for SDK < M, let the system deal with the permissions
@@ -79,7 +83,7 @@ public class EasyPermissions {
 
         for (String perm : perms) {
             if (ContextCompat.checkSelfPermission(context, perm)
-                != PackageManager.PERMISSION_GRANTED) {
+                    != PackageManager.PERMISSION_GRANTED) {
                 return false;
             }
         }
@@ -89,17 +93,19 @@ public class EasyPermissions {
 
     /**
      * Request permissions from an Activity with standard OK/Cancel buttons.
+     *
      * @see #requestPermissions(Activity, String, int, int, int, String...)
      */
     public static void requestPermissions(
             @NonNull Activity host, @NonNull String rationale,
             int requestCode, @NonNull String... perms) {
         requestPermissions(host, rationale, android.R.string.ok, android.R.string.cancel,
-                           requestCode, perms);
+                requestCode, perms);
     }
 
     /**
      * Request permissions from a Support Fragment with standard OK/Cancel buttons.
+     *
      * @see #requestPermissions(Activity, String, int, int, int, String...)
      */
     public static void requestPermissions(
@@ -107,11 +113,12 @@ public class EasyPermissions {
             int requestCode, @NonNull String... perms) {
 
         requestPermissions(host, rationale, android.R.string.ok, android.R.string.cancel,
-                           requestCode, perms);
+                requestCode, perms);
     }
 
     /**
      * Request permissions from a standard Fragment with standard OK/Cancel buttons.
+     *
      * @see #requestPermissions(Activity, String, int, int, int, String...)
      */
     public static void requestPermissions(
@@ -119,7 +126,7 @@ public class EasyPermissions {
             int requestCode, @NonNull String... perms) {
 
         requestPermissions(host, rationale, android.R.string.ok, android.R.string.cancel,
-                           requestCode, perms);
+                requestCode, perms);
     }
 
     /**
@@ -130,21 +137,22 @@ public class EasyPermissions {
      *                       will be displayed if the user rejects the request the first time.
      * @param positiveButton custom text for positive button
      * @param negativeButton custom text for negative button
-     * @param requestCode    request code to track this request, must be < 256.
+     * @param requestCode    request code to track this request, must be &lt; 256.
      * @param perms          a set of permissions to be requested.
-     * @see Manifest.permission
+     * @see android.Manifest.permission
      */
     public static void requestPermissions(
             @NonNull Activity host, @NonNull String rationale,
             @StringRes int positiveButton, @StringRes int negativeButton,
             int requestCode, @NonNull String... perms) {
         requestPermissions(PermissionHelper.newInstance(host), rationale,
-                           positiveButton, negativeButton,
-                           requestCode, perms);
+                positiveButton, negativeButton,
+                requestCode, perms);
     }
 
     /**
      * Request permissions from a Support Fragment.
+     *
      * @see #requestPermissions(Activity, String, int, int, int, String...)
      */
     public static void requestPermissions(
@@ -152,8 +160,8 @@ public class EasyPermissions {
             @StringRes int positiveButton, @StringRes int negativeButton,
             int requestCode, @NonNull String... perms) {
         requestPermissions(PermissionHelper.newInstance(host), rationale,
-                           positiveButton, negativeButton,
-                           requestCode, perms);
+                positiveButton, negativeButton,
+                requestCode, perms);
     }
 
     /**
@@ -164,8 +172,8 @@ public class EasyPermissions {
             @StringRes int positiveButton, @StringRes int negativeButton,
             int requestCode, @NonNull String... perms) {
         requestPermissions(PermissionHelper.newInstance(host), rationale,
-                           positiveButton, negativeButton,
-                           requestCode, perms);
+                positiveButton, negativeButton,
+                requestCode, perms);
     }
 
     private static void requestPermissions(
@@ -181,7 +189,7 @@ public class EasyPermissions {
 
         // Request permissions
         helper.requestPermissions(rationale, positiveButton,
-                                  negativeButton, requestCode, perms);
+                negativeButton, requestCode, perms);
     }
 
     /**
@@ -250,16 +258,16 @@ public class EasyPermissions {
     public static boolean somePermissionPermanentlyDenied(@NonNull Activity host,
                                                           @NonNull List<String> deniedPermissions) {
         return PermissionHelper.newInstance(host)
-                               .somePermissionPermanentlyDenied(deniedPermissions);
+                .somePermissionPermanentlyDenied(deniedPermissions);
     }
 
     /**
-     * @see #somePermissionPermanentlyDenied(Activity, List).
+     * @see #somePermissionPermanentlyDenied(Activity, List)
      */
     public static boolean somePermissionPermanentlyDenied(@NonNull Fragment host,
                                                           @NonNull List<String> deniedPermissions) {
         return PermissionHelper.newInstance(host)
-                               .somePermissionPermanentlyDenied(deniedPermissions);
+                .somePermissionPermanentlyDenied(deniedPermissions);
     }
 
     /**
@@ -268,7 +276,7 @@ public class EasyPermissions {
     public static boolean somePermissionPermanentlyDenied(@NonNull android.app.Fragment host,
                                                           @NonNull List<String> deniedPermissions) {
         return PermissionHelper.newInstance(host)
-                               .somePermissionPermanentlyDenied(deniedPermissions);
+                .somePermissionPermanentlyDenied(deniedPermissions);
     }
 
     /**
@@ -284,7 +292,7 @@ public class EasyPermissions {
     }
 
     /**
-     * @see #permissionPermanentlyDenied(Activity, String).
+     * @see #permissionPermanentlyDenied(Activity, String)
      */
     public static boolean permissionPermanentlyDenied(@NonNull Fragment host,
                                                       @NonNull String deniedPermission) {
@@ -302,7 +310,7 @@ public class EasyPermissions {
     /**
      * See if some denied permission has been permanently denied.
      *
-     * @param host requesting context.
+     * @param host  requesting context.
      * @param perms array of permissions.
      * @return true if the user has previously denied any of the {@code perms} and we should show a
      * rationale, false otherwise.
@@ -329,11 +337,12 @@ public class EasyPermissions {
     }
 
     /**
-     * Run permission callbacks on an object that requested permissions but already has them
-     * by simulating {@link PackageManager#PERMISSION_GRANTED}.
-     * @param object the object requesting permissions.
+     * Run permission callbacks on an object that requested permissions but already has them by
+     * simulating {@link PackageManager#PERMISSION_GRANTED}.
+     *
+     * @param object      the object requesting permissions.
      * @param requestCode the permission request code.
-     * @param perms a list of permissions requested.
+     * @param perms       a list of permissions requested.
      */
     private static void notifyAlreadyHasPermissions(@NonNull Object object,
                                                     int requestCode,
@@ -348,8 +357,9 @@ public class EasyPermissions {
 
     /**
      * Find all methods annotated with {@link AfterPermissionGranted} on a given object with the
-     * correc requestCode argument.
-     * @param object the object with annotated methods.
+     * correct requestCode argument.
+     *
+     * @param object      the object with annotated methods.
      * @param requestCode the requestCode passed to the annotation.
      */
     private static void runAnnotatedMethods(@NonNull Object object, int requestCode) {
@@ -360,14 +370,15 @@ public class EasyPermissions {
 
         while (clazz != null) {
             for (Method method : clazz.getDeclaredMethods()) {
-                if (method.isAnnotationPresent(AfterPermissionGranted.class)) {
+                AfterPermissionGranted ann = method.getAnnotation(AfterPermissionGranted.class);
+                if (ann != null) {
                     // Check for annotated methods with matching request code.
-                    AfterPermissionGranted ann = method.getAnnotation(AfterPermissionGranted.class);
                     if (ann.value() == requestCode) {
                         // Method must be void so that we can invoke it
                         if (method.getParameterTypes().length > 0) {
                             throw new RuntimeException(
-                                    "Cannot execute method " + method.getName() + " because it is non-void method and/or has input parameters.");
+                                    "Cannot execute method " + method.getName() +
+                                    " because it is non-void method and/or has input parameters.");
                         }
 
                         try {
@@ -390,7 +401,7 @@ public class EasyPermissions {
     }
 
     /**
-     * Determine if the project is using the AndroidAnnoations library.
+     * Determine if the project is using the AndroidAnnotations library.
      */
     private static boolean isUsingAndroidAnnotations(@NonNull Object object) {
         if (!object.getClass().getSimpleName().endsWith("_")) {

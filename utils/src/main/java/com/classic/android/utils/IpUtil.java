@@ -34,7 +34,8 @@ import java.util.Enumeration;
  * 创 建 人: 续写经典
  * 创建时间: 2015/11/4 17:26
  */
-@SuppressWarnings("unused") public final class IpUtil {
+@SuppressWarnings({"unused", "SpellCheckingInspection"})
+public final class IpUtil {
 
     private IpUtil() { }
 
@@ -45,14 +46,15 @@ import java.util.Enumeration;
                                  Manifest.permission.ACCESS_WIFI_STATE})
     public static String getWifiIp(@NonNull Context context) {
         // 获取wifi服务
-        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         // 判断wifi是否开启
-        if (!wifiManager.isWifiEnabled()) {
+        if (null != wifiManager && !wifiManager.isWifiEnabled()) {
             wifiManager.setWifiEnabled(true);
+            WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+            int ipAddress = wifiInfo.getIpAddress();
+            return intToIp(ipAddress);
         }
-        WifiInfo wifiInfo  = wifiManager.getConnectionInfo();
-        int      ipAddress = wifiInfo.getIpAddress();
-        return intToIp(ipAddress);
+        return null;
     }
 
     /**

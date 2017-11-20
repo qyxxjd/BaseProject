@@ -8,7 +8,8 @@ import android.support.annotation.NonNull;
  * @author 还如一梦中
  * @version v1.0
  */
-@SuppressWarnings("unused") public final class HtmlUtil {
+@SuppressWarnings({"unused", "WeakerAccess"})
+public final class HtmlUtil {
 
     private HtmlUtil() { }
 
@@ -19,9 +20,8 @@ import android.support.annotation.NonNull;
         if (!hasSpecialChars(text)) {
             return text;
         }
-        //noinspection StringBufferMayBeStringBuilder
-        StringBuffer filtered = new StringBuffer(text.length());
-        char         c;
+        StringBuilder filtered = new StringBuilder(text.length());
+        char c;
         for (int i = 0; i <= text.length() - 1; i++) {
             c = text.charAt(i);
             switch (c) {
@@ -49,7 +49,7 @@ import android.support.annotation.NonNull;
      */
     public static boolean hasSpecialChars(@NonNull String text) {
         boolean flag = false;
-        char    c;
+        char c;
         for (int i = 0; i <= text.length() - 1; i++) {
             c = text.charAt(i);
             switch (c) {

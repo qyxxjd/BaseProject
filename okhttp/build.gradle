@@ -6,8 +6,8 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
-        versionCode rootProject.ext.android.libVersionCode
-        versionName '1.9'
+        versionCode projectVersionCode
+        versionName projectVersion
     }
     buildTypes {
         release {
@@ -21,10 +21,10 @@ android {
 }
 
 dependencies {
-    compile rootProject.ext.rxProject
-    compile rootProject.ext.retrofit
-    compile rootProject.ext.okhttp
-    compile rootProject.ext.rxJavaForRetrofit
+    implementation rootProject.ext.rxProject
+    implementation rootProject.ext.retrofit
+    implementation rootProject.ext.okhttp
+    implementation rootProject.ext.rxJavaForRetrofit
 }
 
 //apply from: rootProject.file('gradle/maven.gradle')

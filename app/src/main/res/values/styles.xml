@@ -34,12 +34,12 @@
     </style>
 
     <style name="Item.Intro.Long">
-        <item name="android:minLines">5</item>
-        <item name="android:maxLines">5</item>
+        <item name="android:minLines">1</item>
+        <item name="android:maxLines">10</item>
     </style>
 
     <style name="Item.Intro.Short">
-        <item name="android:minLines">3</item>
+        <item name="android:minLines">1</item>
         <item name="android:maxLines">3</item>
     </style>
 </resources>

@@ -12,11 +12,11 @@ public class TextFragment extends BaseFragment {
 
     @Override public void onFragmentShow() {
         super.onFragmentShow();
-        ToastUtil.showToast(getActivity(), "TextFragment --> onFragmentShow()");
+        ToastUtil.showToast(mAppContext, "TextFragment --> onFragmentShow()");
     }
 
     @Override public void onFragmentHide() {
         super.onFragmentHide();
-        ToastUtil.showToast(getActivity(), "TextFragment --> onFragmentHide()");
+        ToastUtil.showToast(mAppContext, "TextFragment --> onFragmentHide()");
     }
 }

@@ -1,5 +1,6 @@
 package com.classic.android.utils;
 
+import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,12 +19,10 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 import android.widget.ImageView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 
 /**
  * 应用名称: BaseProject
@@ -33,7 +32,8 @@ import java.io.FileInputStream;
  * 创 建 人: 续写经典
  * 创建时间: 2015/11/4 17:26
  */
-@SuppressWarnings({"unused", "WeakerAccess"}) public final class BitmapUtil {
+@SuppressWarnings({"unused", "WeakerAccess"})
+public final class BitmapUtil {
 
     private BitmapUtil() { }
 
@@ -44,7 +44,7 @@ import java.io.FileInputStream;
      * @return 尺寸数组. 0:width,1:height
      */
     public static float[] getBitmapSize(@NonNull File file) {
-        float[]               size = new float[2];
+        float[] size = new float[2];
         BitmapFactory.Options opts = new BitmapFactory.Options();
         // 设置为true,decodeFile先不创建内存 只获取一些解码边界信息即图片大小信息
         opts.inJustDecodeBounds = true;
@@ -81,13 +81,6 @@ import java.io.FileInputStream;
     /**
      * Bitmap转Drawable
      */
-    public static Drawable bitmap2Drawable(@NonNull Bitmap bitmap) {
-        return bitmap2Drawable(null, bitmap);
-    }
-
-    /**
-     * Bitmap转Drawable
-     */
     public static Drawable bitmap2Drawable(@NonNull Resources res, @NonNull Bitmap bitmap) {
         return new BitmapDrawable(res, bitmap);
     }
@@ -107,13 +100,11 @@ import java.io.FileInputStream;
      *               td.startTransition(200);
      * @return Drawable 转化完成的Drawable对象
      */
-    @SuppressWarnings("ResourceType") public static TransitionDrawable bitmap2TransitionDrawable(
-            @NonNull Bitmap bitmap) {
+    @SuppressWarnings("ResourceType")
+    public static TransitionDrawable bitmap2TransitionDrawable(@NonNull Bitmap bitmap) {
         TransitionDrawable mBitmapDrawable = null;
         try {
-            mBitmapDrawable = new TransitionDrawable(
-                    new Drawable[] {new ColorDrawable(android.R.color.transparent),
-                                    new BitmapDrawable(null, bitmap)});
+            mBitmapDrawable = new TransitionDrawable(new Drawable[]{new ColorDrawable(android.R.color.transparent), new BitmapDrawable(null, bitmap)});
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -127,12 +118,11 @@ import java.io.FileInputStream;
      *                 td.startTransition(200);
      * @return Drawable 转化完成的Drawable对象
      */
-    @SuppressWarnings("ResourceType") public static TransitionDrawable drawable2TransitionDrawable(
-            @NonNull Drawable drawable) {
+    @SuppressWarnings("ResourceType")
+    public static TransitionDrawable drawable2TransitionDrawable(@NonNull Drawable drawable) {
         TransitionDrawable mBitmapDrawable = null;
         try {
-            mBitmapDrawable = new TransitionDrawable(
-                    new Drawable[] {new ColorDrawable(android.R.color.transparent), drawable});
+            mBitmapDrawable = new TransitionDrawable(new Drawable[]{new ColorDrawable(android.R.color.transparent), drawable});
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -174,6 +164,7 @@ import java.io.FileInputStream;
     /**
      * 得到bitmap的大小
      */
+    @SuppressLint("ObsoleteSdkInt")
     public static int getBitmapSize(@NonNull Bitmap bitmap) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { //API 19
             return bitmap.getAllocationByteCount();
@@ -186,45 +177,14 @@ import java.io.FileInputStream;
     }
 
     /**
-     * 旋转Bitmap为一定的角度并四周暗化处理.
-     *
-     * @param bitmap  the bitmap
-     * @param degrees the degrees
-     * @return the bitmap
-     */
-    public static Bitmap rotateBitmapTranslate(@NonNull Bitmap bitmap, float degrees) {
-        Bitmap mBitmap = null;
-        int    width;
-        int    height;
-        try {
-            Matrix matrix = new Matrix();
-            if ((degrees / 90) % 2 != 0) {
-                width = bitmap.getWidth();
-                height = bitmap.getHeight();
-            } else {
-                width = bitmap.getHeight();
-                height = bitmap.getWidth();
-            }
-            int cx = width / 2;
-            int cy = height / 2;
-            matrix.preTranslate(-cx, -cy);
-            matrix.postRotate(degrees);
-            matrix.postTranslate(cx, cy);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return mBitmap;
-    }
-
-    /**
      * 转换图片转换成圆形.
      *
      * @param bitmap 传入Bitmap对象
      * @return the bitmap
      */
     public static Bitmap toRoundBitmap(@NonNull Bitmap bitmap) {
-        int width   = bitmap.getWidth();
-        int height  = bitmap.getHeight();
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
         int roundPx = (width <= height) ? (width / 2) : (height / 2);
         return toRoundBitmap(bitmap, roundPx);
     }
@@ -235,10 +195,10 @@ import java.io.FileInputStream;
      * @param bitmap 传入Bitmap对象
      * @return the bitmap
      */
-    @SuppressWarnings("SuspiciousNameCombination") public static Bitmap toRoundBitmap(
-            @NonNull Bitmap bitmap, int roundPx) {
-        int   width  = bitmap.getWidth();
-        int   height = bitmap.getHeight();
+    @SuppressWarnings("SuspiciousNameCombination")
+    public static Bitmap toRoundBitmap(@NonNull Bitmap bitmap, int roundPx) {
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
         float left;
         float top;
         float right;
@@ -270,13 +230,13 @@ import java.io.FileInputStream;
             dstBottom = height;
         }
 
-        Bitmap      output = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        Canvas      canvas = new Canvas(output);
-        final int   color  = 0xff424242;
-        final Paint paint  = new Paint();
-        final Rect  src    = new Rect((int) left, (int) top, (int) right, (int) bottom);
-        final Rect  dst    = new Rect((int) dstLeft, (int) dstTop, (int) dstRight, (int) dstBottom);
-        final RectF rectF  = new RectF(dst);
+        Bitmap output = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+        final int color = 0xff424242;
+        final Paint paint = new Paint();
+        final Rect src = new Rect((int) left, (int) top, (int) right, (int) bottom);
+        final Rect dst = new Rect((int) dstLeft, (int) dstTop, (int) dstRight, (int) dstBottom);
+        final RectF rectF = new RectF(dst);
         paint.setAntiAlias(true);
         canvas.drawARGB(0, 0, 0, 0);
         paint.setColor(color);
@@ -295,8 +255,8 @@ import java.io.FileInputStream;
     public static Bitmap toReflectionBitmap(@NonNull Bitmap bitmap) {
         try {
             int reflectionGap = 1;
-            int width         = bitmap.getWidth();
-            int height        = bitmap.getHeight();
+            int width = bitmap.getWidth();
+            int height = bitmap.getHeight();
 
             // This will not scale but will flip on the Y axis
             Matrix matrix = new Matrix();
@@ -304,13 +264,11 @@ import java.io.FileInputStream;
 
             // Create a Bitmap with the flip matrix applied to it.
             // We only want the bottom half of the image
-            Bitmap reflectionImage = Bitmap.createBitmap(bitmap, 0, height / 2, width, height / 2,
-                                                         matrix, false);
+            Bitmap reflectionImage = Bitmap.createBitmap(bitmap, 0, height / 2, width, height / 2, matrix, false);
 
             // Create a new bitmap with same width but taller to fit
             // reflection
-            Bitmap bitmapWithReflection = Bitmap.createBitmap(width, (height + height / 2),
-                                                              Bitmap.Config.ARGB_8888);
+            Bitmap bitmapWithReflection = Bitmap.createBitmap(width, (height + height / 2), Bitmap.Config.ARGB_8888);
 
             // Create a new Canvas with the bitmap that's big enough for
             // the image plus gap plus reflection
@@ -318,24 +276,20 @@ import java.io.FileInputStream;
             // Draw in the original image
             canvas.drawBitmap(bitmap, 0, 0, null);
             // Draw in the gap
-            Paint deafaultPaint = new Paint();
-            canvas.drawRect(0, height, width, height + reflectionGap, deafaultPaint);
+            Paint defaultPaint = new Paint();
+            canvas.drawRect(0, height, width, height + reflectionGap, defaultPaint);
             // Draw in the reflection
             canvas.drawBitmap(reflectionImage, 0, height + reflectionGap, null);
             // Create a shader that is a linear gradient that covers the
             // reflection
             Paint paint = new Paint();
-            LinearGradient shader = new LinearGradient(0, bitmap.getHeight(), 0,
-                                                       bitmapWithReflection.getHeight() +
-                                                       reflectionGap, 0x70ffffff, 0x00ffffff,
-                                                       Shader.TileMode.CLAMP);
+            LinearGradient shader = new LinearGradient(0, bitmap.getHeight(), 0, bitmapWithReflection.getHeight() + reflectionGap, 0x70ffffff, 0x00ffffff, Shader.TileMode.CLAMP);
             // Set the paint to use this shader (linear gradient)
             paint.setShader(shader);
             // Set the Transfer mode to be porter duff and destination in
             paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
             // Draw a rectangle using the paint with our linear gradient
-            canvas.drawRect(0, height, width, bitmapWithReflection.getHeight() + reflectionGap,
-                            paint);
+            canvas.drawRect(0, height, width, bitmapWithReflection.getHeight() + reflectionGap, paint);
 
             bitmap = bitmapWithReflection;
         } catch (Exception e) {
@@ -345,67 +299,9 @@ import java.io.FileInputStream;
     }
 
     /**
-     * 等比例缩放图片
-     *
-     * @param pathString 文件路径
-     * @param dstMaxWH   目标文件宽高最大值
-     */
-    public static Bitmap scaleImageByPath(@NonNull String pathString, int dstMaxWH) {
-        Bitmap retBm = null;
-        // 路径为空
-        if (TextUtils.isEmpty(pathString) || dstMaxWH <= 0) {
-            return retBm;
-        }
-        File file = new File(pathString);
-        if (!file.exists()) {
-            return retBm;
-        }
-        try {
-            // 打开源文件
-            Bitmap                srcBitmap;
-            java.io.InputStream   is   = new FileInputStream(pathString);
-            BitmapFactory.Options opts = getOptionsWithInSampleSize(pathString, dstMaxWH);
-            srcBitmap = BitmapFactory.decodeStream(is, null, opts);
-            if (srcBitmap == null) {
-                return retBm;
-            }
-            // 原图片宽高
-            int width  = srcBitmap.getWidth();
-            int height = srcBitmap.getHeight();
-            // 获得缩放因子
-            float scale = 1.f;
-            if (width > dstMaxWH || height > dstMaxWH) {
-                float scaleTemp  = (float) dstMaxWH / (float) width;
-                float scaleTemp2 = (float) dstMaxWH / (float) height;
-                if (scaleTemp > scaleTemp2) {
-                    scale = scaleTemp2;
-                } else {
-                    scale = scaleTemp;
-                }
-            }
-            // 图片缩放
-            Bitmap dstBitmap;
-            if (scale == 1.f) {
-                dstBitmap = srcBitmap;
-            } else {
-                Matrix matrix = new Matrix();
-                matrix.postScale(scale, scale);
-                dstBitmap = Bitmap.createBitmap(srcBitmap, 0, 0, width, height, matrix, true);
-                if (!srcBitmap.isRecycled()) { srcBitmap.recycle(); }
-                srcBitmap = null;
-            }
-            retBm = dstBitmap;
-        } catch (Exception e) {
-            return retBm;
-        }
-        return retBm;
-    }
-
-    /**
      * 按比例取得缩略图
      */
-    public static BitmapFactory.Options getOptionsWithInSampleSize(
-            @NonNull String filePath, int maxWidth) {
+    public static BitmapFactory.Options getOptionsWithInSampleSize(@NonNull String filePath, int maxWidth) {
         BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
         bitmapOptions.inJustDecodeBounds = true; // 只取得outHeight(图片原始高度)和
         // outWidth(图片的原始宽度)而不加载图片

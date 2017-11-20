@@ -1,20 +1,20 @@
 def supportVersion = "27.0.0"
 def retrofitVersion = "2.3.0"
-def okHttpVersion = "3.9.0"
+def okHttpVersion = "3.9.1"
 def butterKnifeVersion = "8.8.1"
+def glideVersion = "4.3.1"
 
-def libVersionCode = 11
-def baseVersion = "1.4"
-def rxVersion = "1.9"
-def httpVersion = "1.9"
-def utilsVersion = "1.0"
+def coreVersion = "1.5"
+def rxVersion = "2.0"
+def httpVersion = "2.0"
+def utilsVersion = "1.1"
 
 ext {
     android = [
             compileSdkVersion: 27,
             buildToolsVersion: "27.0.1",
             minSdkVersion    : 14,
-            targetSdkVersion : 23,
+            targetSdkVersion : 25,
             versionCode      : 1,
             versionName      : "1.0",
             applicationId    : "com.classic.simple"
@@ -29,7 +29,7 @@ ext {
     supportGridLayout = "com.android.support:gridlayout-v7:${supportVersion}"
     supportAnnotations = "com.android.support:support-annotations:${supportVersion}"
 
-    baseProject = "com.classic.android:core:${baseVersion}"
+    coreProject = "com.classic.android:core:${coreVersion}"
     rxProject = "com.classic.android:rxjava:${rxVersion}"
     httpProject = "com.classic.android:okhttp:${httpVersion}"
     utils = "com.classic.android:utils:${utilsVersion}"
@@ -39,7 +39,8 @@ ext {
     //通用适配器
     commonAdapter = "com.classic.adapter:commonadapter:1.9"
     //图片加载
-    glide = "com.github.bumptech.glide:glide:4.3.0"
+    glide = "com.github.bumptech.glide:glide:${glideVersion}"
+    glideCompiler = "com.github.bumptech.glide:compiler:${glideVersion}"
 
     butterknife = "com.jakewharton:butterknife:${butterKnifeVersion}"
     butterknifeCompiler = "com.jakewharton:butterknife-compiler:${butterKnifeVersion}"

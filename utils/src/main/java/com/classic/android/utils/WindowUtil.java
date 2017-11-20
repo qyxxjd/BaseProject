@@ -1,5 +1,6 @@
 package com.classic.android.utils;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -60,12 +61,13 @@ import android.view.WindowManager;
      *
      * @return 顶部状态栏高度
      */
+    @SuppressLint("PrivateApi")
     public static int getStatusBarHeight(@NonNull Context context) {
-        Class<?>                c;
-        Object                  obj;
+        Class<?> c;
+        Object obj;
         java.lang.reflect.Field field;
-        int                     x;
-        int                     statusBarHeight = 0;
+        int x;
+        int statusBarHeight = 0;
         try {
             c = Class.forName("com.android.internal.R$dimen");
             obj = c.newInstance();
@@ -84,9 +86,12 @@ import android.view.WindowManager;
      */
     public static int getScreenWidth(@NonNull Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics outMetrics = new DisplayMetrics();
-        wm.getDefaultDisplay().getMetrics(outMetrics);
-        return outMetrics.widthPixels;
+        if (wm != null) {
+            DisplayMetrics outMetrics = new DisplayMetrics();
+            wm.getDefaultDisplay().getMetrics(outMetrics);
+            return outMetrics.widthPixels;
+        }
+        return 0;
     }
 
     /**
@@ -94,9 +99,12 @@ import android.view.WindowManager;
      */
     public static int getScreenHeight(@NonNull Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics outMetrics = new DisplayMetrics();
-        wm.getDefaultDisplay().getMetrics(outMetrics);
-        return outMetrics.heightPixels;
+        if (wm != null) {
+            DisplayMetrics outMetrics = new DisplayMetrics();
+            wm.getDefaultDisplay().getMetrics(outMetrics);
+            return outMetrics.heightPixels;
+        }
+        return 0;
     }
 
     /**
@@ -105,8 +113,9 @@ import android.view.WindowManager;
     public static int getStatusHeight(@NonNull Context context) {
         int statusHeight = -1;
         try {
-            Class<?> clazz  = Class.forName("com.android.internal.R$dimen");
-            Object   object = clazz.newInstance();
+            @SuppressLint("PrivateApi")
+            Class<?> clazz = Class.forName("com.android.internal.R$dimen");
+            Object object = clazz.newInstance();
             int height = Integer.parseInt(
                     clazz.getField("status_bar_height").get(object).toString());
             statusHeight = context.getResources().getDimensionPixelSize(height);
@@ -123,10 +132,10 @@ import android.view.WindowManager;
         View view = activity.getWindow().getDecorView();
         view.setDrawingCacheEnabled(true);
         view.buildDrawingCache();
-        Bitmap bmp    = view.getDrawingCache();
-        int    width  = getScreenWidth(activity);
-        int    height = getScreenHeight(activity);
-        Bitmap bp     = Bitmap.createBitmap(bmp, 0, 0, width, height);
+        Bitmap bmp = view.getDrawingCache();
+        int width = getScreenWidth(activity);
+        int height = getScreenHeight(activity);
+        Bitmap bp = Bitmap.createBitmap(bmp, 0, 0, width, height);
         view.destroyDrawingCache();
         return bp;
     }
@@ -138,12 +147,12 @@ import android.view.WindowManager;
         View view = activity.getWindow().getDecorView();
         view.setDrawingCacheEnabled(true);
         view.buildDrawingCache();
-        Bitmap bmp   = view.getDrawingCache();
-        Rect   frame = new Rect();
+        Bitmap bmp = view.getDrawingCache();
+        Rect frame = new Rect();
         activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
         int statusBarHeight = frame.top;
 
-        int width  = getScreenWidth(activity);
+        int width = getScreenWidth(activity);
         int height = getScreenHeight(activity);
         Bitmap bp = Bitmap.createBitmap(bmp, 0, statusBarHeight, width, height - statusBarHeight);
         view.destroyDrawingCache();

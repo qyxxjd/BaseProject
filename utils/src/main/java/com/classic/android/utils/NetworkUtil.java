@@ -13,7 +13,7 @@ import android.support.annotation.NonNull;
  * 创 建 人: 续写经典
  * 创建时间: 2015/11/3 17:26
  */
-@SuppressWarnings({"unused", "SpellCheckingInspection", "WeakerAccess"})
+@SuppressWarnings({"unused", "SpellCheckingInspection", "WeakerAccess", "MissingPermission"})
 public final class NetworkUtil {
 
     private NetworkUtil() { }
@@ -27,9 +27,12 @@ public final class NetworkUtil {
      * 网络是否可用
      */
     public static boolean isNetworkAvailable(@NonNull Context context) {
-        ConnectivityManager mgr = (ConnectivityManager) context.getSystemService(
+        ConnectivityManager manager = (ConnectivityManager) context.getSystemService(
                 Context.CONNECTIVITY_SERVICE);
-        NetworkInfo[] info = mgr.getAllNetworkInfo();
+        if (null == manager) {
+            return false;
+        }
+        NetworkInfo[] info = manager.getAllNetworkInfo();
         if (info != null) {
             for (NetworkInfo anInfo : info) {
                 if (anInfo.getState() == NetworkInfo.State.CONNECTED) {
@@ -46,7 +49,10 @@ public final class NetworkUtil {
     public static boolean isNetworkConnected(@NonNull Context context) {
         ConnectivityManager mConnectivityManager = (ConnectivityManager) context.getSystemService(
                 Context.CONNECTIVITY_SERVICE);
-        NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
+        NetworkInfo mNetworkInfo = null;
+        if (mConnectivityManager != null) {
+            mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
+        }
         return mNetworkInfo != null && mNetworkInfo.isAvailable();
     }
 
@@ -56,8 +62,11 @@ public final class NetworkUtil {
     public static boolean isWifiConnected(@NonNull Context context) {
         ConnectivityManager mConnectivityManager = (ConnectivityManager) context.getSystemService(
                 Context.CONNECTIVITY_SERVICE);
-        NetworkInfo mWiFiNetworkInfo = mConnectivityManager.getNetworkInfo(
-                ConnectivityManager.TYPE_WIFI);
+        NetworkInfo mWiFiNetworkInfo = null;
+        if (mConnectivityManager != null) {
+            mWiFiNetworkInfo = mConnectivityManager.getNetworkInfo(
+                    ConnectivityManager.TYPE_WIFI);
+        }
         return mWiFiNetworkInfo != null && mWiFiNetworkInfo.isAvailable();
     }
 
@@ -67,8 +76,11 @@ public final class NetworkUtil {
     public static boolean isMobileConnected(@NonNull Context context) {
         ConnectivityManager mConnectivityManager = (ConnectivityManager) context.getSystemService(
                 Context.CONNECTIVITY_SERVICE);
-        NetworkInfo mMobileNetworkInfo = mConnectivityManager.getNetworkInfo(
-                ConnectivityManager.TYPE_MOBILE);
+        NetworkInfo mMobileNetworkInfo = null;
+        if (mConnectivityManager != null) {
+            mMobileNetworkInfo = mConnectivityManager.getNetworkInfo(
+                    ConnectivityManager.TYPE_MOBILE);
+        }
         return mMobileNetworkInfo != null && mMobileNetworkInfo.isAvailable();
     }
 
@@ -78,7 +90,10 @@ public final class NetworkUtil {
     public static int getAPNType(@NonNull Context context) {
         ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(
                 Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        NetworkInfo networkInfo = null;
+        if (connMgr != null) {
+            networkInfo = connMgr.getActiveNetworkInfo();
+        }
         if (networkInfo == null) {
             return NONE;
         }

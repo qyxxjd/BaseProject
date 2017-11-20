@@ -1,5 +1,6 @@
 package com.classic.android.http.observer;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -27,8 +28,9 @@ import io.reactivex.observers.DisposableObserver;
         extends DisposableObserver<T> {
 
     private static final String TAG = "HttpObserver";
-    private Context mAppContext;
-    private boolean isDebug;
+
+    private final Context mAppContext;
+    private final boolean isDebug;
 
     public HttpObserver(@NonNull Context context) {
         this.mAppContext = context.getApplicationContext();
@@ -38,7 +40,8 @@ import io.reactivex.observers.DisposableObserver;
     private boolean isNetworkAvailable(@NonNull Context context) {
         ConnectivityManager mConnectivityManager = (ConnectivityManager) context.getSystemService(
                 Context.CONNECTIVITY_SERVICE);
-        NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
+        @SuppressLint("MissingPermission")
+        NetworkInfo mNetworkInfo = mConnectivityManager != null ? mConnectivityManager.getActiveNetworkInfo() : null;
         return mNetworkInfo != null && mNetworkInfo.isAvailable();
     }
 

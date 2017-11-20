@@ -20,7 +20,8 @@ import java.util.UUID;
  * 创 建 人: 续写经典
  * 创建时间: 2015/11/4 17:26
  */
-@SuppressWarnings({"unused", "WeakerAccess"}) public final class DeviceUtil {
+@SuppressWarnings({"unused", "WeakerAccess", "MissingPermission", "HardwareIds", "SpellCheckingInspection"})
+public final class DeviceUtil {
     private static final String TAG = "DeviceUtil";
 
     private static volatile DeviceUtil sDeviceUtil;
@@ -28,7 +29,7 @@ import java.util.UUID;
     private String           mAndroidId;
     private TelephonyManager mTelephonyManager;
 
-    @SuppressLint("HardwareIds") private DeviceUtil(Context context) {
+    private DeviceUtil(Context context) {
         mTelephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         mAndroidId = Settings.Secure.getString(context.getContentResolver(),
                                                Settings.Secure.ANDROID_ID);
@@ -106,7 +107,7 @@ import java.util.UUID;
      * 权限： 获取DEVICE_ID需要READ_PHONE_STATE权限
      * </pre>
      */
-    @SuppressLint("HardwareIds") public String getDeviceId() {
+    public String getDeviceId() {
         final String deviceId = mTelephonyManager.getDeviceId();
         return TextUtils.isEmpty(deviceId) ? "" : deviceId;
     }
@@ -114,7 +115,7 @@ import java.util.UUID;
     /**
      * 返回手机号码 (可能为空)
      */
-    @SuppressLint("HardwareIds") public String getNumber() {
+    public String getNumber() {
         final String number = mTelephonyManager.getLine1Number();
         return TextUtils.isEmpty(number) ? "" : number;
     }
@@ -122,7 +123,7 @@ import java.util.UUID;
     /**
      * 返回用户唯一标识，比如GSM网络的IMSI编号
      */
-    @SuppressLint("HardwareIds") public String getSubscriberId() {
+    public String getSubscriberId() {
         final String subscriberId = mTelephonyManager.getSubscriberId();
         return TextUtils.isEmpty(subscriberId) ? "" : subscriberId;
     }
@@ -142,6 +143,7 @@ import java.util.UUID;
      *
      * @return GsmCellLocation
      */
+    @SuppressLint("MissingPermission")
     public GsmCellLocation getGsmCellLocation() {
         return (GsmCellLocation) mTelephonyManager.getCellLocation();
     }
@@ -181,7 +183,7 @@ import java.util.UUID;
      * 返回SIM卡的序列号(IMEI)
      * 注意：对于CDMA设备，返回的是一个空值！
      */
-    @SuppressLint("HardwareIds") public String getSimSerialNumber() {
+    public String getSimSerialNumber() {
         final String simSerialNumber = mTelephonyManager.getSimSerialNumber();
         return TextUtils.isEmpty(simSerialNumber) ? "" : simSerialNumber;
     }
@@ -190,7 +192,7 @@ import java.util.UUID;
      * 返回序列号 (Android 2.3以上可以使用此方法)
      */
     public String getSerialNumber() {
-        final String serialNumber = Build.SERIAL;
+        String serialNumber = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? Build.getSerial() : Build.SERIAL;
         return TextUtils.isEmpty(serialNumber) ? "" : serialNumber;
     }
 

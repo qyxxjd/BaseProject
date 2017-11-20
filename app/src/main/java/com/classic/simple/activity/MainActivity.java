@@ -31,20 +31,22 @@ import butterknife.BindView;
  * 通用适配器示例By RecyclerView
  */
 public class MainActivity extends AppBaseActivity {
-    private static final int    REQUEST_CODE_CAMERA   = 101;
-    private static final String TAG                   = "MainActivity";
+    private static final int REQUEST_CODE_CAMERA = 101;
+    private static final String TAG = "MainActivity";
 
-    @BindView(R.id.main_rv) RecyclerView mRecyclerView;
+    @BindView(R.id.main_rv)
+    RecyclerView mRecyclerView;
 
-    private List<Demo>            mDemos;
+    private List<Demo> mDemos;
     private DoubleClickExitHelper mDoubleClickExitHelper;
-    private DemoAdapter           mAdapter;
 
-    @Override public int getLayoutResId() {
+    @Override
+    public int getLayoutResId() {
         return R.layout.activity_main;
     }
 
-    @Override public void onFirst() {
+    @Override
+    public void onFirst() {
         super.onFirst();
         XLog.d("onFirst只有第一次才会执行");
         //这里可以做一些界面功能引导
@@ -54,7 +56,8 @@ public class MainActivity extends AppBaseActivity {
      * 方法执行顺序：
      * initData() --> initView() --> register()
      */
-    @Override public void initData() {
+    @Override
+    public void initData() {
         super.initData();
         mDemos = Demo.getDemos();
         //双击退出应用工具类使用方法，别忘了重写onKeyDown方法（见底部）
@@ -68,7 +71,8 @@ public class MainActivity extends AppBaseActivity {
      * 方法执行顺序：
      * initData() --> initView() --> register()
      */
-    @Override public void initView(Bundle savedInstanceState) {
+    @Override
+    public void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
         mRecyclerView.setOnClickListener(this);
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -77,9 +81,9 @@ public class MainActivity extends AppBaseActivity {
         //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mAdapter = new DemoAdapter(mActivity, R.layout.activity_main_item, mDemos);
-        mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(new CommonRecyclerAdapter.OnItemClickListener() {
+        DemoAdapter adapter = new DemoAdapter(mActivity, R.layout.activity_main_item, mDemos);
+        mRecyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new CommonRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(RecyclerView.ViewHolder viewHolder, View view, int position) {
                 itemClick(mDemos.get(position));
@@ -89,23 +93,26 @@ public class MainActivity extends AppBaseActivity {
 
     private final class DemoAdapter extends CommonRecyclerAdapter<Demo> {
 
-        public DemoAdapter(Context context, int layoutResId, List<Demo> data) {
+        DemoAdapter(Context context, int layoutResId, List<Demo> data) {
             super(context, layoutResId, data);
         }
 
-        @Override public void onUpdate(BaseAdapterHelper helper, Demo item, int position) {
+        @Override
+        public void onUpdate(BaseAdapterHelper helper, Demo item, int position) {
             final CardView cardView = helper.getView(R.id.main_item_cardview);
             cardView.setCardBackgroundColor(item.bgColor);
             helper.setText(R.id.main_item_tv, item.title);
         }
     }
 
-    @Override public void register() {
+    @Override
+    public void register() {
         super.register();
         //这里可以注册一些广播、服务
     }
 
-    @Override public void unRegister() {
+    @Override
+    public void unRegister() {
         super.unRegister();
         //注销广播、服务
     }
@@ -133,12 +140,12 @@ public class MainActivity extends AppBaseActivity {
     private void crashTest() {
         ToastUtil.showLongToast(this, "程序即将崩溃，崩溃日志请查看：" + SDCardUtil.getLogDirPath());
         new Handler().postDelayed(new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 throw new NullPointerException("666");
             }
         }, 3000);
     }
-
 
     @AfterPermissionGranted(REQUEST_CODE_CAMERA)
     public void useCamera() {
@@ -146,8 +153,7 @@ public class MainActivity extends AppBaseActivity {
             ToastUtil.showToast(getApplicationContext(), "相机权限已授权,可以开始使用相机了");
         } else {
             //请求权限
-            EasyPermissions.requestPermissions(this, "应用需要访问你的相机进行拍照",
-                                               REQUEST_CODE_CAMERA, Manifest.permission.CAMERA);
+            EasyPermissions.requestPermissions(this, "应用需要访问你的相机进行拍照", REQUEST_CODE_CAMERA, Manifest.permission.CAMERA);
         }
     }
 
@@ -161,7 +167,8 @@ public class MainActivity extends AppBaseActivity {
         Log.e(TAG, "onPermissionsDenied:" + requestCode + ":" + perms.size());
     }
 
-    @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
         return mDoubleClickExitHelper.onKeyDown(keyCode, event);
     }
 }

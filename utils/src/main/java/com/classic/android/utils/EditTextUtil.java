@@ -55,7 +55,7 @@ import android.widget.EditText;
             public CharSequence filter(
                     CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
                 // 可以检查中文字符
-                boolean isChinese = StringUtil.checkNameChese(source.toString());
+                boolean isChinese = StringUtil.checkNameChinese(source.toString());
                 if (!isChinese || dest.toString().length() >= length) {
                     return "";
                 }

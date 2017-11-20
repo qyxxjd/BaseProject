@@ -3,15 +3,13 @@ package com.classic.android.base;
 import android.support.annotation.NonNull;
 
 import com.classic.android.event.ActivityEvent;
-import com.classic.android.rx.RxUtil;
+import com.classic.android.rx.clean.AutoClean;
+import com.classic.android.rx.clean.RxAutoCleanDelegate;
+import com.classic.android.rx.lifecycle.LifecycleListener;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
+import io.reactivex.FlowableTransformer;
 import io.reactivex.ObservableTransformer;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Predicate;
-import io.reactivex.subjects.BehaviorSubject;
 
 /**
  * 应用名称: BaseProject
@@ -21,71 +19,60 @@ import io.reactivex.subjects.BehaviorSubject;
  * 创 建 人: 续写经典
  * 创建时间: 2016/12/8 17:03
  */
-@SuppressWarnings("unused") public abstract class RxActivity extends BaseActivity {
-    private final BehaviorSubject<Integer> mBehaviorSubject = BehaviorSubject.create();
+@SuppressWarnings("unused") public abstract class RxActivity extends BaseActivity
+        implements AutoClean, LifecycleListener {
 
-    private CompositeDisposable mCompositeDisposable;
-
-    /**
-     * 绑定一个Activity的生命周期
-     * <p>
-     * 例如：网络请求时绑定ActivityEvent.STOP, onStop()时会自动取消网络请求
-     *
-     * @param event {@link ActivityEvent#CREATE},
-     *              {@link ActivityEvent#START},
-     *              {@link ActivityEvent#RESTART},
-     *              {@link ActivityEvent#RESUME},
-     *              {@link ActivityEvent#PAUSE},
-     *              {@link ActivityEvent#STOP},
-     *              {@link ActivityEvent#DESTROY}.
-     */
-    @SuppressWarnings("unused") protected <T> ObservableTransformer<T, T> bindEvent(@ActivityEvent final int event) {
-        final Observable<Integer> observable = mBehaviorSubject.filter(new Predicate<Integer>() {
-            @Override public boolean test(Integer integer) throws Exception {
-                return integer == event;
-            }
-        }).take(1);
-
-        return new ObservableTransformer<T, T>() {
-            @Override public ObservableSource<T> apply(Observable<T> upstream) {
-                return upstream.takeUntil(observable);
-            }
-        };
-    }
-
-    /**
-     * 回收Disposable，默认unRegister统一释放资源
-     */
-    protected void recycle(@NonNull Disposable disposable) {
-        if (null == mCompositeDisposable) {
-            mCompositeDisposable = new CompositeDisposable();
-        }
-        mCompositeDisposable.add(disposable);
-    }
-
-    /**
-     * 清理Disposable，释放资源
-     */
-    protected void clear() {
-        if (null != mCompositeDisposable) {
-            mCompositeDisposable.dispose();
-        }
-    }
-
-    /**
-     * 清理Disposable，释放资源
-     */
-    protected void clear(Disposable... disposables) {
-        RxUtil.clear(disposables);
-    }
-
-    @Override public void unRegister() {
-        clear();
-        super.unRegister();
-    }
+    private final RxAutoCleanDelegate mAutoCleanDelegate = new RxAutoCleanDelegate();
 
     @Override void stateChange(@ActivityEvent int event) {
         super.stateChange(event);
-        mBehaviorSubject.onNext(event);
+        onLifecycleChange(event);
+    }
+
+    @Override
+    public void onLifecycleChange(@ActivityEvent int event) {
+        mAutoCleanDelegate.onLifecycleChange(event);
+    }
+
+    /**
+     * 绑定 Activity 的生命周期，自动释放资源
+     * <br/>
+     * 例如：网络请求时绑定{@link ActivityEvent#STOP}, onStop()时会自动取消网络请求.
+     *
+     * @param event 事件类型
+     * @see ActivityEvent
+     */
+    @Override
+    public <Type> ObservableTransformer<Type, Type> bindEvent(@ActivityEvent int event) {
+        return mAutoCleanDelegate.bindEvent(event);
+    }
+
+    /**
+     * 绑定 Activity 的生命周期，自动释放资源
+     * <br/>
+     * 例如：网络请求时绑定{@link ActivityEvent#STOP}, onStop()时会自动取消网络请求.
+     *
+     * @param event 事件类型
+     * @see ActivityEvent
+     */
+    @SuppressWarnings("SpellCheckingInspection")
+    @Override
+    public <Type> FlowableTransformer<Type, Type> bindEventWithFlowable(@ActivityEvent int event) {
+        return mAutoCleanDelegate.bindEventWithFlowable(event);
+    }
+
+    @Override
+    public void recycle(@NonNull Disposable disposable) {
+        mAutoCleanDelegate.recycle(disposable);
+    }
+
+    @Override
+    public void clear() {
+        mAutoCleanDelegate.clear();
+    }
+
+    @Override
+    public void clear(Disposable... disposables) {
+        mAutoCleanDelegate.clear(disposables);
     }
 }

@@ -2,19 +2,17 @@ package com.classic.android.permissions;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.annotation.RestrictTo;
 import android.support.annotation.StringRes;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatDialogFragment;
 
 /**
  * {@link AppCompatDialogFragment} to display rationale for permission requests when the request
  * comes from a Fragment or Activity that can host a Fragment.
  */
-@RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
 @RestrictTo(RestrictTo.Scope.LIBRARY)
 public class RationaleDialogFragmentCompat extends AppCompatDialogFragment {
 
@@ -35,6 +33,18 @@ public class RationaleDialogFragmentCompat extends AppCompatDialogFragment {
         dialogFragment.setArguments(config.toBundle());
 
         return dialogFragment;
+    }
+
+    /**
+     * Version of {@link #show(FragmentManager, String)} that no-ops when an IllegalStateException
+     * would otherwise occur.
+     */
+    public void showAllowingStateLoss(FragmentManager manager, String tag) {
+        if (manager.isStateSaved()) {
+            return;
+        }
+
+        show(manager, tag);
     }
 
     @Override
@@ -65,6 +75,6 @@ public class RationaleDialogFragmentCompat extends AppCompatDialogFragment {
                 new RationaleDialogClickListener(this, config, mPermissionCallbacks);
 
         // Create an AlertDialog
-        return config.createDialog(getContext(), clickListener);
+        return config.createSupportDialog(getContext(), clickListener);
     }
 }
