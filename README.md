@@ -19,7 +19,7 @@
 `Gradle`依赖
 ```gradle
 dependencies {
-    compile 'com.classic.android:core:1.5'
+    implementation 'com.classic.android:core:1.5'
 }
 ```
 
@@ -33,7 +33,7 @@ dependencies {
 `Gradle`依赖
 ```gradle
 dependencies {
-    compile 'com.classic.android:rxjava:2.0'
+    implementation 'com.classic.android:rxjava:2.0'
 }
 ```
 
@@ -46,7 +46,7 @@ dependencies {
 `Gradle`依赖
 ```gradle
 dependencies {
-    compile 'com.classic.android:okhttp:2.0'
+    implementation 'com.classic.android:okhttp:2.0'
 }
 ```
 
@@ -55,7 +55,7 @@ dependencies {
 `Gradle`依赖
 ```gradle
 dependencies {
-    compile 'com.classic.android:utils:1.1'
+    implementation 'com.classic.android:utils:1.1'
 }
 ```
 
