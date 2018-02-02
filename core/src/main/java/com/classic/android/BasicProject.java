@@ -24,11 +24,11 @@ import com.elvishew.xlog.printer.Printer;
 
     private static volatile BasicProject sInstance;
 
-    private boolean          isDebug;
-    private String           mRootDirectoryName;
-    private ICrashProcess    mExceptionHandler;
-    private Integer          mLogLevel;
-    private Printer[]        mPrinters;
+    private boolean isDebug;
+    private String mRootDirectoryName;
+    private ICrashProcess mExceptionHandler;
+    private Integer mLogLevel;
+    private Printer[] mPrinters;
     private LogConfiguration mLogConfiguration;
 
     private BasicProject(Builder builder) {

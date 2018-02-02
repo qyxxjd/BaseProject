@@ -15,7 +15,7 @@ import android.view.View;
  * 创 建 人: 续写经典
  * 创建时间: 2015/11/4 10:00
  */
-@SuppressWarnings("unused") public interface IActivity extends IProgress {
+@SuppressWarnings("unused") public interface IActivity {
 
     /**
      * 获取布局文件
@@ -29,12 +29,6 @@ import android.view.View;
      * 此方法会在setContentView之前调用
      */
     void onSetContentViewBefore();
-
-    /**
-     * Version 1.5 已废弃，请使用{@link #onSetContentViewBefore()}
-     */
-    @Deprecated
-    void initPre();
 
     /**
      * 初始化数据

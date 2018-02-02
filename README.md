@@ -7,8 +7,8 @@
 
 #### 基础项目：
 
-- `Support (v27.0.0)`
-- `EasyPermissions (v1.0.1)`
+- `Support (v27.0.2)`
+- `EasyPermissions (v1.1.3)`
 - `BaseActivity`、`BaseFragment`
 - `Activity`栈管理
 - 异常信息收集
@@ -19,21 +19,21 @@
 `Gradle`依赖
 ```gradle
 dependencies {
-    implementation 'com.classic.android:core:1.5'
+    implementation 'com.classic.android:core:1.6'
 }
 ```
 
 #### 基于`RxJava`的版本： [示例代码点这里](https://github.com/qyxxjd/RxJava2Demo)
 
 - 包含基础项目的所有功能
-- 集成`RxJava (v2.1.6)`、`RxAndroid (v2.0.1)`
+- 集成`RxJava (v2.1.9)`、`RxAndroid (v2.0.1)`
 - `RxActivity`、`RxFragment`
 - 常用方法封装
 
 `Gradle`依赖
 ```gradle
 dependencies {
-    implementation 'com.classic.android:rxjava:2.0'
+    implementation 'com.classic.android:rxjava:2.1'
 }
 ```
 
@@ -46,7 +46,7 @@ dependencies {
 `Gradle`依赖
 ```gradle
 dependencies {
-    implementation 'com.classic.android:okhttp:2.0'
+    implementation 'com.classic.android:okhttp:2.1'
 }
 ```
 
@@ -167,8 +167,6 @@ public class TestActivity extends BaseActivity {
     @Override public void onSetContentViewBefore() { }
     //view点击事件统一处理
     @Override public void viewClick(View v) { }
-    @Override public void showProgress() { }
-    @Override public void hideProgress() { }
 }
 ```
 
@@ -199,8 +197,6 @@ public class TestFragment extends BaseFragment {
     @Override public void initData() { }
     //view点击事件统一处理
     @Override public void viewClick(View v) { }
-    @Override public void showProgress() { }
-    @Override public void hideProgress() { }
 
     //Fragment被切换到前台时调用
     @Override public void onFragmentShow() { }

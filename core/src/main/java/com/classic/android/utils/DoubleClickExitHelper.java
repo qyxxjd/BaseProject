@@ -22,10 +22,10 @@ import com.classic.android.core.R;
     private final Activity mActivity;
 
     /** 两次点击的有效时间间隔，单位：毫秒 */
-    private int         timeInterval = 2000;
-    private boolean     isOnKeyBacking;
+    private int timeInterval = 2000;
+    private boolean isOnKeyBacking;
     private WeakHandler mHandler;
-    private Toast       mBackToast;
+    private Toast mBackToast;
 
     @SuppressLint("ShowToast") public DoubleClickExitHelper(@NonNull Activity activity) {
         mActivity = activity;

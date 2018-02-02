@@ -25,7 +25,7 @@ import java.util.List;
  * 包 名 称: com.classic.android.base
  *
  * 文件描述: 启动页
- * 创 建 人: msdx {https://github.com/msdx/androidkit}
+ * 创 建 人: {https://github.com/msdx/androidkit}
  * 创建时间: 2015/11/4 18:34
  */
 @SuppressWarnings("unused") public abstract class BaseSplashActivity extends Activity {
@@ -33,15 +33,15 @@ import java.util.List;
     /**
      * 后台任务完成的标志。
      */
-    private static final byte BACKGROUND_FINISH  = 0x01;
+    private static final byte BACKGROUND_FINISH = 0x01;
     /**
      * 前台任务完成的标志。
      */
-    private static final byte FRONTGROUND_FINISH = 0x10;
+    private static final byte FOREGROUND_FINISH = 0x10;
     /**
      * 表示要播放开场动画。
      */
-    private static final int  SPLASH_PLAY        = 0;
+    private static final int SPLASH_PLAY = 0;
     /**
      * 开场动画的资源。
      */
@@ -53,7 +53,7 @@ import java.util.List;
     /**
      * UI线程。
      */
-    private Handler   mUiHandler;
+    private Handler mUiHandler;
     /**
      * 用来显示动画。
      */
@@ -101,7 +101,7 @@ import java.util.List;
             mUiHandler.sendMessageDelayed(msg, delayTime);
             delayTime += resource.mPlayerTime;
         }
-        mUiHandler.sendEmptyMessageDelayed(FRONTGROUND_FINISH, delayTime);
+        mUiHandler.sendEmptyMessageDelayed(FOREGROUND_FINISH, delayTime);
     }
 
     /**
@@ -208,12 +208,12 @@ import java.util.List;
                 return;
             }
 
-            if (msg.what == BACKGROUND_FINISH || msg.what == FRONTGROUND_FINISH) {
+            if (msg.what == BACKGROUND_FINISH || msg.what == FOREGROUND_FINISH) {
 
                 isWaiting |= msg.what;
                 // 当后台或前台的任务未完成时，不执行Activity的跳转。
                 BaseSplashActivity splash = activity.get();
-                if (splash != null && (isWaiting == (BACKGROUND_FINISH | FRONTGROUND_FINISH))) {
+                if (splash != null && (isWaiting == (BACKGROUND_FINISH | FOREGROUND_FINISH))) {
                     if (splash.isAutoStartNextActivity()) {
                         Intent intent = new Intent(splash, splash.nextActivity());
                         splash.setIntentDate(intent);

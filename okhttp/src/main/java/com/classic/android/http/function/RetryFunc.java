@@ -25,9 +25,9 @@ import io.reactivex.functions.Function;
         implements Function<Observable<? extends Throwable>, ObservableSource<?>> {
 
     private final TimeUnit mTimeUnit;
-    private final int      mMaxRetryCount;
-    private final int      mRetryDelay;
-    private       int      mRetryCount;
+    private final int mMaxRetryCount;
+    private final int mRetryDelay;
+    private int mRetryCount;
 
     public RetryFunc(int maxRetries, int retryDelayMillis, TimeUnit timeUnit) {
         this.mMaxRetryCount = maxRetries;

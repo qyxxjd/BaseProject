@@ -1,5 +1,8 @@
 package com.classic.android.utils;
 
+import android.support.annotation.NonNull;
+import android.text.TextUtils;
+
 /**
  * 应用名称: BaseProject
  * 包 名 称: com.classic.android.utils
@@ -10,8 +13,23 @@ package com.classic.android.utils;
  */
 @SuppressWarnings({"unused", "WeakerAccess"})
 public final class StringUtil {
+    private static final String ELLIPSIS = "...";
+    private static final String EMPTY = "";
 
     private StringUtil() { }
+
+    public static String replaceEmpty(String text) {
+        return TextUtils.isEmpty(text) ? EMPTY : text;
+    }
+
+    public static String replaceWithMaxLength(@NonNull String text, int maxLength) {
+        return replaceWithMaxLength(text, maxLength, ELLIPSIS);
+    }
+
+    public static String replaceWithMaxLength(@NonNull String text, int maxLength,
+                                              @NonNull String replaceContent) {
+        return text.length() > maxLength ? (text.substring(0, maxLength) + replaceContent) : text;
+    }
 
     /**
      * 描述：将null转化为“”.
@@ -21,19 +39,19 @@ public final class StringUtil {
      */
     public static String parseEmpty(String str) {
         if (str == null || "null".equals(str.trim())) {
-            str = "";
+            str = EMPTY;
         }
         return str.trim();
     }
 
     /**
-     * 描述：判断一个字符串是否为null或空值.
+     * 描述：判断一个字符串是否为空值.
      *
      * @param str 指定的字符串
      * @return true or false
      */
     public static boolean isEmpty(String str) {
-        return str == null || str.trim().length() == 0;
+        return TextUtils.isEmpty(str);
     }
 
     /**

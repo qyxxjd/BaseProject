@@ -30,10 +30,10 @@ import java.util.List;
 
     private static final String SP_NAME = "firstConfig";
 
-    private   int          mActivityState;
-    private   BaseFragment mCurrentFragment;
-    protected Activity     mActivity;
-    protected Context      mAppContext;
+    private int mActivityState;
+    private BaseFragment mCurrentFragment;
+    protected Activity mActivity;
+    protected Context mAppContext;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,19 +63,9 @@ import java.util.List;
 
     @Override public void onSetContentViewBefore() { }
 
-    /**
-     * Version 1.5 已废弃，请使用{@link #onSetContentViewBefore()}
-     */
-    @Deprecated
-    @Override public void initPre() { onSetContentViewBefore(); }
-
     @Override public void initData() { }
 
     @Override public void initView(@Nullable Bundle savedInstanceState) { }
-
-    @Override public void showProgress() { }
-
-    @Override public void hideProgress() { }
 
     @Override public void register() { }
 
@@ -83,9 +73,9 @@ import java.util.List;
 
     @Override public void viewClick(@NonNull View v) { }
 
-    @Override public void onPermissionsGranted(int requestCode, List<String> perms) { }
+    @Override public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) { }
 
-    @Override public void onPermissionsDenied(int requestCode, List<String> perms) { }
+    @Override public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) { }
 
     @Override public void onClick(View v) {
         viewClick(v);

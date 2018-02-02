@@ -12,6 +12,7 @@
 
     <string name="exit.application.hint">再按一次返回键退出应用</string>
 
+    <string name="rationale.ask">没有权限，此应用程序可能无法正常工作。</string>
     <string name="rationale.ask.again">应用程序无法正常工作,打开应用程序设置修改应用程序的权限.</string>
     <string name="title.settings.dialog">权限请求</string>
 </resources>

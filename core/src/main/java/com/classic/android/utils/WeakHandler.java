@@ -31,8 +31,8 @@ import java.util.concurrent.locks.ReentrantLock;
     private final ExecHandler      mExec;
 
     private Lock mLock = new ReentrantLock();
-    @SuppressWarnings({"ConstantConditions", "SpellCheckingInspection"}) @VisibleForTesting
-    private final ChainedRef mRunnables = new ChainedRef(mLock, null);
+    @VisibleForTesting
+    private final ChainedRef mRunnableChain = new ChainedRef(mLock, null);
 
     /**
      * Default constructor associates this handler with the {@link Looper} for the
@@ -146,6 +146,7 @@ import java.util.concurrent.locks.ReentrantLock;
      * Runnable will be processed -- if the looper is quit before the delivery time of the message occurs then the
      * message will be dropped.
      */
+    @SuppressWarnings("UnusedReturnValue")
     public final boolean postDelayed(Runnable r, long delayMillis) {
         return mExec.postDelayed(wrapRunnable(r), delayMillis);
     }
@@ -171,7 +172,7 @@ import java.util.concurrent.locks.ReentrantLock;
      * Remove any pending posts of Runnable r that are in the message queue.
      */
     public final void removeCallbacks(Runnable r) {
-        final WeakRunnable runnable = mRunnables.remove(r);
+        final WeakRunnable runnable = mRunnableChain.remove(r);
         if (runnable != null) {
             mExec.removeCallbacks(runnable);
         }
@@ -183,7 +184,7 @@ import java.util.concurrent.locks.ReentrantLock;
      * all callbacks will be removed.
      */
     public final void removeCallbacks(Runnable r, Object token) {
-        final WeakRunnable runnable = mRunnables.remove(r);
+        final WeakRunnable runnable = mRunnableChain.remove(r);
         if (runnable != null) {
             mExec.removeCallbacks(runnable, token);
         }
@@ -334,7 +335,7 @@ import java.util.concurrent.locks.ReentrantLock;
             throw new NullPointerException("Runnable can't be null");
         }
         final ChainedRef hardRef = new ChainedRef(mLock, r);
-        mRunnables.insertAfter(hardRef);
+        mRunnableChain.insertAfter(hardRef);
         return hardRef.wrapper;
     }
 

@@ -31,12 +31,12 @@ import java.util.List;
 @SuppressWarnings("unused") public abstract class BaseFragment extends Fragment
         implements IFragment, IRegister, View.OnClickListener, EasyPermissions.PermissionCallbacks {
 
-    private static final String SP_NAME         = "firstConfig";
+    private static final String SP_NAME = "firstConfig";
     private static final String STATE_IS_HIDDEN = "isHidden";
 
-    private   int      mFragmentState;
+    private int mFragmentState;
     protected Activity mActivity;
-    protected Context  mAppContext;
+    protected Context mAppContext;
 
     @Override public void onAttach(Context context) {
         super.onAttach(context);
@@ -149,15 +149,11 @@ import java.util.List;
 
     @Override public void onFragmentHide() { }
 
-    @Override public void showProgress() { }
-
-    @Override public void hideProgress() { }
-
     @Override public void viewClick(@NonNull View v) { }
 
-    @Override public void onPermissionsGranted(int requestCode, List<String> perms) { }
+    @Override public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) { }
 
-    @Override public void onPermissionsDenied(int requestCode, List<String> perms) { }
+    @Override public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) { }
 
     @Override public void onClick(View v) {
         viewClick(v);

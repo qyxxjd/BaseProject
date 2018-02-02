@@ -13,7 +13,7 @@ import android.view.View;
  * 创 建 人: 续写经典
  * 创建时间: 2015/11/12 10:00
  */
-@SuppressWarnings("unused") public interface IFragment extends IProgress {
+@SuppressWarnings("unused") public interface IFragment {
 
     /**
      * 获取布局文件

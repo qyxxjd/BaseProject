@@ -1,7 +1,10 @@
 package com.classic.android.permissions.helper;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.StyleRes;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 
 import com.classic.android.permissions.RationaleDialogFragmentCompat;
 
@@ -9,6 +12,8 @@ import com.classic.android.permissions.RationaleDialogFragmentCompat;
  * Implementation of {@link PermissionHelper} for Support Library host classes.
  */
 public abstract class BaseSupportPermissionsHelper<T> extends PermissionHelper<T> {
+
+    private static final String TAG = "BSPermissionsHelper";
 
     public BaseSupportPermissionsHelper(@NonNull T host) {
         super(host);
@@ -18,12 +23,23 @@ public abstract class BaseSupportPermissionsHelper<T> extends PermissionHelper<T
 
     @Override
     public void showRequestPermissionRationale(@NonNull String rationale,
-                                               int positiveButton,
-                                               int negativeButton,
+                                               @NonNull String positiveButton,
+                                               @NonNull String negativeButton,
+                                               @StyleRes int theme,
                                                int requestCode,
                                                @NonNull String... perms) {
+
+        FragmentManager fm = getSupportFragmentManager();
+
+        // Check if fragment is already showing
+        Fragment fragment = fm.findFragmentByTag(RationaleDialogFragmentCompat.TAG);
+        if (fragment instanceof RationaleDialogFragmentCompat) {
+            Log.d(TAG, "Found existing fragment, not showing rationale.");
+            return;
+        }
+
         RationaleDialogFragmentCompat
-                .newInstance(positiveButton, negativeButton, rationale, requestCode, perms)
-                .showAllowingStateLoss(getSupportFragmentManager(), RationaleDialogFragmentCompat.TAG);
+                .newInstance(rationale, positiveButton, negativeButton, theme, requestCode, perms)
+                .showAllowingStateLoss(fm, RationaleDialogFragmentCompat.TAG);
     }
 }

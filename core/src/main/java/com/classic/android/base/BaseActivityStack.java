@@ -76,16 +76,16 @@ import java.util.Stack;
      */
     public void finishActivity() {
         IActivity activity = sActivityStack.lastElement();
-        finishActivity((Activity)activity);
+        finishActivity(activity);
     }
 
     /**
      * 结束指定的Activity
      */
-    public void finishActivity(Activity activity) {
+    public void finishActivity(IActivity activity) {
         if (activity != null) {
             sActivityStack.remove(activity);
-            activity.finish();
+            ((Activity)activity).finish();
         }
     }
 
@@ -95,7 +95,7 @@ import java.util.Stack;
     public void finishActivity(Class<?> cls) {
         for (IActivity activity : sActivityStack) {
             if (activity.getClass().equals(cls)) {
-                finishActivity((Activity)activity);
+                finishActivity(activity);
             }
         }
     }
@@ -106,7 +106,7 @@ import java.util.Stack;
     public void finishOthersActivity(Class<?> cls) {
         for (IActivity activity : sActivityStack) {
             if (!(activity.getClass().equals(cls))) {
-                finishActivity((Activity)activity);
+                finishActivity(activity);
             }
         }
     }

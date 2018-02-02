@@ -12,6 +12,7 @@
 
     <string name="exit.application.hint">The return key to exit the application</string>
 
+    <string name="rationale.ask">This app may not work correctly without the requested permissions.</string>
     <string name="rationale.ask.again">This app may not work correctly without the requested permissions. Open the app settings screen to modify app permissions.</string>
     <string name="title.settings.dialog">Permissions Required</string>
 </resources>

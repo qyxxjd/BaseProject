@@ -6,13 +6,13 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0'
+        classpath 'com.android.tools.build:gradle:3.0.1'
         classpath 'com.jakewharton:butterknife-gradle-plugin:8.8.1'
 
-//        //https://github.com/dcendents/android-maven-gradle-plugin
-//        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
-//        //https://github.com/bintray/gradle-bintray-plugin
-//        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
+        //https://github.com/dcendents/android-maven-gradle-plugin
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
+        //https://github.com/bintray/gradle-bintray-plugin
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
     }
 }
 
@@ -32,15 +32,15 @@ ext {
     projectName = 'BaseProject'
     projectDesc = 'android base project'
     projectGroup = 'com.classic.android'
-    projectVersionCode = 12
+    projectVersionCode = 13
 
-    projectVersion = '1.5' // base library version
-    projectArtifactId = 'core'
+//    projectVersion = '1.6' // base library version
+//    projectArtifactId = 'core'
 
-//    projectVersion = '2.0' // rxjava library version
+//    projectVersion = '2.1' // rxjava library version
 //    projectArtifactId = 'rxjava'
 
-//    projectVersion = '2.0' // okhttp library version
+//    projectVersion = '2.1' // okhttp library version
 //    projectArtifactId = 'okhttp'
 
 //    projectVersion = '1.1' // utils library version

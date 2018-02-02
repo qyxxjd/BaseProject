@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.classic.android.BasicProject;
-import com.classic.android.http.exception.HttpException;
 import com.classic.android.okhttp.R;
 import com.elvishew.xlog.XLog;
 
@@ -50,7 +49,6 @@ import io.reactivex.observers.DisposableObserver;
         if (!isNetworkAvailable(mAppContext)) {
             dispose();
             onNetworkNotConnected();
-            onCancel();
             onFinish();
         }
     }
@@ -63,14 +61,11 @@ import io.reactivex.observers.DisposableObserver;
         onFinish();
     }
 
-    @Override public void onError(Throwable e) {
-        if (e instanceof HttpException) {
-            final HttpException exception = (HttpException) e;
-            onFailure(exception);
-        } else if (e instanceof SocketTimeoutException) {
+    @Override public final void onError(Throwable e) {
+        if (e instanceof SocketTimeoutException) {
             onSocketTimeout();
         } else {
-            onFailure(new HttpException(-1, e.getMessage()));
+            onFailure(e);
         }
         onUnifiedErrorHandling();
         onFinish();
@@ -100,9 +95,9 @@ import io.reactivex.observers.DisposableObserver;
     /**
      * 请求失败回调
      *
-     * @see com.classic.android.http.exception.HttpException
+     * @param e 异常信息
      */
-    public void onFailure(HttpException e) {
+    public void onFailure(Throwable e) {
         if (isDebug && null != e && !TextUtils.isEmpty(e.getMessage())) {
             XLog.tag(TAG).e(e.getMessage());
         }
@@ -110,9 +105,6 @@ import io.reactivex.observers.DisposableObserver;
 
     /** 统一的错误处理,所有的错误最终都会执行此方法 */
     public void onUnifiedErrorHandling() { }
-
-    /** 网络请求取消回调 */
-    public void onCancel() { }
 
     /**
      * 不管成功失败，最后都会执行此方法
