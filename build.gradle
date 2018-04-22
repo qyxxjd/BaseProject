@@ -46,6 +46,9 @@ ext {
 //    projectVersion = '1.1' // utils library version
 //    projectArtifactId = 'utils'
 
+    projectVersion = '1.0'
+    projectArtifactId = 'clean-rxjava'
+
     orgName = 'classic'
     repoName = 'maven'
 

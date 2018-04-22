@@ -4,7 +4,7 @@ task findbugs(type: FindBugs, dependsOn: 'assembleDebug') {
     ignoreFailures = true
     effort = "max"
     showProgress = true
-    reportLevel = "high"
+    reportLevel = "low" // high medium low
     println("$project.buildDir")
     excludeFilter = rootProject.file('FindBugsFilter.xml')
     classes = files("$project.buildDir/intermediates/classes")

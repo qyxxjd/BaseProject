@@ -1,0 +1,35 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode projectVersionCode
+        versionName projectVersion
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    compileOnly rootProject.ext.supportAppcompatV7
+    compileOnly rootProject.ext.xlog
+    compileOnly rootProject.ext.easyPermissions
+    compileOnly rootProject.ext.rxJava
+    compileOnly rootProject.ext.rxAndroid
+}
+
+//apply from: rootProject.file('gradle/maven.gradle')
+//apply from: rootProject.file('gradle/bintray.gradle')
+apply from: rootProject.file('gradle/findbugs.gradle')
+//apply from: rootProject.file('gradle/checkstyle.gradle')

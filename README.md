@@ -7,8 +7,7 @@
 
 #### 基础项目：
 
-- `Support (v27.0.2)`
-- `EasyPermissions (v1.1.3)`
+- `EasyPermissions (v1.2.0)`
 - `BaseActivity`、`BaseFragment`
 - `Activity`栈管理
 - 异常信息收集
